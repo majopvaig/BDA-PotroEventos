@@ -12,7 +12,6 @@ import Entitys.ENUMS.EstadoBoleto;
 public class Boleto {
 
     private String codigoQR;
-    private Double precio;
     private EstadoBoleto estadoBoleto;
     private Evento evento;
     private AsientoEvento asiento;
@@ -21,9 +20,8 @@ public class Boleto {
     public Boleto() {
     }
 
-    public Boleto(String codigoQR, Double precio, EstadoBoleto estadoBoleto, Evento evento, AsientoEvento asiento, String token) {
+    public Boleto(String codigoQR, EstadoBoleto estadoBoleto, Evento evento, AsientoEvento asiento, String token) {
         this.codigoQR = codigoQR;
-        this.precio = precio;
         this.estadoBoleto = estadoBoleto;
         this.evento = evento;
         this.asiento = asiento;
@@ -36,14 +34,6 @@ public class Boleto {
 
     public void setCodigoQR(String codigoQR) {
         this.codigoQR = codigoQR;
-    }
-
-    public Double getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(Double precio) {
-        this.precio = precio;
     }
 
     public EstadoBoleto getEstadoBoleto() {

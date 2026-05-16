@@ -4,20 +4,17 @@
  */
 package adaptadores;
 
-import Entitys.Boleto;
 import Entitys.ENUMS.ReservacionEstado;
 import Entitys.Reservacion;
-import Entitys.Usuario;
-import daos.ReservacionDAO;
-import daos.UsuarioDAO;
+import entidadesmongo.PagoMongoEntidad;
 import entidadesmongo.ReservacionMongoEntidad;
 import entidadesresumenmongo.UsuarioResumenMongo;
 import excepciones.PersistenciaException;
-import interfaces.IReservacionDAO;
-import interfaces.IUsuarioDAO;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import org.bson.Document;
 import org.bson.types.ObjectId;
 
 /**
@@ -25,9 +22,6 @@ import org.bson.types.ObjectId;
  * @author maria
  */
 public class ReservacionPersistenciaAdapter {
-    
-    public static IReservacionDAO reservacionDAO = ReservacionDAO.getInstance();
-    public static IUsuarioDAO usuarioDAO = UsuarioDAO.getInstance();
     
     public static ReservacionMongoEntidad convertirAMongo(Reservacion dominio) throws PersistenciaException {
         if(dominio == null){
@@ -60,42 +54,45 @@ public class ReservacionPersistenciaAdapter {
         return mongo;
     }
     
-    public static Reservacion convertirADominio(ReservacionMongoEntidad mongo) throws PersistenciaException {
+    public static Reservacion convertirADominio(Document mongo) throws PersistenciaException {
         if(mongo == null){
             return null;
         }
         
         Reservacion dominio = new Reservacion();
         
-        dominio.setIdReservacion(mongo.getIdComoTexto());
-        dominio.setTotal(mongo.getTotal());
+        dominio.setIdReservacion(mongo.getObjectId("_id").toHexString());
+        dominio.setTotal(mongo.getDouble("total"));
         
-        Boleto b = reservacionDAO.obtenerBoleto(mongo.getIdComoTexto());
-        if(b != null){
-            dominio.setBoleto(b);
+        dominio.setBoleto(BoletoPersistenciaAdapter.convertirADominio((Document) mongo.get("boleto")));
+        
+        Document pago = (Document) mongo.get("pago");
+        if(pago != null){
+            dominio.setPago(PagoPersistenciaAdapter.convertirADominio(pago));
         }
         
-        dominio.setPago(PagoPersistenciaAdapter.convertirADominio(mongo.getPago()));
-        
-        Usuario u = usuarioDAO.obtenerPorId(mongo.getUsuario().getIdComoTexto());
-        if(u != null){
-            dominio.setUsuario(u);
+        Document usuario = (Document) mongo.get("usuario");
+        if(usuario != null){
+            dominio.setUsuario(UsuarioPersistenciaAdapter.convertirADominio(usuario));
         }
         
-        dominio.setFechaHora(mongo.getFechaRegistro());
-        dominio.setEstado(ReservacionEstado.valueOf(mongo.getEstado()));
+        dominio.setFechaHora(mongo.getDate("fechaRegistro")
+                .toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime());
+        dominio.setEstado(ReservacionEstado.valueOf(mongo.getString("estado")));
         
         return dominio;
     }
     
-    public static List<Reservacion> convertirListaADominio(List<ReservacionMongoEntidad> lista) throws PersistenciaException {
+    public static List<Reservacion> convertirListaADominio(List<Document> lista) throws PersistenciaException {
         List<Reservacion> reservaciones = new ArrayList<>();
         
         if(lista == null){
-            return null;
+            return new ArrayList<>();
         }
         
-        for(ReservacionMongoEntidad mongo : lista){
+        for(Document mongo : lista){
             reservaciones.add(convertirADominio(mongo));
         }
         

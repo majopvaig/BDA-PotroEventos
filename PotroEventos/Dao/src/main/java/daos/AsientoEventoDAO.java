@@ -5,14 +5,21 @@ import Entitys.ENUMS.EstadoAsiento;
 import adaptadores.AsientoEventoPersistenciaAdapter;
 import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Aggregates;
+import com.mongodb.client.model.Field;
+import com.mongodb.client.model.Filters;
 import static com.mongodb.client.model.Filters.eq;
+import com.mongodb.client.model.Projections;
+import com.mongodb.client.model.UnwindOptions;
 import com.mongodb.client.result.UpdateResult;
 import conexion.ConexionMongo;
 import entidadesmongo.AsientoEventoMongoEntidad;
 import excepciones.PersistenciaException;
 import interfaces.IAsientoEventoDAO;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import org.bson.Document;
 import org.bson.types.ObjectId;
 
 /**
@@ -53,15 +60,47 @@ public class AsientoEventoDAO implements IAsientoEventoDAO {
 
     @Override
     public List<AsientoEvento> buscarPorEvento(String idEvento) throws PersistenciaException {
-        try{
-            List<AsientoEventoMongoEntidad> asientos = coleccionAsientosEventos
-                    .find(eq("evento", new ObjectId(idEvento)))
+        try {
+            List<Document> asientos = coleccionAsientosEventos
+                    .withDocumentClass(Document.class)
+                    .aggregate(Arrays.asList(
+                            Aggregates.match(Filters.eq("evento", new ObjectId(idEvento))),
+                            // hace el join con el asiento
+                            Aggregates.lookup("asientos", "asiento", "_id", "asiento_doc"),
+                            Aggregates.unwind("$asiento_doc", new UnwindOptions().preserveNullAndEmptyArrays(true)),
+                            // hace el join para jalar la ubicación completa del asiento
+                            Aggregates.lookup("ubicaciones", "asiento_doc.ubicacion", "_id", "ubicacion_temp"),
+                            Aggregates.unwind("$ubicacion_temp", new UnwindOptions().preserveNullAndEmptyArrays(true)),
+                            // hace que las referencias en asiento ahora sean objetos completos
+                            Aggregates.addFields(
+                                    new Field<>("asiento_doc.ubicacion", "$ubicacion_temp"),
+                                    new Field<>("asiento_doc.seccion",
+                                            new Document("$arrayElemAt", Arrays.asList(
+                                                    new Document("$filter",
+                                                            new Document("input", "$ubicacion_temp.secciones")
+                                                                    .append("as", "s")
+                                                                    .append("cond", new Document("$eq", Arrays.asList("$$s._id", "$asiento_doc.seccion")))
+                                                    ),
+                                                    0
+                                            ))
+                                    )
+                            ),
+                            // desecha el objeto temporal
+                            Aggregates.project(Projections.exclude("ubicacion_temp")),
+                            // ahora hace el join con el evento
+                            Aggregates.lookup("eventos", "evento", "_id", "evento_doc"),
+                            Aggregates.unwind("$evento_doc", new UnwindOptions().preserveNullAndEmptyArrays(true)),
+                            // hace el join para pasarle la ubicación al evento
+                            Aggregates.lookup("ubicaciones", "evento_doc.ubicacion._id", "_id", "ubicacion_temp2"),
+                            Aggregates.unwind("$ubicacion_temp2", new UnwindOptions().preserveNullAndEmptyArrays(true)),
+                            Aggregates.addFields(new Field<>("evento_doc.ubicacion", "$ubicacion_temp2")),
+                            Aggregates.project(Projections.exclude("ubicacion_temp2"))
+                    ))
                     .into(new ArrayList<>());
             return AsientoEventoPersistenciaAdapter.convertirListaADominio(asientos);
-        } catch(MongoException me){
+        } catch (MongoException me) {
             throw new PersistenciaException("No fue posible consultar los asientos del evento.");
         }
-
     }
 
     @Override
@@ -144,12 +183,45 @@ public class AsientoEventoDAO implements IAsientoEventoDAO {
 
     @Override
     public AsientoEvento consultarPorId(String idAsiento) throws PersistenciaException {
-        try{
-            AsientoEventoMongoEntidad seccion = coleccionAsientosEventos
-                    .find(eq("_id", new ObjectId(idAsiento)))
+        try {
+            Document asiento = coleccionAsientosEventos
+                    .withDocumentClass(Document.class)
+                    .aggregate(Arrays.asList(
+                            Aggregates.match(Filters.eq("_id", new ObjectId(idAsiento))),
+                            // hace el join con el asiento
+                            Aggregates.lookup("asientos", "asiento", "_id", "asiento_doc"),
+                            Aggregates.unwind("$asiento_doc", new UnwindOptions().preserveNullAndEmptyArrays(true)),
+                            // ahora hace el join para obtener la ubicación
+                            Aggregates.lookup("ubicaciones", "asiento_doc.ubicacion", "_id", "ubicacion_temp"),
+                            Aggregates.unwind("$ubicacion_temp", new UnwindOptions().preserveNullAndEmptyArrays(true)),
+                            // transforma las referencias en objetos completos
+                            Aggregates.addFields(
+                                    new Field<>("asiento_doc.ubicacion", "$ubicacion_temp"),
+                                    new Field<>("asiento_doc.seccion",
+                                            new Document("$arrayElemAt", Arrays.asList(
+                                                    new Document("$filter",
+                                                            new Document("input", "$ubicacion_temp.secciones")
+                                                                    .append("as", "s")
+                                                                    .append("cond", new Document("$eq", Arrays.asList("$$s._id", "$asiento_doc.seccion")))
+                                                    ),
+                                                    0
+                                            ))
+                                    )
+                            ),
+                            Aggregates.project(Projections.exclude("ubicacion_temp")),
+                            // hace join con el evento
+                            Aggregates.lookup("eventos", "evento", "_id", "evento_doc"),
+                            Aggregates.unwind("$evento_doc", new UnwindOptions().preserveNullAndEmptyArrays(true)),
+                            // hace el join para pasarle la ubicación pero al evento
+                            Aggregates.lookup("ubicaciones", "evento_doc.ubicacion._id", "_id", "ubicacion_temp2"),
+                            Aggregates.unwind("$ubicacion_temp2", new UnwindOptions().preserveNullAndEmptyArrays(true)),
+                            Aggregates.addFields(new Field<>("evento_doc.ubicacion", "$ubicacion_temp2")),
+                            Aggregates.project(Projections.exclude("ubicacion_temp2"))  
+                    ))
                     .first();
-            return AsientoEventoPersistenciaAdapter.convertirADominio(seccion);
-        } catch(MongoException me){
+
+            return AsientoEventoPersistenciaAdapter.convertirADominio(asiento);
+        } catch (MongoException me) {
             throw new PersistenciaException("No fue posible obtener el asiento del evento.");
         }
     }

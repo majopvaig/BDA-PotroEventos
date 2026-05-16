@@ -305,25 +305,4 @@ public class PnlEstadio extends JPanel {
         listenerSeleccion.onSeleccionCambiada(listSecciones, listInfo, asientosSeleccionados);
     }
 
-//    private AsientoDTO buscarDetalle(Object idBuscado) {
-//        if (catalogoAsientos == null || idBuscado == null) {
-//            return null;
-//        }
-//        String idStr = String.valueOf(idBuscado);
-//        for (AsientoDTO a : catalogoAsientos) {
-//            if (String.valueOf(a.getIdAsiento()).equals(idStr)) {
-//                return a;
-//            }
-//        }
-//        return null;
-//    }
-//
-//    private SeccionDTO buscarSeccion(AsientoEventoDTO ae) {
-//        for (Map.Entry<SeccionDTO, List<AsientoEventoDTO>> entry : mapaOcupacion.entrySet()) {
-//            if (entry.getValue().contains(ae)) {
-//                return entry.getKey();
-//            }
-//        }
-//        return null;
-//    }
 }

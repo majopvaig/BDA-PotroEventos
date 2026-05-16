@@ -5,10 +5,10 @@ import Entitys.Evento;
 import adaptadores.EventoPersistenciaAdapter;
 import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
-import static com.mongodb.client.model.Filters.eq;
+import com.mongodb.client.model.UnwindOptions;
 import static com.mongodb.client.model.Updates.inc;
-import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.result.UpdateResult;
 import conexion.ConexionMongo;
 import entidadesmongo.EventoMongoEntidad;
@@ -16,7 +16,9 @@ import excepciones.PersistenciaException;
 import interfaces.IEventoDAO;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
@@ -46,14 +48,25 @@ public class EventoDAO implements IEventoDAO {
     @Override
     public Evento buscarPorId(String idEvento) throws PersistenciaException {
         try {
-            EventoMongoEntidad evento = this.coleccionEventos
-                    .find(eq("_id", new ObjectId(idEvento)))
-                    .first();
+            Document evento = coleccionEventos
+                    .withDocumentClass(Document.class)
+                    .aggregate(Arrays.asList(
+                            Aggregates.match(Filters.eq("_id", new ObjectId(idEvento))),
+                            Aggregates.lookup("categorias", "categoria._id", "_id", "categoria"),
+                            Aggregates.unwind("$categoria", new UnwindOptions().preserveNullAndEmptyArrays(true)),
+                            Aggregates.lookup("ubicaciones", "ubicacion._id", "_id", "ubicacion"),
+                            Aggregates.unwind("$ubicacion", new UnwindOptions().preserveNullAndEmptyArrays(true))
+                    )).first();
 
+            if (evento == null) {
+                return null;
+            }
+
+            // Pasamos el Document al adapter
             return EventoPersistenciaAdapter.convertirADominio(evento);
 
         } catch (MongoException e) {
-            throw new PersistenciaException("No fue posible buscar el evento");
+            throw new PersistenciaException("Error al buscar evento completo: " + e.getMessage());
         }
     }
 
@@ -65,9 +78,16 @@ public class EventoDAO implements IEventoDAO {
                     Filters.eq("estado", "ACTIVO"),
                     Filters.ne("disponibilidad", 0),
                     Filters.gt("fechaHora", LocalDateTime.now()));
-            
-            List<EventoMongoEntidad> eventos = coleccionEventos
-                    .find(filtro)
+
+            List<Document> eventos = coleccionEventos
+                    .withDocumentClass(Document.class)
+                    .aggregate(Arrays.asList(
+                            Aggregates.match(filtro),
+                            Aggregates.lookup("categorias", "categoria._id", "_id", "categoria"),
+                            Aggregates.unwind("$categoria", new UnwindOptions().preserveNullAndEmptyArrays(true)),
+                            Aggregates.lookup("ubicaciones", "ubicacion._id", "_id", "ubicacion"),
+                            Aggregates.unwind("$ubicacion", new UnwindOptions().preserveNullAndEmptyArrays(true))
+                    ))
                     .into(new ArrayList<>());
             return EventoPersistenciaAdapter.convetirListaADominio(eventos);
         } catch (MongoException e) {

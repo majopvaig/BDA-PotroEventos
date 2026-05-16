@@ -5,6 +5,8 @@
 package adapters;
 
 import Entitys.Usuario;
+import dtos.LoginDTO;
+import dtos.RegistroUsuarioDTO;
 import dtos.UsuarioDTO;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +27,6 @@ public class UsuarioAdapter {
         dto.setApellidoPaterno(usuario.getApellidoPaterno());
         dto.setApellidoMaterno(usuario.getApellidoMaterno());
         dto.setCorreo(usuario.getCorreo());
-        dto.setContrasenia(usuario.getContrasenia());
         dto.setCreditos(usuario.getCreditos());
         return dto;
     }
@@ -41,7 +42,6 @@ public class UsuarioAdapter {
         usuario.setApellidoPaterno(dto.getApellidoPaterno());
         usuario.setApellidoMaterno(dto.getApellidoMaterno());
         usuario.setCorreo(dto.getCorreo());
-        usuario.setContrasenia(dto.getContrasenia());
         usuario.setCreditos(dto.getCreditos());
         
         return usuario;
@@ -53,5 +53,32 @@ public class UsuarioAdapter {
             usuarios.add(entidadADTO(user));
         }
         return usuarios;
+    }
+    
+    public static Usuario dtoRegistroAEntidad(RegistroUsuarioDTO registroDTO){
+        if(registroDTO == null){
+            return null;
+        }
+        
+        Usuario entidad = new Usuario();
+        entidad.setNombre(registroDTO.getNombres());
+        entidad.setApellidoPaterno(registroDTO.getApellidoPaterno());
+        entidad.setApellidoMaterno(registroDTO.getApellidoMaterno());
+        entidad.setCorreo(registroDTO.getCorreo());
+        entidad.setContrasenia(registroDTO.getContrasenia());
+        
+        return entidad;
+    }
+    
+    public static Usuario dtoLoginAEntidad(LoginDTO loginDTO){
+        if(loginDTO == null){
+            return null;
+        }
+        
+        Usuario entidad = new Usuario();
+        entidad.setCorreo(loginDTO.getCorreo());
+        entidad.setContrasenia(loginDTO.getContrasenia());
+        
+        return entidad;
     }
 }

@@ -5,6 +5,7 @@
 package entidadesmongo;
 
 import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.bson.types.ObjectId;
 
 /**
@@ -48,6 +49,7 @@ public class AsientoEventoMongoEntidad {
         this.id = id;
     }
     
+    @BsonIgnore
     public String getIdComoTexto(){
         if(id == null){
             return null;
@@ -79,6 +81,7 @@ public class AsientoEventoMongoEntidad {
         this.asiento = asiento;
     }
     
+    @BsonIgnore
     public String getAsientoComoTexto(){
         if(asiento == null){
             return null;
@@ -94,6 +97,7 @@ public class AsientoEventoMongoEntidad {
         this.evento = evento;
     }
     
+    @BsonIgnore
     public String getEventoComoTexto(){
         if(evento == null){
             return null;

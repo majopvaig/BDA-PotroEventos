@@ -9,7 +9,7 @@ import entidadesmongo.SeccionMongoEntidad;
 import excepciones.PersistenciaException;
 import java.util.ArrayList;
 import java.util.List;
-import org.bson.types.ObjectId;
+import org.bson.Document;
 
 /**
  *
@@ -17,19 +17,22 @@ import org.bson.types.ObjectId;
  */
 public class SeccionPersistenciaAdapter {
     
-    public static SeccionMongoEntidad convertirAMongo(Seccion dominio) throws PersistenciaException {
-        if(dominio == null){
+    public static Seccion convertirADominio(Document mongo) throws PersistenciaException {
+        if(mongo == null){
             return null;
         }
         
-        SeccionMongoEntidad mongo = new SeccionMongoEntidad();
+        Seccion dominio = new Seccion();
         
-        mongo.setId(convertirStringAObjectId(dominio.getIdSeccion()));
-        mongo.setNombre(dominio.getNombre());
-        mongo.setCapacidad(dominio.getCapacidad());
-        mongo.setPrecioBase(dominio.getPrecioBase());
+        dominio.setIdSeccion(mongo.getObjectId("_id").toHexString());
+        dominio.setNombre(mongo.getString("nombre"));
+        dominio.setCapacidad(mongo.getInteger("capacidad"));
+        Number precioBaseNum = (Number) mongo.get("precioBase");
+        if (precioBaseNum != null) {
+            dominio.setPrecioBase(precioBaseNum.longValue());
+        }
         
-        return mongo;
+        return dominio;
     }
     
     public static Seccion convertirADominio(SeccionMongoEntidad mongo) throws PersistenciaException {
@@ -47,6 +50,20 @@ public class SeccionPersistenciaAdapter {
         return dominio;
     }
     
+    public static List<Seccion> convertirDocsADominio(List<Document> lista) throws PersistenciaException {
+        List<Seccion> secciones = new ArrayList<>();
+        
+        if(lista == null){
+            return secciones;
+        }
+        
+        for(Document documento : lista){
+            secciones.add(convertirADominio(documento));
+        }
+        
+        return secciones;
+    }
+    
     public static List<Seccion> convertirListaADominio(List<SeccionMongoEntidad> lista) throws PersistenciaException {
         List<Seccion> secciones = new ArrayList<>();
         
@@ -60,30 +77,5 @@ public class SeccionPersistenciaAdapter {
         
         return secciones;
     }
-    
-    public static List<SeccionMongoEntidad> convertirListaAMongo(List<Seccion> lista) throws PersistenciaException {
-        List<SeccionMongoEntidad> secciones = new ArrayList<>();
-        
-        if(lista == null){
-            return secciones;
-        }
-        
-        for(Seccion dominio : lista){
-            secciones.add(convertirAMongo(dominio));
-        }
-        
-        return secciones;
-    }
-    
-    private static ObjectId convertirStringAObjectId(String id) throws PersistenciaException {
-        if (id == null || id.isBlank()) {
-            return null;
-        }
-        if (!ObjectId.isValid(id)) {
-            throw new PersistenciaException(
-                    "El id recibido no tiene formato válido de ObjectId."
-            );
-        }
-        return new ObjectId(id);
-    }
+   
 }

@@ -4,92 +4,55 @@
  */
 package adaptadores;
 
-import Entitys.Asiento;
 import Entitys.AsientoEvento;
 import Entitys.ENUMS.EstadoAsiento;
-import Entitys.Evento;
-import daos.AsientoDAO;
-import daos.EventoDAO;
-import entidadesmongo.AsientoEventoMongoEntidad;
 import excepciones.PersistenciaException;
-import interfaces.IAsientoDAO;
-import interfaces.IEventoDAO;
 import java.util.ArrayList;
 import java.util.List;
-import org.bson.types.ObjectId;
+import org.bson.Document;
 
 /**
  *
  * @author maria
  */
 public class AsientoEventoPersistenciaAdapter {
-    
-    private static IAsientoDAO asientoDAO = AsientoDAO.getInstance();
-    private static IEventoDAO eventoDAO = EventoDAO.getInstance();
- 
-    public static AsientoEventoMongoEntidad convertirAMongo(AsientoEvento dominio) throws PersistenciaException {
-        if(dominio == null){
+
+    public static AsientoEvento convertirADominio(Document mongo) throws PersistenciaException {
+        if (mongo == null) {
             return null;
         }
-        
-        AsientoEventoMongoEntidad mongo = new AsientoEventoMongoEntidad();
-        
-        mongo.setId(convertirStringAObjectId(dominio.getIdAsientoEvento()));
-        mongo.setPrecio(dominio.getPrecio());
-        mongo.setEstado(dominio.getEstadoAsiento().name());
-        mongo.setAsiento(convertirStringAObjectId(dominio.getAsiento().getIdAsiento()));
-        mongo.setEvento(convertirStringAObjectId(dominio.getEvento().getIdEvento()));
-        
-        return mongo;
-    }
-    
-    public static AsientoEvento convertirADominio(AsientoEventoMongoEntidad mongo) throws PersistenciaException {
-        if(mongo == null){
-            return null;
-        }
-        
         AsientoEvento dominio = new AsientoEvento();
-        
-        dominio.setIdAsientoEvento(mongo.getIdComoTexto());
-        dominio.setPrecio(mongo.getPrecio());
-        dominio.setEstadoAsiento(EstadoAsiento.valueOf(mongo.getEstado()));
-        
-        Asiento asiento = asientoDAO.consultarPorID(mongo.getAsientoComoTexto());
-        if(asiento != null){
-            dominio.setAsiento(asiento);
+
+        dominio.setIdAsientoEvento(mongo.getObjectId("_id").toHexString());
+        Double precio = ((Number) mongo.get("precio")).doubleValue();
+        dominio.setPrecio(precio);
+        dominio.setEstadoAsiento(EstadoAsiento.valueOf(mongo.getString("estado")));
+
+        Document asientoDoc = (Document) mongo.get("asiento_doc");
+        if (asientoDoc != null) {
+            dominio.setAsiento(AsientoPersistenciaAdapter.convertirADominio(asientoDoc));
         }
-        
-        Evento evento = eventoDAO.buscarPorId(mongo.getEventoComoTexto());
-        if(evento != null){
-            dominio.setEvento(evento);
-        }    
-        
+
+        Document eventoDoc = (Document) mongo.get("evento_doc");
+        if (eventoDoc != null) {
+            dominio.setEvento(EventoPersistenciaAdapter.convertirADominio(eventoDoc));
+        }
+
         return dominio;
     }
-    
-    public static List<AsientoEvento> convertirListaADominio(List<AsientoEventoMongoEntidad> lista) throws PersistenciaException {
+
+    public static List<AsientoEvento> convertirListaADominio(List<Document> lista) throws PersistenciaException {
         List<AsientoEvento> asientos = new ArrayList<>();
-        
-        if(lista == null){
+
+        if (lista == null) {
             return asientos;
         }
-        
-        for(AsientoEventoMongoEntidad mongo : lista){
+
+        for (Document mongo : lista) {
             asientos.add(convertirADominio(mongo));
         }
-        
+
         return asientos;
     }
     
-    private static ObjectId convertirStringAObjectId(String id) throws PersistenciaException {
-        if (id == null || id.isBlank()) {
-            return null;
-        }
-        if (!ObjectId.isValid(id)) {
-            throw new PersistenciaException(
-                    "El id recibido no tiene formato válido de ObjectId."
-            );
-        }
-        return new ObjectId(id);
-    }
 }

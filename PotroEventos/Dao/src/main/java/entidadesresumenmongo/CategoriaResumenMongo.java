@@ -4,6 +4,7 @@
  */
 package entidadesresumenmongo;
 
+import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.bson.types.ObjectId;
 
 /**
@@ -31,6 +32,7 @@ public class CategoriaResumenMongo {
         this.id = id;
     }
     
+    @BsonIgnore
     public String getIdComoTexto(){
         if(id == null){
             return null;

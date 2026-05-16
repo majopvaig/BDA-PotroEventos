@@ -8,9 +8,7 @@ import Entitys.ENUMS.TipoUbicacionP;
 import Entitys.Ubicacion;
 import entidadesmongo.UbicacionMongoEntidad;
 import excepciones.PersistenciaException;
-import java.util.ArrayList;
-import java.util.List;
-import org.bson.types.ObjectId;
+import org.bson.Document;
 
 /**
  *
@@ -18,47 +16,41 @@ import org.bson.types.ObjectId;
  */
 public class UbicacionPersistenciaAdapter {
     
-    public static UbicacionMongoEntidad convetirAMongo(Ubicacion ubicacion) throws PersistenciaException {
-        if(ubicacion == null){
-            return null;
-        }
-        
-        UbicacionMongoEntidad mongo = new UbicacionMongoEntidad();
-        
-        mongo.setId(convertirStringAObjectId(ubicacion.getIdUbicacion()));
-        mongo.setNombre(ubicacion.getNombre());
-        mongo.setCapacidad(ubicacion.getCapacidad());
-        mongo.setTipoUbicacion(ubicacion.getTipo().name());
-        mongo.setSecciones(SeccionPersistenciaAdapter.convertirListaAMongo(ubicacion.getSecciones()));
-        
-        return mongo;
-    }
-    
-    public static Ubicacion convertirADominio(UbicacionMongoEntidad ubicacion) throws PersistenciaException {
-        if(ubicacion == null){
+    public static Ubicacion convertirADominio(Document mongo) throws PersistenciaException {
+        if(mongo == null){
             return null;
         }
         
         Ubicacion dominio = new Ubicacion();
         
-        dominio.setIdUbicacion(ubicacion.getIdComoTexto());
-        dominio.setNombre(ubicacion.getNombre());
-        dominio.setCapacidad(ubicacion.getCapacidad());
-        dominio.setTipo(TipoUbicacionP.valueOf(ubicacion.getTipoUbicacion()));
-        dominio.setSecciones(SeccionPersistenciaAdapter.convertirListaADominio(ubicacion.getSecciones()));
+        dominio.setIdUbicacion(mongo.getObjectId("_id").toHexString());
+        dominio.setNombre(mongo.getString("nombre"));
+        dominio.setCapacidad(mongo.getInteger("capacidad"));
+        String tipo = mongo.getString("tipoUbicacion");
+        if (tipo != null && !tipo.trim().isEmpty()) {
+            dominio.setTipo(TipoUbicacionP.valueOf(tipo));
+        } else {
+            System.err.println("¡OJO! La ubicación con ID " + mongo.getObjectId("_id") + " no tiene el campo 'tipoUbicacion'."); 
+        }
+        dominio.setSecciones(SeccionPersistenciaAdapter.convertirDocsADominio(mongo.getList("secciones", Document.class)));
         
         return dominio;
     }
     
-    private static ObjectId convertirStringAObjectId(String id) throws PersistenciaException {
-        if (id == null || id.isBlank()) {
+     public static Ubicacion convertirADominio(UbicacionMongoEntidad mongo) throws PersistenciaException {
+        if(mongo == null){
             return null;
         }
-        if (!ObjectId.isValid(id)) {
-            throw new PersistenciaException(
-                    "El id recibido no tiene formato válido de ObjectId."
-            );
-        }
-        return new ObjectId(id);
+        
+        Ubicacion dominio = new Ubicacion();
+        
+        dominio.setIdUbicacion(mongo.getIdComoTexto());
+        dominio.setNombre(mongo.getNombre());
+        dominio.setCapacidad(mongo.getCapacidad());
+        dominio.setTipo(TipoUbicacionP.valueOf(mongo.getTipoUbicacion()));
+        dominio.setSecciones(SeccionPersistenciaAdapter.convertirListaADominio(mongo.getSecciones()));
+        
+        return dominio;
     }
+   
 }

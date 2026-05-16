@@ -7,6 +7,7 @@ package entidadesmongo;
 import java.util.ArrayList;
 import java.util.List;
 import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.bson.types.ObjectId;
 
 /**
@@ -52,6 +53,7 @@ public class UbicacionMongoEntidad {
         return id;
     }
     
+    @BsonIgnore
     public String getIdComoTexto(){
         if(id == null){
             return null;

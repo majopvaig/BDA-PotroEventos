@@ -7,6 +7,8 @@ package adaptadores;
 import Entitys.Pago;
 import entidadesmongo.PagoMongoEntidad;
 import excepciones.PersistenciaException;
+import java.time.ZoneId;
+import org.bson.Document;
 
 /**
  *
@@ -28,17 +30,22 @@ public class PagoPersistenciaAdapter {
         return mongo;
     }
     
-    public static Pago convertirADominio(PagoMongoEntidad mongo) throws PersistenciaException {
-        if(mongo == null){
+    public static Pago convertirADominio(Document mongo) throws PersistenciaException {
+        if (mongo == null) {
             return null;
         }
-        
+
         Pago entidad = new Pago();
-        entidad.setIdTransaccion(mongo.getIdTransaccion());
-        entidad.setFechaOperacion(mongo.getFechaOperacion());
-        entidad.setImporte(mongo.getImporte());
-        entidad.setMetodoPago(mongo.getMetodoPago());
-        
+        entidad.setIdTransaccion(mongo.getString("idTransaccion"));
+        if (mongo.getDate("fechaOperacion") != null) {
+            entidad.setFechaOperacion(mongo.getDate("fechaOperacion")
+                    .toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDateTime());
+        }
+        entidad.setImporte(mongo.getDouble("importe"));
+        entidad.setMetodoPago(mongo.getString("metodoPago"));
+
         return entidad;
     }
 }

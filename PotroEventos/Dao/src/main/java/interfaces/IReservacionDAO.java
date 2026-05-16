@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface IReservacionDAO {
 
-    Reservacion guardarReservacion(Reservacion reservacion) throws PersistenciaException;
+    boolean guardarReservacion(Reservacion reservacion) throws PersistenciaException;
 
     List<Reservacion> obtenerReservacionesUsuario(String idUsuario) throws PersistenciaException;
     

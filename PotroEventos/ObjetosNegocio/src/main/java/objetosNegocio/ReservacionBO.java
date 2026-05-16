@@ -29,12 +29,12 @@ public class ReservacionBO implements IReservacionBO {
     }
 
     @Override
-    public ReservacionDTO agregarReservacion(ReservacionDTO reservacion) throws NegocioException {
+    public boolean agregarReservacion(ReservacionDTO reservacion) throws NegocioException {
         try {
             if (!validarDatos(reservacion)) {
                 throw new NegocioException("Reservación inválida.");
             }
-            return ReservacionAdapter.entidadADTO(reservacionDAO.guardarReservacion(ReservacionAdapter.dtoAEntidad(reservacion)));
+            return reservacionDAO.guardarReservacion(ReservacionAdapter.dtoAEntidad(reservacion));
         } catch (PersistenciaException ex) {
             throw new NegocioException(ex.getMessage());
         }

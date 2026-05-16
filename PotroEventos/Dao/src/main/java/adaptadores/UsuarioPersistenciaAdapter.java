@@ -7,8 +7,7 @@ package adaptadores;
 import Entitys.Usuario;
 import entidadesmongo.UsuarioMongoEntidad;
 import excepciones.PersistenciaException;
-import java.util.ArrayList;
-import java.util.List;
+import org.bson.Document;
 import org.bson.types.ObjectId;
 
 /**
@@ -49,6 +48,23 @@ public class UsuarioPersistenciaAdapter {
         dominio.setApellidoMaterno(mongo.getApellidoMaterno());
         dominio.setCorreo(mongo.getCorreo());
         dominio.setContrasenia(mongo.getContrasenia());
+        
+        return dominio;
+    }
+    
+    public static Usuario convertirADominio(Document mongo) throws PersistenciaException {
+        if(mongo == null){
+            return null;
+        }
+        
+        Usuario dominio = new Usuario();
+        
+        dominio.setIdUsuario(mongo.getObjectId("_id").toHexString());
+        dominio.setNombre(mongo.getString("nombre"));
+        dominio.setApellidoPaterno(mongo.getString("apellidoPaterno"));
+        dominio.setApellidoMaterno(mongo.getString("apellidoMaterno"));
+        dominio.setCorreo(mongo.getString("correo"));
+        dominio.setContrasenia(mongo.getString("contrasenia"));
         
         return dominio;
     }

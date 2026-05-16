@@ -4,7 +4,6 @@ import Entitys.Usuario;
 import adaptadores.UsuarioPersistenciaAdapter;
 import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
-import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 import com.mongodb.client.model.IndexOptions;
 import com.mongodb.client.result.InsertOneResult;
@@ -14,6 +13,7 @@ import excepciones.PersistenciaException;
 import interfaces.IUsuarioDAO;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -50,7 +50,11 @@ public class UsuarioDAO implements IUsuarioDAO {
                 return null;
             }
 
-            return UsuarioPersistenciaAdapter.convertirADominio(resultado);
+            if (BCrypt.checkpw(usuario.getContrasenia(), resultado.getContrasenia())) {
+                return UsuarioPersistenciaAdapter.convertirADominio(resultado);
+            }
+
+            return null;
         } catch (MongoException e) {
             throw new PersistenciaException("Error al buscar el usuario en la base de datos.");
         }
@@ -60,18 +64,16 @@ public class UsuarioDAO implements IUsuarioDAO {
     public Usuario guardarUsuario(Usuario usuario) throws PersistenciaException {
         if (usuario == null) {
             throw new PersistenciaException("El usuario no puede ser null.");
-
         }
-
         try {
+            usuario.setContrasenia(BCrypt.hashpw(usuario.getContrasenia(), BCrypt.gensalt()));
             UsuarioMongoEntidad u = UsuarioPersistenciaAdapter.convertirAMongo(usuario);
             InsertOneResult resultado = this.coleccionUsuarios.insertOne(u);
 
             if (resultado.getInsertedId() == null) {
                 throw new PersistenciaException("Error al guardar al usuario");
             }
-
-            //String idGenerado = resultado.getInsertedId().asObjectId().getValue().toHexString();
+            
             ObjectId idGenerado = resultado.getInsertedId().asObjectId().getValue();
 
             u.setId(idGenerado);

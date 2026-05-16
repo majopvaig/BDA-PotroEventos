@@ -4,6 +4,7 @@
  */
 package entidadesresumenmongo;
 
+import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.bson.types.ObjectId;
 
 /**
@@ -35,6 +36,7 @@ public class AsientoEventoResumenMongo {
         this.idAsientoEvento = idAsientoEvento;
     }
     
+    @BsonIgnore
     public String getIdComoTexto(){
         if(idAsientoEvento == null){
             return null;

@@ -2,7 +2,7 @@ package pruebaStripe;
 
 import adaptadores.BancoAdapter;
 import com.stripe.Stripe;
-import control.ControlPago;
+import pago.ControlPago;
 import dtos.CobroDTO;
 import dtos.PagoDTO;
 import dtos.TarjetaDTO;
@@ -29,7 +29,7 @@ public class PruebaStripe {
      * @param args argumentos de ejecución
      */
     public static void main(String[] args) {
-
+        /**
         String apiKey = "Clave_Privada";
 
         if (apiKey == null || apiKey.isBlank()) {
@@ -66,5 +66,6 @@ public class PruebaStripe {
         } catch (PagoException ex) {
             System.out.println("Error: " + ex.getMessage());
         }
+        */
     }
 }

@@ -14,28 +14,25 @@ public class UsuarioDTO {
     private String apellidoPaterno;
     private String apellidoMaterno;
     private String correo;
-    private String contrasenia;
     private Integer creditos;
 
     public UsuarioDTO() {
     }
 
-    public UsuarioDTO(String nombre, String apellidoPaterno, String apellidoMaterno, String correo, String contrasenia, Integer creditos) {
+    public UsuarioDTO(String nombre, String apellidoPaterno, String apellidoMaterno, String correo, Integer creditos) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.correo = correo;
-        this.contrasenia = contrasenia;
         this.creditos = creditos;
     }
 
-    public UsuarioDTO(String idUsuario, String nombre, String apellidoPaterno, String apellidoMaterno, String correo, String contrasenia, Integer creditos) {
+    public UsuarioDTO(String idUsuario, String nombre, String apellidoPaterno, String apellidoMaterno, String correo, Integer creditos) {
         this.idUsuario = idUsuario;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.correo = correo;
-        this.contrasenia = contrasenia;
         this.creditos = creditos;
     }
 
@@ -77,14 +74,6 @@ public class UsuarioDTO {
 
     public void setCorreo(String correo) {
         this.correo = correo;
-    }
-
-    public String getContrasenia() {
-        return contrasenia;
-    }
-
-    public void setContrasenia(String contrasenia) {
-        this.contrasenia = contrasenia;
     }
 
     public Integer getCreditos() {

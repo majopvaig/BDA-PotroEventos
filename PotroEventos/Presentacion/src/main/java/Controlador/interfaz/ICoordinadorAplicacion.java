@@ -7,6 +7,7 @@ import dtos.CobroDTO;
 import dtos.EventoDTO;
 import dtos.LoginDTO;
 import dtos.PagoDTO;
+import dtos.RegistroUsuarioDTO;
 import dtos.ReservacionDTO;
 import dtos.SeccionDTO;
 import dtos.TarjetaDTO;
@@ -64,7 +65,7 @@ public interface ICoordinadorAplicacion {
 
     public UsuarioDTO iniciarSesion(LoginDTO login) throws CoordinadorException;
 
-    public UsuarioDTO guardarUsuario(UsuarioDTO usuario) throws CoordinadorException;
+    public UsuarioDTO guardarUsuario(RegistroUsuarioDTO usuario) throws CoordinadorException;
 
     public boolean setUsuarioSesion(UsuarioDTO usuario);
 

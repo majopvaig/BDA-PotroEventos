@@ -13,7 +13,6 @@ import java.time.LocalDate;
 public class BoletoDTO {
 
     private String codigoQR;
-    private Double precio;
     private EstadoBoletoDTO estadoBoleto;
     private EventoDTO evento;
     private AsientoEventoDTO asiento;
@@ -22,9 +21,8 @@ public class BoletoDTO {
     public BoletoDTO() {
     }
 
-    public BoletoDTO(String codigoQR, Double precio, EstadoBoletoDTO estadoBoleto, EventoDTO evento, AsientoEventoDTO asiento, String token) {
+    public BoletoDTO(String codigoQR, EstadoBoletoDTO estadoBoleto, EventoDTO evento, AsientoEventoDTO asiento, String token) {
         this.codigoQR = codigoQR;
-        this.precio = precio;
         this.estadoBoleto = estadoBoleto;
         this.evento = evento;
         this.asiento = asiento;
@@ -37,14 +35,6 @@ public class BoletoDTO {
 
     public void setCodigoQR(String codigoQR) {
         this.codigoQR = codigoQR;
-    }
-
-    public Double getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(Double precio) {
-        this.precio = precio;
     }
 
     public EstadoBoletoDTO getEstadoBoleto() {

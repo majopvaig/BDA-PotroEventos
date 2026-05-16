@@ -5,6 +5,7 @@
 package Pantallas;
 
 import Controlador.interfaz.ICoordinadorAplicacion;
+import dtos.RegistroUsuarioDTO;
 import dtos.UsuarioDTO;
 import excepciones.CoordinadorException;
 import javax.swing.JOptionPane;
@@ -299,7 +300,7 @@ public class FrmRegistrarse extends javax.swing.JFrame {
             return;
         }
 
-        UsuarioDTO usuario = new UsuarioDTO(txtNombre.getText().trim(), txtApellidoP.getText().trim(), apellidoM.isEmpty() ? null : apellidoM, correo, pass, 0);
+        RegistroUsuarioDTO usuario = new RegistroUsuarioDTO(txtNombre.getText().trim(), txtApellidoP.getText().trim(), apellidoM.isEmpty() ? null : apellidoM, correo, pass);
 
         UsuarioDTO usuarioGuardado;
         try {

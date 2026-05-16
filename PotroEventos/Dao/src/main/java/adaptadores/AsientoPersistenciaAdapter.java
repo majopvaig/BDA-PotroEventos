@@ -5,15 +5,10 @@
 package adaptadores;
 
 import Entitys.Asiento;
-import Entitys.Seccion;
-import Entitys.Ubicacion;
-import daos.UbicacionDAO;
-import entidadesmongo.AsientoMongoEntidad;
 import excepciones.PersistenciaException;
-import interfaces.IUbicacionDAO;
 import java.util.ArrayList;
 import java.util.List;
-import org.bson.types.ObjectId;
+import org.bson.Document;
 
 /**
  *
@@ -39,8 +34,8 @@ public class AsientoPersistenciaAdapter {
         return mongo;
     }
     
-    public static Asiento convertirADominio(AsientoMongoEntidad mongo) throws PersistenciaException {
-        if (mongo == null) {
+    public static Asiento convertirADominio(Document mongo) throws PersistenciaException {
+        if(mongo == null){
             return null;
         }
 
@@ -76,29 +71,18 @@ public class AsientoPersistenciaAdapter {
             return dominio;
     }
     
-    public static List<Asiento> convertirListaADominio(List<AsientoMongoEntidad> lista) throws PersistenciaException {
+    public static List<Asiento> convertirDocumentosADominio(List<Document> lista) throws PersistenciaException {
         List<Asiento> asientos = new ArrayList<>();
         
         if(lista == null){
             return asientos;
         }
         
-        for(AsientoMongoEntidad mongo : lista){
+        for(Document mongo : lista){
             asientos.add(convertirADominio(mongo));
         }
         
         return asientos;
     }
-    
-    private static ObjectId convertirStringAObjectId(String id) throws PersistenciaException {
-        if (id == null || id.isBlank()) {
-            return null;
-        }
-        if (!ObjectId.isValid(id)) {
-            throw new PersistenciaException(
-                    "El id recibido no tiene formato válido de ObjectId."
-            );
-        }
-        return new ObjectId(id);
-    }
+   
 }

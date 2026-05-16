@@ -9,6 +9,7 @@ import dtos.LoginDTO;
 import dtos.UsuarioDTO;
 import interfaces.IUsuarioBO;
 import daos.UsuarioDAO;
+import dtos.RegistroUsuarioDTO;
 import excepciones.NegocioException;
 import excepciones.PersistenciaException;
 import interfaces.IUsuarioDAO;
@@ -38,31 +39,23 @@ public class UsuarioBO implements IUsuarioBO {
     @Override
     public UsuarioDTO obtenerUsuario(LoginDTO sesion) throws NegocioException {
         try {
-            UsuarioDTO usuario = new UsuarioDTO();
-            usuario.setCorreo(sesion.getCorreo());
-            usuario.setContrasenia(sesion.getContrasenia());
 
-            UsuarioDTO usuarioBaseDatos = UsuarioAdapter.entidadADTO(usuarioDAO.obtenerUsuario(UsuarioAdapter.dtoAEntidad(usuario)));
+            UsuarioDTO usuarioBaseDatos = UsuarioAdapter.entidadADTO(usuarioDAO.obtenerUsuario(UsuarioAdapter.dtoLoginAEntidad(sesion)));
 
-            if (BCrypt.checkpw(sesion.getContrasenia(), usuarioBaseDatos.getContrasenia())) {
-                return usuarioBaseDatos;
-            } else {
-                throw new NegocioException("Contraseña incorrecta.");
+            if(usuarioBaseDatos == null){
+                return null;
             }
+            
+            return usuarioBaseDatos;
         } catch (PersistenciaException ex) {
             throw new NegocioException(ex.getMessage());
         }
     }
 
     @Override
-    public UsuarioDTO guardarUsuario(UsuarioDTO dto) throws NegocioException {
+    public UsuarioDTO guardarUsuario(RegistroUsuarioDTO dto) throws NegocioException {
         try {
-
-            String passwordEncriptada = BCrypt.hashpw(dto.getContrasenia(), BCrypt.gensalt());
-
-            dto.setContrasenia(passwordEncriptada);
-
-            return UsuarioAdapter.entidadADTO(usuarioDAO.guardarUsuario(UsuarioAdapter.dtoAEntidad(dto)));
+            return UsuarioAdapter.entidadADTO(usuarioDAO.guardarUsuario(UsuarioAdapter.dtoRegistroAEntidad(dto)));
         } catch (PersistenciaException ex) {
             throw new NegocioException(ex.getMessage());
         }

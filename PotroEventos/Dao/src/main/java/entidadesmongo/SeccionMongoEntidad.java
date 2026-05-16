@@ -5,6 +5,7 @@
 package entidadesmongo;
 
 import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.bson.types.ObjectId;
 
 /**
@@ -45,6 +46,7 @@ public class SeccionMongoEntidad {
         this.id = id;
     }
     
+    @BsonIgnore
     public String getIdComoTexto(){
         if(id == null){
             return null;

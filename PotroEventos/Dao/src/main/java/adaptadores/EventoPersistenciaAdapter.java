@@ -5,21 +5,17 @@
 package adaptadores;
 
 import Entitys.Categoria;
+import Entitys.ENUMS.CategoriaEvento;
 import Entitys.ENUMS.EstadoEvento;
 import Entitys.ENUMS.TipoEventoP;
+import Entitys.ENUMS.TipoUbicacionP;
 import Entitys.Evento;
 import Entitys.Ubicacion;
-import daos.CategoriaDAO;
-import daos.UbicacionDAO;
-import entidadesmongo.EventoMongoEntidad;
-import entidadesresumenmongo.CategoriaResumenMongo;
-import entidadesresumenmongo.UbicacionResumenMongo;
 import excepciones.PersistenciaException;
-import interfaces.ICategoriaDAO;
-import interfaces.IUbicacionDAO;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
-import org.bson.types.ObjectId;
+import org.bson.Document;
 
 /**
  *
@@ -27,95 +23,60 @@ import org.bson.types.ObjectId;
  */
 public class EventoPersistenciaAdapter {
     
-    private static ICategoriaDAO categoriaDAO = CategoriaDAO.getInstance();
-    private static IUbicacionDAO ubicacionDAO = UbicacionDAO.getInstance();
-    
-    public static EventoMongoEntidad convertirAMongo(Evento evento) throws PersistenciaException {
-        if(evento == null){
+    public static Evento convertirADominio(Document documento) throws PersistenciaException {
+        if(documento == null){
             return null;
         }
-        
-        EventoMongoEntidad mongo = new EventoMongoEntidad();
-        
-        mongo.setId(convertirStringAObjectId(evento.getIdEvento()));
-        
-        mongo.setCategoria(
-                new CategoriaResumenMongo(
-                        convertirStringAObjectId(evento.getCategoriaEvento().getId()), 
-                        evento.getCategoriaEvento().getNombre().name()));
-        
-        mongo.setNombre(evento.getNombreEvento());
-        mongo.setInformacion(evento.getInformacionEvento());
-        mongo.setFechaHora(evento.getFechaHora());
-        
-        mongo.setUbicacion(
-                new UbicacionResumenMongo(
-                        convertirStringAObjectId(evento.getUbicacion().getIdUbicacion()), 
-                        evento.getUbicacion().getNombre()));
-        
-        mongo.setEstado(evento.getEstadoEvento().name());
-        mongo.setUrlImagen(evento.getUrlImagen());
-        mongo.setGratuito(evento.isGratuito());
-        mongo.setTipo(evento.getTipoEvento().name());
-        mongo.setDisponibilidad(evento.getDisponibilidad());
-        
-        return mongo;
-    }
-    
-    public static Evento convertirADominio(EventoMongoEntidad mongo) throws PersistenciaException {
-        if(mongo == null){
-            return null;
-        }
-        
         Evento dominio = new Evento();
-        dominio.setIdEvento(mongo.getIdComoTexto());
-        
-        Categoria categoria = categoriaDAO.consultarPorId(mongo.getCategoria().getIdComoTexto());
-        if(categoria != null){
-            dominio.setCategoriaEvento(categoria);
-        }
-        
-        dominio.setNombreEvento(mongo.getNombre());
-        dominio.setInformacionEvento(mongo.getInformacion());
-        dominio.setFechaHora(mongo.getFechaHora());
-        
-        Ubicacion ubicacion = ubicacionDAO.consultarPorID(mongo.getUbicacion().getIdComoTexto());
-        if(ubicacion != null){
-            dominio.setUbicacion(ubicacion);
+        dominio.setIdEvento(documento.getObjectId("_id").toHexString());
+        dominio.setNombreEvento(documento.getString("nombre"));
+        dominio.setInformacionEvento(documento.getString("informacion"));
+        dominio.setFechaHora(documento
+                .getDate("fechaHora")
+                .toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime());
+        dominio.setEstadoEvento(EstadoEvento.valueOf(documento.getString("estado")));
+        dominio.setUrlImagen(documento.getString("urlImagen"));
+        dominio.setGratuito(documento.getBoolean("gratuito"));
+        dominio.setTipoEvento(TipoEventoP.valueOf(documento.getString("tipo")));
+        dominio.setDisponibilidad(documento.getInteger("disponibilidad"));
+
+        Document catDoc = (Document) documento.get("categoria");
+        if (catDoc != null) {
+            Categoria cat = new Categoria();
+            cat.setId(catDoc.getObjectId("_id").toHexString());
+            cat.setNombre(CategoriaEvento.valueOf(catDoc.getString("nombre")));
+            cat.setUrlImagen((catDoc.getString("urlImagen")));
+            dominio.setCategoriaEvento(cat);
         }
 
-        dominio.setEstadoEvento(EstadoEvento.valueOf(mongo.getEstado()));
-        dominio.setUrlImagen(mongo.getUrlImagen());
-        dominio.setGratuito(mongo.isGratuito());
-        dominio.setTipoEvento(TipoEventoP.valueOf(mongo.getTipo()));
-        dominio.setDisponibilidad(mongo.getDisponibilidad());
-        
+        Document ubiDoc = (Document) documento.get("ubicacion");
+        if (ubiDoc != null) {
+            Ubicacion ubi = new Ubicacion();
+            ubi.setIdUbicacion(ubiDoc.getObjectId("_id").toHexString());
+            ubi.setNombre(ubiDoc.getString("nombre"));
+            ubi.setTipo(TipoUbicacionP.valueOf(ubiDoc.getString("tipoUbicacion")));
+            ubi.setCapacidad(ubiDoc.getInteger("capacidad"));
+            ubi.setSecciones(SeccionPersistenciaAdapter.convertirDocsADominio(ubiDoc.getList("secciones", Document.class)));
+            dominio.setUbicacion(ubi);
+        }
+
         return dominio;
     }
     
-    public static List<Evento> convetirListaADominio(List<EventoMongoEntidad> lista) throws PersistenciaException {
+    public static List<Evento> convetirListaADominio(List<Document> lista) throws PersistenciaException {
         List<Evento> eventos = new ArrayList<>();
         
         if(lista == null){
             return eventos;
         }
         
-        for(EventoMongoEntidad mongo: lista){
+        for(Document mongo: lista){
             eventos.add(convertirADominio(mongo));
         }
         
         return eventos;
     }
     
-    private static ObjectId convertirStringAObjectId(String id) throws PersistenciaException {
-        if (id == null || id.isBlank()) {
-            return null;
-        }
-        if (!ObjectId.isValid(id)) {
-            throw new PersistenciaException(
-                    "El id recibido no tiene formato válido de ObjectId."
-            );
-        }
-        return new ObjectId(id);
-    }
 }

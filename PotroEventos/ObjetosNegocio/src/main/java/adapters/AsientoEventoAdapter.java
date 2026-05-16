@@ -1,10 +1,7 @@
 package adapters;
 
-import Entitys.Asiento;
 import Entitys.AsientoEvento;
 import Entitys.ENUMS.EstadoAsiento;
-import Entitys.Evento;
-import Entitys.Reservacion;
 import dtos.AsientoEventoDTO;
 import dtos.ENUMS.EstadoAsientoDTO; // Tu Enum
 import java.util.ArrayList;
@@ -16,14 +13,16 @@ public class AsientoEventoAdapter {
         if (entidad == null) {
             return null;
         }
-
         AsientoEventoDTO dto = new AsientoEventoDTO();
         dto.setIdAsientoEvento(entidad.getIdAsientoEvento());
         dto.setPrecio(entidad.getPrecio());
-        dto.setEstadoAsiento(EstadoAsientoDTO.valueOf(entidad.getEstadoAsiento().name()));
+
+        if (entidad.getEstadoAsiento() != null) {
+            dto.setEstadoAsiento(EstadoAsientoDTO.valueOf(entidad.getEstadoAsiento().name()));
+        }
+
         dto.setAsiento(AsientoAdapter.entidadADTO(entidad.getAsiento()));
         dto.setEvento(EventoAdapter.entidadADTO(entidad.getEvento()));
-
         return dto;
     }
     

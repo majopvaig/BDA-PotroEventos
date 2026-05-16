@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface IReservacionBO {
     
-    ReservacionDTO agregarReservacion(ReservacionDTO reservacion) throws NegocioException;
+    boolean agregarReservacion(ReservacionDTO reservacion) throws NegocioException;
     
     List<ReservacionDTO> obtenerReservacionesUsuario(String idUsuario) throws NegocioException;
     

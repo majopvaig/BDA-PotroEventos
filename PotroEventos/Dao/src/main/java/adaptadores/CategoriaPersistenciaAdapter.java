@@ -10,27 +10,12 @@ import entidadesmongo.CategoriaMongoEntidad;
 import excepciones.PersistenciaException;
 import java.util.ArrayList;
 import java.util.List;
-import org.bson.types.ObjectId;
 
 /**
  *
  * @author maria
  */
 public class CategoriaPersistenciaAdapter {
-    
-    public static CategoriaMongoEntidad convetirAMongo(Categoria dominio) throws PersistenciaException {
-        if(dominio == null){
-            return null;
-        }
-        
-        CategoriaMongoEntidad mongo = new CategoriaMongoEntidad();
-        
-        mongo.setId(convertirStringAObjectId(dominio.getId()));
-        mongo.setNombre(dominio.getNombre().name());
-        mongo.setUrlImagen(dominio.getUrlImagen());
-        
-        return mongo;
-    }
     
     public static Categoria convertirADominio(CategoriaMongoEntidad mongo) throws PersistenciaException {
         if(mongo == null){
@@ -59,16 +44,5 @@ public class CategoriaPersistenciaAdapter {
         
         return categorias;
     }
-    
-    private static ObjectId convertirStringAObjectId(String id) throws PersistenciaException {
-        if (id == null || id.isBlank()) {
-            return null;
-        }
-        if (!ObjectId.isValid(id)) {
-            throw new PersistenciaException(
-                    "El id recibido no tiene formato válido de ObjectId."
-            );
-        }
-        return new ObjectId(id);
-    }
+
 }

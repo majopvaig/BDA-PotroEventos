@@ -18,24 +18,25 @@ import dtos.CobroDTO;
 import dtos.EventoDTO;
 import dtos.LoginDTO;
 import dtos.PagoDTO;
+import dtos.RegistroUsuarioDTO;
 import dtos.ReservacionDTO;
 import dtos.SeccionDTO;
 import dtos.TarjetaDTO;
 import dtos.UsuarioDTO;
 import dtos.UsuarioInstitucionalDTO;
-import fachada.InicioSesionFachada;
+import inicioSesion.InicioSesionFachada;
 import excepciones.CompraBoletoException;
 import excepciones.CoordinadorException;
 import excepciones.GestionEventoException;
 import excepciones.GestionUsuarioException;
 import excepciones.InicioSesionException;
-import fachada.CompraBoletoFachada;
-import fachada.GestionEventoFachada;
-import fachada.GestionUsuarioFachada;
-import interfaces.IFachadaGestionEvento;
-import interfaces.IFachadaInicioSesion;
-import interfaces.IGestionUsuariosFachada;
-import interfaz.ICompraBoleto;
+import compraBoleto.CompraBoletoFachada;
+import gestionEvento.GestionEventoFachada;
+import gestionUsuarios.GestionUsuarioFachada;
+import gestionEvento.IFachadaGestionEvento;
+import inicioSesion.IFachadaInicioSesion;
+import gestionUsuarios.IGestionUsuariosFachada;
+import compraBoleto.ICompraBoleto;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -397,7 +398,7 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
     }
 
     @Override
-    public UsuarioDTO guardarUsuario(UsuarioDTO usuario) throws CoordinadorException {
+    public UsuarioDTO guardarUsuario(RegistroUsuarioDTO usuario) throws CoordinadorException {
         try {
             return controlInicioSesion.registrarUsuario(usuario);
         } catch (InicioSesionException ex) {

@@ -685,7 +685,7 @@ public class PnlConsultarEvento extends javax.swing.JPanel {
             // 2. Generar la ruta del QR usando ese token
             String rutaQR = coordinador.generarQR(evento, null, tokenNuevo);
 
-            BoletoDTO boletoGratis = new BoletoDTO(rutaQR, 0.0, EstadoBoletoDTO.ACTIVO, evento, null, tokenNuevo);
+            BoletoDTO boletoGratis = new BoletoDTO(rutaQR, EstadoBoletoDTO.ACTIVO, evento, null, tokenNuevo);
 
             reservacionParcial.setBoleto(boletoGratis);
             reservacionParcial.setPago(null);
@@ -727,7 +727,7 @@ public class PnlConsultarEvento extends javax.swing.JPanel {
         String rutaQR = coordinador.generarQR(evento, asientoDTO, tokenPago);
 
         // 3. Crear DTO
-        BoletoDTO boleto = new BoletoDTO(rutaQR, 0.0, EstadoBoletoDTO.ACTIVO, evento, asientoDTO, tokenPago);
+        BoletoDTO boleto = new BoletoDTO(rutaQR, EstadoBoletoDTO.ACTIVO, evento, asientoDTO, tokenPago);
 
         reservacionParcial.setBoleto(boleto);
 
@@ -737,39 +737,6 @@ public class PnlConsultarEvento extends javax.swing.JPanel {
         reservacionParcial.setEstado(ReservacionEstadoDTO.ACTIVA);
         reservacionParcial.setUsuario(coordinador.getUsuarioSesion());
 
-        /*
-        esto irá en comentarios xq rn no aplica
-         */
- /*
-        int opcion = JOptionPane.showConfirmDialog(this, "¿Desea pagar con créditos de la aplicación?");
-
-        // ================= PAGO CON CRÉDITOS =================
-        if (opcion == JOptionPane.OK_OPTION) {
-
-            Long total = totalCompra;
-
-            reservacionParcial.setCobro(
-                    new CobroDTO(total * 2, "CRÉDITO APP", "Pago con créditos")
-            );
-
-            boolean exito = coordinador.venderAsientos(asientosSeleccionados, total, false, reservacionParcial);
-
-            if (exito) {
-                JOptionPane.showMessageDialog(this, "Compra realizada con créditos.");
-                coordinador.mostrarDetalles(reservacionParcial);
-            } else {
-                JOptionPane.showMessageDialog(this, "No tienes créditos suficientes.");
-            }
-
-        } // ================= PAGO CON TARJETA =================
-        else if (opcion == JOptionPane.NO_OPTION) {
-
-            // Guardas como pendiente en backend
-            coordinador.venderAsientos(asientosSeleccionados, totalCompra, false, reservacionParcial);
-
-            // Ahora sí vas a la pantalla de pago
-            coordinador.mostrarPago(reservacionParcial);
-        }*/
         // Guardas como pendiente en backend
         coordinador.venderAsientos(asientosSeleccionados, totalCompra, false, reservacionParcial);
 
