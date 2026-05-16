@@ -40,27 +40,40 @@ public class AsientoPersistenciaAdapter {
     }
     
     public static Asiento convertirADominio(AsientoMongoEntidad mongo) throws PersistenciaException {
-        if(mongo == null){
+        if (mongo == null) {
             return null;
         }
-        
+
         Asiento dominio = new Asiento();
-        
+
         dominio.setIdAsiento(mongo.getIdComoTexto());
         dominio.setFila(mongo.getFila());
         dominio.setNumero(mongo.getNumero());
-        
-        Ubicacion u = ubicacionDAO.consultarPorID(mongo.getUbicacionComoTexto());
-        if(u != null){
-            dominio.setUbicacion(u);
+
+        String ubiId = mongo.getUbicacionComoTexto();
+        if (ubiId != null && !ubiId.isBlank()) {
+            try {
+                Ubicacion u = ubicacionDAO.consultarPorID(ubiId);
+                if (u != null) {
+                    dominio.setUbicacion(u);
+                }
+            } catch (PersistenciaException e) {
+                System.err.println("Error al consultar ubicación: " + e.getMessage());
+            }
         }
-        
-        Seccion s = ubicacionDAO.buscarSeccionPorId(mongo.getUbicacionComoTexto(), mongo.getSeccionComoTexto());
-        if(s != null){
-            dominio.setSeccion(s);
+
+        String secId = mongo.getSeccionComoTexto();
+        if (secId != null && !secId.isBlank() && ubiId != null && !ubiId.isBlank()) {
+            try {
+                Seccion s = ubicacionDAO.buscarSeccionPorId(ubiId, secId);
+                if (s != null) {
+                    dominio.setSeccion(s);
+                }
+            } catch (PersistenciaException e) {
+                System.err.println("Error al consultar sección: " + e.getMessage());
+            }
         }
-        
-        return dominio;
+            return dominio;
     }
     
     public static List<Asiento> convertirListaADominio(List<AsientoMongoEntidad> lista) throws PersistenciaException {

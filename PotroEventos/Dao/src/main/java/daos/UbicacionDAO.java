@@ -38,12 +38,15 @@ public class UbicacionDAO implements IUbicacionDAO {
     
     @Override
     public Ubicacion consultarPorID(String idUbicacion) throws PersistenciaException {
-        try{
+        if (idUbicacion == null || idUbicacion.trim().isEmpty()) {
+            return null;
+        }
+        try {
             UbicacionMongoEntidad seccion = coleccionUbicaciones
                     .find(eq("_id", new ObjectId(idUbicacion)))
                     .first();
             return UbicacionPersistenciaAdapter.convertirADominio(seccion);
-        } catch(MongoException me){
+        } catch (MongoException me) {
             throw new PersistenciaException("No fue posible obtener la sección.");
         }
     }

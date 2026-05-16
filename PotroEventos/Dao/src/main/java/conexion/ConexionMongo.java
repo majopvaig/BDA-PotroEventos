@@ -29,7 +29,9 @@ public class ConexionMongo {
     private static final String URL = "mongodb://localhost:27017";
 
     private static final String BASE_DATOS = "potro_eventos";
-
+    
+    private static final ThreadLocal<String> testDatabaseName = new ThreadLocal<>();
+    
     public static MongoClient cliente;
 
     public static final MongoClient obtenerCliente() {
@@ -52,8 +54,31 @@ public class ConexionMongo {
 
         return cliente;
     }
+    
+    public static void useTestDatabase(String testDbName) {
+        testDatabaseName.set(testDbName);
+    }
+    
+    public static void resetToProductionDatabase() {
+        testDatabaseName.remove();
+    }
+    
+    public static boolean isTestMode() {
+        return testDatabaseName.get() != null;
+    }
+
+    public static void cerrarCliente() {
+        if (cliente != null) {
+            cliente.close();
+            cliente = null;
+        }
+    }
 
     public static MongoDatabase obtenerBaseDatos() {
+        String dbName = testDatabaseName.get();
+        if (dbName != null && !dbName.isEmpty()) {
+            return obtenerCliente().getDatabase(dbName);
+        }
         return obtenerCliente().getDatabase(BASE_DATOS);
     }
     
