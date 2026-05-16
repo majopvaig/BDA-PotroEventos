@@ -41,6 +41,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
+import Pantallas.FrmDatosFacturar;
 
 /**
  * Clase que actúa como coordinador principal de la aplicación. Se encarga de
@@ -66,6 +67,7 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
     private FrmDetallesCompra frmDetalles;
     private FrmRegistroItson frmRegistro;
     private ReservacionDTO reservacionActual;
+    private FrmDatosFacturar frmDatosFacturar;
 
     /**
      * Oculta todas las ventanas instanciadas actualmente en el sistema. Es
@@ -215,6 +217,15 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
         frmPlantilla.setVisible(true);
     }
 
+    @Override
+    public void mostrarDatosFactura() {
+       if(frmDatosFacturar == null){
+           frmDatosFacturar = new FrmDatosFacturar(this);
+       }
+       frmDatosFacturar.setVisible(true);
+    }
+    
+    
     @Override
     public List<EventoDTO> consultarEventos(CategoriaDTO categoria) throws GestionEventoException {
         return controlEvento.consultarEventosPorCategoria(categoria);
@@ -411,4 +422,6 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
         return frmRegistro.registroExitoso();
     }
 
+    
+    
 }

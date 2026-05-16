@@ -88,4 +88,6 @@ public interface ICoordinadorAplicacion {
     boolean validarCredenciales(UsuarioInstitucionalDTO credenciales);
     
     boolean isUsuarioITSONRegistrado();
+    
+    void mostrarDatosFactura();
 }
