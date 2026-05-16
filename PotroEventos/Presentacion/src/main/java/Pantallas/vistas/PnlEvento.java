@@ -13,6 +13,8 @@ import java.awt.Image;
 import java.awt.Panel;
 import java.time.format.DateTimeFormatter;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import utilerias.BotonUtileria;
 
 /**
  *
@@ -113,6 +115,7 @@ public class PnlEvento extends Panel {
 
     private void configurarModo() {
         if (modoConsulta) {
+            btnFacturar.setText("Facturar");
             btnMostrar.setText("Ver mis boletos");
         } else {
             btnMostrar.setText("Mostrar Información");
@@ -200,7 +203,7 @@ public class PnlEvento extends Panel {
         }
     }//GEN-LAST:event_btnMostrarActionPerformed
 
-
+    private JButton btnFacturar = new JButton("Facturar");
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnMostrar;
     private javax.swing.JLabel iconEvento;
