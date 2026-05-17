@@ -5,8 +5,14 @@
 package daos;
 
 import Entitys.Usuario;
-import com.mongodb.client.result.InsertOneResult;
-import org.junit.jupiter.api.AfterEach;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import conexion.ConexionMongo;
+import java.util.UUID;
+import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -15,11 +21,46 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
- * @author Kaleb
+ * @author Dayanara Peralta G
  */
 public class UsuarioDAOTest {
     
+    private static String databaseName;
+    private UsuarioDAO usuarioDAO;
+    
     public UsuarioDAOTest() {
+    }
+    
+    @BeforeAll
+    public static void setUpClass() {
+        databaseName = "test_potro_eventos_" + UUID.randomUUID().toString().substring(0, 8);
+        ConexionMongo.useTestDatabase(databaseName);
+    }
+    
+    @AfterAll
+    public static void tearDownClass() {
+        MongoDatabase db = ConexionMongo.obtenerBaseDatos();
+        if (db != null) {
+            db.drop();
+        }
+        ConexionMongo.resetToProductionDatabase();
+        ConexionMongo.cerrarCliente();
+    }
+    
+    @BeforeEach
+    public void setUp() {
+        usuarioDAO = UsuarioDAO.getInstance();
+        
+    }
+    /**
+     * Test of getInstance method, of class UsuarioDAO.
+     */
+    @Test
+    public void testGetInstance() {
+        UsuarioDAO instancia1 = UsuarioDAO.getInstance();
+        UsuarioDAO instancia2 = UsuarioDAO.getInstance();
+        assertNotNull(instancia1);
+        assertEquals(instancia1, instancia2);
     }
 
     /**
@@ -27,23 +68,67 @@ public class UsuarioDAOTest {
      */
     @Test
     public void testObtenerUsuario() throws Exception {
-        System.out.println("obtenerUsuario");
+        MongoDatabase base = ConexionMongo.obtenerBaseDatos();
+        MongoCollection<Document> usuarioCol = base.getCollection("usuario");
         
+        ObjectId usuarioId = new ObjectId();
+        Document usuarioDoc = new Document("_id", usuarioId)
+                .append("nombre", "Aaron")
+                .append("apellidoPaterno", "Burciaga")
+                .append("apellidoMaterno", "Alcantar")
+                .append("correo", "aaronA@gmail.com")
+                .append("creditos", 230);
+        usuarioCol.insertOne(usuarioDoc);
+        
+        Usuario usuario = new Usuario();
+        usuario.setCorreo("aaronA@gmail.com");
+        
+        Usuario result = usuarioDAO.obtenerUsuario(usuario);
+        assertNotNull(result);
     }
 
-//    /**
-//     * Test of guardarUsuario method, of class UsuarioDAO.
-//     */
-//    @Test
-//    public void testGuardarUsuario() throws Exception {
-//        UsuarioDAO dao = UsuarioDAO.getInstance();
-//        
-//        Usuario usuario = new Usuario("Brian", "Sandoval", "Rodriguez", "brian@mail.com", "1234", 0);
-//        
-//        Usuario usuarioGuardado = dao.guardarUsuario(usuario);
-//        
+    /**
+     * Test of guardarUsuario method, of class UsuarioDAO.
+     */
+    @Test
+    public void testGuardarUsuario() throws Exception {
+//        MongoDatabase base = ConexionMongo.obtenerBaseDatos();
+//        MongoCollection<Document> usuarioCol = base.getCollection("usuario");
+        
+        Usuario usuario = new Usuario();
+        usuario.setNombre("Aaron");
+        usuario.setApellidoPaterno("Burciaga");
+        usuario.setApellidoMaterno("Alcantar");
+        usuario.setCorreo("aaronA@gmail.com");
+        usuario.setCreditos(230);
+        
+        Usuario result = usuarioDAO.guardarUsuario(usuario);
+        
+        assertNotNull(result);
+        
+//        Document usuarioGuardado = usuarioCol.find(new Document("_id", new ObjectId(result.getIdUsuario()))).first();
 //        assertNotNull(usuarioGuardado);
-//        
-//    }
+    }
+
+    /**
+     * Test of obtenerPorId method, of class UsuarioDAO.
+     */
+    @Test
+    public void testObtenerPorId() throws Exception {
+        MongoDatabase base = ConexionMongo.obtenerBaseDatos();
+        MongoCollection<Document> usuarioCol = base.getCollection("usuario");
+        
+        ObjectId usuarioId = new ObjectId();
+        Document usuarioDoc = new Document("_id", usuarioId)
+                .append("nombre", "Aaron")
+                .append("apellidoPaterno", "Burciaga")
+                .append("apellidoMaterno", "Alcantar")
+                .append("correo", "aaronA@gmail.com")
+                .append("creditos", 230);
+        usuarioCol.insertOne(usuarioDoc);
+        
+        Usuario result = usuarioDAO.obtenerPorId(usuarioId.toString());
+        assertNotNull(result);
+    }
     
 }

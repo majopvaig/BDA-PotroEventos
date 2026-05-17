@@ -5,8 +5,14 @@
 package daos;
 
 import Entitys.Categoria;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import conexion.ConexionMongo;
+import dtos.ENUMS.CategoriaEventoDTO;
 import java.util.List;
-import org.junit.jupiter.api.AfterEach;
+import java.util.UUID;
+import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -19,36 +25,45 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class CategoriaDAOTest {
     
+    private static String databaseName;
+    private CategoriaDAO categoriaDAO;
+    
     public CategoriaDAOTest() {
     }
     
     @BeforeAll
     public static void setUpClass() {
+        databaseName = "test_potro_eventos_" + UUID.randomUUID().toString().substring(0, 8);
+        ConexionMongo.useTestDatabase(databaseName);
     }
     
     @AfterAll
     public static void tearDownClass() {
+        MongoDatabase db = ConexionMongo.obtenerBaseDatos();
+        if (db != null) {
+            db.drop();
+        }
+        ConexionMongo.resetToProductionDatabase();
+        ConexionMongo.cerrarCliente();
     }
     
     @BeforeEach
     public void setUp() {
+        categoriaDAO = CategoriaDAO.getInstance();
+        MongoDatabase base = ConexionMongo.obtenerBaseDatos();
+        MongoCollection<Document> categoriaCol = base.getCollection("categorias");
+        categoriaCol.deleteMany(new Document());
     }
     
-    @AfterEach
-    public void tearDown() {
-    }
-
     /**
      * Test of getInstance method, of class CategoriaDAO.
      */
     @Test
     public void testGetInstance() {
-        System.out.println("getInstance");
-        CategoriaDAO expResult = null;
-        CategoriaDAO result = CategoriaDAO.getInstance();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        CategoriaDAO instance1 = CategoriaDAO.getInstance();
+        CategoriaDAO instance2 = CategoriaDAO.getInstance();
+        assertNotNull(instance1);
+        assertEquals(instance1, instance2);
     }
 
     /**
@@ -56,13 +71,19 @@ public class CategoriaDAOTest {
      */
     @Test
     public void testConsultarCategorias() throws Exception {
-        System.out.println("consultarCategorias");
-        CategoriaDAO instance = null;
-        List<Categoria> expResult = null;
-        List<Categoria> result = instance.consultarCategorias();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        MongoDatabase base = ConexionMongo.obtenerBaseDatos();
+        MongoCollection<Document> categoriaCol = base.getCollection("categorias");
+        
+        ObjectId categoriaId = new ObjectId();
+        Document categoriaDoc = new Document("_id", categoriaId)
+                .append("urlImagen", "test.jpg")
+                .append("nombre", CategoriaEventoDTO.ARTE);
+        categoriaCol.insertOne(categoriaDoc);
+        
+        List<Categoria> result = categoriaDAO.consultarCategorias();
+        assertNotNull(result);
+        assertEquals(1, result.size());
+                
     }
 
     /**
@@ -70,14 +91,17 @@ public class CategoriaDAOTest {
      */
     @Test
     public void testConsultarPorId() throws Exception {
-        System.out.println("consultarPorId");
-        String idCategoria = "";
-        CategoriaDAO instance = null;
-        Categoria expResult = null;
-        Categoria result = instance.consultarPorId(idCategoria);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        MongoDatabase base = ConexionMongo.obtenerBaseDatos();
+        MongoCollection<Document> categoriaCol = base.getCollection("categorias");
+        
+        ObjectId categoriaId = new ObjectId();
+        Document categoriaDoc = new Document("_id", categoriaId)
+                .append("urlImagen", "test.jpg")
+                .append("nombre", CategoriaEventoDTO.ARTE);
+        categoriaCol.insertOne(categoriaDoc);
+        
+        Categoria result = categoriaDAO.consultarPorId(categoriaId.toString());
+        assertNotNull(result);
     }
     
 }

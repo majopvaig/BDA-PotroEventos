@@ -6,7 +6,16 @@ package daos;
 
 import Entitys.Seccion;
 import Entitys.Ubicacion;
-import org.junit.jupiter.api.AfterEach;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import conexion.ConexionMongo;
+import dtos.ENUMS.TipoUbicacionN;
+import java.util.ArrayList;
+import java.util.UUID;
+import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -19,36 +28,49 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class UbicacionDAOTest {
     
+    private static String databaseName;
+    private UbicacionDAO ubicacionDAO;
+    
     public UbicacionDAOTest() {
     }
     
     @BeforeAll
     public static void setUpClass() {
+        databaseName = "test_potro_eventos_" + UUID.randomUUID().toString().substring(0, 8);
+        ConexionMongo.useTestDatabase(databaseName);
     }
     
     @AfterAll
     public static void tearDownClass() {
+        MongoDatabase db = ConexionMongo.obtenerBaseDatos();
+        if (db != null) {
+            db.drop();
+        }
+        ConexionMongo.resetToProductionDatabase();
+        ConexionMongo.cerrarCliente();
     }
     
     @BeforeEach
     public void setUp() {
+        ubicacionDAO = UbicacionDAO.getInstance();
+        
+        MongoDatabase base = ConexionMongo.obtenerBaseDatos();
+        MongoCollection<Document> ubicacionesCol = base.getCollection("ubicaciones");
+        MongoCollection<Document> seccionesCol = base.getCollection("secciones");
+        
+        ubicacionesCol.deleteMany(new Document());
+        seccionesCol.deleteMany(new Document());
     }
     
-    @AfterEach
-    public void tearDown() {
-    }
-
     /**
      * Test of getInstance method, of class UbicacionDAO.
      */
     @Test
     public void testGetInstance() {
-        System.out.println("getInstance");
-        UbicacionDAO expResult = null;
-        UbicacionDAO result = UbicacionDAO.getInstance();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        UbicacionDAO instancia1 = UbicacionDAO.getInstance();
+        UbicacionDAO instancia2 = UbicacionDAO.getInstance();
+        assertNotNull(instancia1);
+        assertEquals(instancia1, instancia2);
     }
 
     /**
@@ -56,14 +78,19 @@ public class UbicacionDAOTest {
      */
     @Test
     public void testConsultarPorID() throws Exception {
-        System.out.println("consultarPorID");
-        String idUbicacion = "";
-        UbicacionDAO instance = null;
-        Ubicacion expResult = null;
-        Ubicacion result = instance.consultarPorID(idUbicacion);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        MongoDatabase base = ConexionMongo.obtenerBaseDatos();
+        MongoCollection<Document> ubicacionesCol = base.getCollection("ubicaciones");
+        
+        ObjectId ubicacionId = new ObjectId();
+        ubicacionesCol.insertOne(new Document("_id", ubicacionId)
+            .append("nombre", "Estadio Potros")
+            .append("capacidad", 100)
+            .append("tipoUbicacion", TipoUbicacionN.AIRELIBRE.name())
+            .append("secciones", new ArrayList<>())
+        );
+
+        Ubicacion result = ubicacionDAO.consultarPorID(ubicacionId.toString());
+        assertNotNull(result);
     }
 
     /**
@@ -71,15 +98,27 @@ public class UbicacionDAOTest {
      */
     @Test
     public void testBuscarSeccionPorId() throws Exception {
-        System.out.println("buscarSeccionPorId");
-        String idUbicacion = "";
-        String idSeccion = "";
-        UbicacionDAO instance = null;
-        Seccion expResult = null;
-        Seccion result = instance.buscarSeccionPorId(idUbicacion, idSeccion);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        MongoDatabase base = ConexionMongo.obtenerBaseDatos();
+        MongoCollection<Document> ubicacionesCol = base.getCollection("ubicaciones");
+        MongoCollection<Document> seccionesCol = base.getCollection("secciones");
+
+        ObjectId ubicacionId = new ObjectId();
+        ubicacionesCol.insertOne(new Document("_id", ubicacionId)
+            .append("nombre", "Estadio Potros")
+            .append("capacidad", 100)
+            .append("tipoUbicacion", TipoUbicacionN.AIRELIBRE.name())
+            .append("secciones", new ArrayList<>())
+        );
+        
+        ObjectId seccionId = new ObjectId();
+        Document seccionDoc = new Document("_id", seccionId)
+            .append("nombre", "A")
+            .append("capacidad", 50)
+            .append("precioBase", 500L);
+        seccionesCol.insertOne(seccionDoc);
+        
+        Seccion result = ubicacionDAO.buscarSeccionPorId(ubicacionId.toString(), seccionId.toString());
+        assertNotNull(result);
     }
     
 }

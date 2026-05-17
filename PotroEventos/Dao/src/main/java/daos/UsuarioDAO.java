@@ -36,7 +36,7 @@ public class UsuarioDAO implements IUsuarioDAO {
         return instance;
     }
 
-    @Override
+     @Override
     public Usuario obtenerUsuario(Usuario usuario) throws PersistenciaException {
         if (usuario == null || usuario.getCorreo() == null) {
             throw new PersistenciaException("El correo del usuario es requerido.");

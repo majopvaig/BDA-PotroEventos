@@ -16,24 +16,6 @@ import org.bson.Document;
  */
 public class AsientoPersistenciaAdapter {
     
-    private static IUbicacionDAO ubicacionDAO = UbicacionDAO.getInstance();
-    
-    public static AsientoMongoEntidad convertirAMongo(Asiento dominio) throws PersistenciaException {
-        if(dominio == null){
-            return null;
-        }
-        
-        AsientoMongoEntidad mongo = new AsientoMongoEntidad();
-        
-        mongo.setId(convertirStringAObjectId(dominio.getIdAsiento()));
-        mongo.setFila(dominio.getFila());
-        mongo.setNumero(dominio.getNumero());
-        mongo.setUbicacion(convertirStringAObjectId(dominio.getUbicacion().getIdUbicacion()));
-        mongo.setSeccion(convertirStringAObjectId(dominio.getSeccion().getIdSeccion()));
-        
-        return mongo;
-    }
-    
     public static Asiento convertirADominio(Document mongo) throws PersistenciaException {
         if(mongo == null){
             return null;
@@ -41,32 +23,17 @@ public class AsientoPersistenciaAdapter {
 
         Asiento dominio = new Asiento();
 
-        dominio.setIdAsiento(mongo.getIdComoTexto());
-        dominio.setFila(mongo.getFila());
-        dominio.setNumero(mongo.getNumero());
+        dominio.setIdAsiento(mongo.getObjectId("_id").toHexString());
+        dominio.setFila(mongo.getString("fila"));
+        dominio.setNumero(mongo.getInteger("numero"));
 
-        String ubiId = mongo.getUbicacionComoTexto();
-        if (ubiId != null && !ubiId.isBlank()) {
-            try {
-                Ubicacion u = ubicacionDAO.consultarPorID(ubiId);
-                if (u != null) {
-                    dominio.setUbicacion(u);
-                }
-            } catch (PersistenciaException e) {
-                System.err.println("Error al consultar ubicación: " + e.getMessage());
-            }
+        Document ubicacion = (Document) mongo.get("ubicacion");
+        if(ubicacion != null){
+            dominio.setUbicacion(UbicacionPersistenciaAdapter.convertirADominio(ubicacion));
         }
-
-        String secId = mongo.getSeccionComoTexto();
-        if (secId != null && !secId.isBlank() && ubiId != null && !ubiId.isBlank()) {
-            try {
-                Seccion s = ubicacionDAO.buscarSeccionPorId(ubiId, secId);
-                if (s != null) {
-                    dominio.setSeccion(s);
-                }
-            } catch (PersistenciaException e) {
-                System.err.println("Error al consultar sección: " + e.getMessage());
-            }
+        Document seccion = (Document) mongo.get("seccion");
+        if(seccion != null){
+            dominio.setSeccion(SeccionPersistenciaAdapter.convertirADominio(seccion));
         }
             return dominio;
     }
