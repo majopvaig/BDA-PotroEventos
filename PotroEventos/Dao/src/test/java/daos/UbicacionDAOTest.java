@@ -6,8 +6,6 @@ package daos;
 
 import Entitys.Seccion;
 import Entitys.Ubicacion;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import conexion.ConexionMongo;
@@ -93,6 +91,7 @@ public class UbicacionDAOTest {
         assertNotNull(result);
     }
 
+//Fail BuscarSeccionPorId
     /**
      * Test of buscarSeccionPorId method, of class UbicacionDAO.
      */

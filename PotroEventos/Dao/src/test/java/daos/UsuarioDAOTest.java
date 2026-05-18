@@ -5,8 +5,6 @@
 package daos;
 
 import Entitys.Usuario;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import conexion.ConexionMongo;
@@ -51,6 +49,10 @@ public class UsuarioDAOTest {
     public void setUp() {
         usuarioDAO = UsuarioDAO.getInstance();
         
+        MongoDatabase base = ConexionMongo.obtenerBaseDatos();
+        MongoCollection<Document> usuarioCol = base.getCollection("usuario");
+        
+        usuarioCol.deleteMany(new Document());
     }
     /**
      * Test of getInstance method, of class UsuarioDAO.
@@ -87,27 +89,28 @@ public class UsuarioDAOTest {
         assertNotNull(result);
     }
 
+//Fail GuardarUsuario y ObtenerPoId
     /**
      * Test of guardarUsuario method, of class UsuarioDAO.
      */
     @Test
     public void testGuardarUsuario() throws Exception {
-//        MongoDatabase base = ConexionMongo.obtenerBaseDatos();
-//        MongoCollection<Document> usuarioCol = base.getCollection("usuario");
+        MongoDatabase base = ConexionMongo.obtenerBaseDatos();
+        MongoCollection<Document> usuarioCol = base.getCollection("usuario");
         
         Usuario usuario = new Usuario();
         usuario.setNombre("Aaron");
         usuario.setApellidoPaterno("Burciaga");
         usuario.setApellidoMaterno("Alcantar");
         usuario.setCorreo("aaronA@gmail.com");
-        usuario.setCreditos(230);
+        usuario.setContrasenia("1234");
         
         Usuario result = usuarioDAO.guardarUsuario(usuario);
         
         assertNotNull(result);
         
-//        Document usuarioGuardado = usuarioCol.find(new Document("_id", new ObjectId(result.getIdUsuario()))).first();
-//        assertNotNull(usuarioGuardado);
+        Document usuarioGuardado = usuarioCol.find(new Document("_id", new ObjectId(result.getIdUsuario()))).first();
+        assertNotNull(usuarioGuardado);
     }
 
     /**
@@ -124,7 +127,7 @@ public class UsuarioDAOTest {
                 .append("apellidoPaterno", "Burciaga")
                 .append("apellidoMaterno", "Alcantar")
                 .append("correo", "aaronA@gmail.com")
-                .append("creditos", 230);
+                .append("contrasenia", "1234");
         usuarioCol.insertOne(usuarioDoc);
         
         Usuario result = usuarioDAO.obtenerPorId(usuarioId.toString());

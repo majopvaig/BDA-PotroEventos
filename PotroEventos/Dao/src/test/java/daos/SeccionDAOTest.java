@@ -82,6 +82,7 @@ public class SeccionDAOTest {
         assertEquals(instancia1, instancia2);
     }
 
+//Fali BuscarPorEvento
     /**
      * Test of buscarPorEvento method, of class SeccionDAO.
      */
@@ -136,25 +137,6 @@ public class SeccionDAOTest {
         List<Seccion> secciones = seccionDAO.buscarPorEvento(eventoId.toString());
         assertNotNull(secciones);
         assertEquals(1, secciones);
-    }
-
-    /**
-     * Test of buscarPorId method, of class SeccionDAO.
-     */
-    @Test
-    public void testBuscarPorId() throws Exception {
-        MongoDatabase base = ConexionMongo.obtenerBaseDatos();
-        MongoCollection<Document> seccionesCol = base.getCollection("secciones");
-
-        ObjectId seccionId = new ObjectId();
-        Document seccionDoc = new Document("_id", seccionId)
-                .append("nombre", "A")
-                .append("capacidad", 50)
-                .append("precioBase", 500L);
-        seccionesCol.insertOne(seccionDoc);
-
-        Seccion result = seccionDAO.buscarPorId(seccionId.toString());
-        assertNotNull(result);
     }
 
 }

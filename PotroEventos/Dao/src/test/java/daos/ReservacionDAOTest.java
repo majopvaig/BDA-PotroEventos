@@ -334,6 +334,7 @@ public class ReservacionDAOTest {
         assertNotNull(result);
     }
 
+//fail obtenerBoleto
     /**
      * Test of obtenerBoleto method, of class ReservacionDAO.
      */
@@ -353,13 +354,14 @@ public class ReservacionDAOTest {
         MongoCollection<Document> usuarioCol = base.getCollection("usuario");
 
         ObjectId ubicacionId = new ObjectId();
-        ubicacionesCol.insertOne(new Document("_id", ubicacionId)
+        Document ubicacionDoc = new Document("_id", ubicacionId)
                 .append("nombre", "Estadio Potros")
                 .append("capacidad", 100)
-                .append("tipoUbicacion", TipoUbicacionN.AIRELIBRE.name()) // ✅ 'tipoUbicacion'
-                .append("secciones", new ArrayList<>())
+                .append("tipoUbicacion", TipoUbicacionN.AIRELIBRE.name())
+                .append("secciones", new ArrayList<>()
         );
-
+        ubicacionesCol.insertOne(ubicacionDoc);
+                
         ObjectId seccionId = new ObjectId();
         Document seccionDoc = new Document("_id", seccionId)
                 .append("nombre", "A")
@@ -376,10 +378,11 @@ public class ReservacionDAOTest {
         asientosCol.insertOne(asientoDoc);
 
         ObjectId categoriaId = new ObjectId();
-        categoriaCol.insertOne(new Document("_id", categoriaId)
+        Document categoriaDoc = new Document("_id", categoriaId)
                 .append("urlImagen", "test.jpg")
-                .append("nombre", CategoriaEventoDTO.NATACION.name())
+                .append("nombre", CategoriaEventoDTO.NATACION.name()
         );
+        categoriaCol.insertOne(categoriaDoc);
 
         ObjectId eventoId = new ObjectId();
         Document eventoDoc = new Document("_id", eventoId)
@@ -412,7 +415,7 @@ public class ReservacionDAOTest {
         Document boletoDoc = new Document("_id", boletoId)
                 .append("codigoQR", "testQR")
                 .append("estado", EstadoBoletoDTO.ACTIVO.name())
-                .append("evento", new Document("_id", eventoId))
+                .append("evento", eventoId)
                 .append("asientoEvento", asientoEveId)
                 .append("token", "testToken");
         boletoCol.insertOne(boletoDoc);
