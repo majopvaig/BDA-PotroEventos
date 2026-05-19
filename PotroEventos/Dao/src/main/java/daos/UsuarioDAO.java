@@ -50,11 +50,7 @@ public class UsuarioDAO implements IUsuarioDAO {
                 return null;
             }
 
-            if (BCrypt.checkpw(usuario.getContrasenia(), resultado.getContrasenia())) {
-                return UsuarioPersistenciaAdapter.convertirADominio(resultado);
-            }
-
-            return null;
+            return UsuarioPersistenciaAdapter.convertirADominio(resultado);
         } catch (MongoException e) {
             throw new PersistenciaException("Error al buscar el usuario en la base de datos.");
         }
@@ -66,14 +62,13 @@ public class UsuarioDAO implements IUsuarioDAO {
             throw new PersistenciaException("El usuario no puede ser null.");
         }
         try {
-            usuario.setContrasenia(BCrypt.hashpw(usuario.getContrasenia(), BCrypt.gensalt()));
             UsuarioMongoEntidad u = UsuarioPersistenciaAdapter.convertirAMongo(usuario);
             InsertOneResult resultado = this.coleccionUsuarios.insertOne(u);
 
             if (resultado.getInsertedId() == null) {
                 throw new PersistenciaException("Error al guardar al usuario");
             }
-            
+
             ObjectId idGenerado = resultado.getInsertedId().asObjectId().getValue();
 
             u.setId(idGenerado);

@@ -5,8 +5,6 @@
 package gestionEvento;
 
 import dtos.CategoriaDTO;
-import dtos.ENUMS.CategoriaEventoDTO;
-import dtos.ENUMS.EstadoEventoDTO;
 import dtos.EventoDTO;
 import excepciones.GestionEventoException;
 import excepciones.NegocioException;

@@ -261,7 +261,7 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
 
     @Override
     public void cerrarSesion() {
-        controlInicioSesion.cerrarSesion();
+        controlUsuarios.cerrarSesion();
         this.mostrarInicioSesion();
     }
 

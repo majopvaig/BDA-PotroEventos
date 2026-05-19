@@ -18,10 +18,13 @@ import java.util.List;
  * @author María Valdez - 262775
  */
 public interface IGestionUsuariosFachada {
-    
+
     public boolean asociarUsuario(UsuarioDTO usuario) throws GestionUsuarioException;
-    
-    public UsuarioDTO obtenerUsuarioActivo() throws GestionUsuarioException ;
-    
+
+    public UsuarioDTO obtenerUsuarioActivo() throws GestionUsuarioException;
+
     public List<ReservacionDTO> obtenerReservacionesUsuario(String idUsuario) throws GestionUsuarioException;
+
+    void cerrarSesion();
+
 }

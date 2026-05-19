@@ -14,7 +14,7 @@ import dtos.UsuarioDTO;
  * @author Dayanara Peralta G
  */
 public class UsuarioAdapter {
-    
+
     public static UsuarioDTO entidadADTO(Usuario usuario) {
         if (usuario == null) {
             return null;
@@ -28,12 +28,12 @@ public class UsuarioAdapter {
         dto.setCreditos(usuario.getCreditos());
         return dto;
     }
-    
+
     public static Usuario dtoAEntidad(UsuarioDTO dto) {
         if (dto == null) {
             return null;
         }
-        
+
         Usuario usuario = new Usuario();
         usuario.setIdUsuario(dto.getIdUsuario());
         usuario.setNombre(dto.getNombre());
@@ -41,34 +41,41 @@ public class UsuarioAdapter {
         usuario.setApellidoMaterno(dto.getApellidoMaterno());
         usuario.setCorreo(dto.getCorreo());
         usuario.setCreditos(dto.getCreditos());
-        
+
         return usuario;
     }
-    
-    public static Usuario dtoRegistroAEntidad(RegistroUsuarioDTO registroDTO){
-        if(registroDTO == null){
+
+    public static Usuario dtoRegistroAEntidad(RegistroUsuarioDTO registroDTO) {
+        if (registroDTO == null) {
             return null;
         }
-        
+
         Usuario entidad = new Usuario();
         entidad.setNombre(registroDTO.getNombres());
         entidad.setApellidoPaterno(registroDTO.getApellidoPaterno());
         entidad.setApellidoMaterno(registroDTO.getApellidoMaterno());
         entidad.setCorreo(registroDTO.getCorreo());
         entidad.setContrasenia(registroDTO.getContrasenia());
-        
+
         return entidad;
     }
-    
-    public static Usuario dtoLoginAEntidad(LoginDTO loginDTO){
-        if(loginDTO == null){
+
+    public static RegistroUsuarioDTO registroEntidadADto(Usuario entidad) {
+        if (entidad == null) {
             return null;
         }
-        
+        return new RegistroUsuarioDTO(entidad.getNombre(), entidad.getApellidoPaterno(), entidad.getApellidoMaterno(), entidad.getCorreo(), entidad.getContrasenia());
+    }
+
+    public static Usuario dtoLoginAEntidad(LoginDTO loginDTO) {
+        if (loginDTO == null) {
+            return null;
+        }
+
         Usuario entidad = new Usuario();
         entidad.setCorreo(loginDTO.getCorreo());
         entidad.setContrasenia(loginDTO.getContrasenia());
-        
+
         return entidad;
     }
 }

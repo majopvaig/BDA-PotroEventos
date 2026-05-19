@@ -41,11 +41,27 @@ public class UsuarioBO implements IUsuarioBO {
 
             UsuarioDTO usuarioBaseDatos = UsuarioAdapter.entidadADTO(usuarioDAO.obtenerUsuario(UsuarioAdapter.dtoLoginAEntidad(sesion)));
 
-            if(usuarioBaseDatos == null){
+            if (usuarioBaseDatos == null) {
                 return null;
             }
-            
+
             return usuarioBaseDatos;
+        } catch (PersistenciaException ex) {
+            throw new NegocioException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public RegistroUsuarioDTO iniciarSesion(LoginDTO sesion) throws NegocioException {
+        try {
+
+            RegistroUsuarioDTO registro = UsuarioAdapter.registroEntidadADto(usuarioDAO.obtenerUsuario(UsuarioAdapter.dtoLoginAEntidad(sesion)));
+
+            if (registro == null) {
+                return null;
+            }
+
+            return registro;
         } catch (PersistenciaException ex) {
             throw new NegocioException(ex.getMessage());
         }

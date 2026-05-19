@@ -38,9 +38,14 @@ public class GestionUsuarioFachada implements IGestionUsuariosFachada {
 
     @Override
     public boolean asociarUsuario(UsuarioDTO usuario) throws GestionUsuarioException {
-        if(control.asociarUsuario(usuario) != null){
+        if (control.asociarUsuario(usuario) != null) {
             return true;
         }
         throw new GestionUsuarioException("No se pudo asociar el usuario a la sesión.");
+    }
+
+    @Override
+    public void cerrarSesion() {
+        control.cerrarSesion();
     }
 }
