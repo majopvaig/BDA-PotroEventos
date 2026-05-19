@@ -138,4 +138,41 @@ public class ReservacionDAO implements IReservacionDAO {
         }
     }
     
+    // --- caso factura ---
+
+    /**
+     * Cuenta si la reserva cumple con el requisito de:
+     * - ser igual al id que se proporciona
+     * - tenga una columna de idFactura existiendo
+     * - que el campo no tenga valor nulo
+     * @param idReservacion
+     * @return verdadero si tiene factura, falso si no ha sido facturada
+     * @throws PersistenciaException 
+     */
+    @Override
+    public boolean tieneFactura(String idReservacion) throws PersistenciaException {
+        try{
+            
+            if(idReservacion == null){
+                throw new MongoException("Reserva inválida");
+            }
+            
+            // cuenta si esa reserva cumple con el filtro
+            Long count = coleccionReservaciones
+            .countDocuments(Filters.and(
+                    Filters.eq("_id", new ObjectId(idReservacion)),
+                    Filters.exists("idFactura", true),
+                    Filters.ne("idFactura", null)
+            ));
+
+            return count > 0; 
+        }catch(MongoException me){
+            throw new MongoException("Hubo un error al comprobar la reserva.");
+        }
+        
+                
+    }
+    
+    
+    
 }

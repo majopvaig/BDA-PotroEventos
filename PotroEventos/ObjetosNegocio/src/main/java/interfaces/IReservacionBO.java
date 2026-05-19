@@ -18,4 +18,7 @@ public interface IReservacionBO {
     
     List<ReservacionDTO> obtenerReservacionesUsuario(String idUsuario) throws NegocioException;
     
+    boolean obtenerReservacion(String idReservacion) throws NegocioException;
+    
+    
 }

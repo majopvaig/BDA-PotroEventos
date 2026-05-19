@@ -4,6 +4,7 @@
  */
 package entidadesmongo;
 
+import entidadesresumenmongo.PerfilFiscalResumenMongo;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.bson.types.ObjectId;
@@ -22,7 +23,10 @@ public class UsuarioMongoEntidad {
     private String apellidoMaterno;
     private String correo;
     private String contrasenia;
-
+    
+    //Caso de uso factura
+    private PerfilFiscalResumenMongo perfilFiscal;
+    
     public UsuarioMongoEntidad() {
     }
 
@@ -43,6 +47,27 @@ public class UsuarioMongoEntidad {
         this.contrasenia = contrasenia;
     }
 
+    public UsuarioMongoEntidad(ObjectId id, String nombre, String apellidoPaterno, String apellidoMaterno, String correo, String contrasenia, PerfilFiscalResumenMongo perfilFiscal) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.correo = correo;
+        this.contrasenia = contrasenia;
+        this.perfilFiscal = perfilFiscal;
+    }
+    
+    // --- caso de uso individual ---
+    public PerfilFiscalResumenMongo getPerfilFiscal() {
+        return perfilFiscal;
+    }
+
+    public void setPerfilFiscal(PerfilFiscalResumenMongo perfilFiscal) {
+        this.perfilFiscal = perfilFiscal;
+    }
+    // --- 
+    
+    
     public ObjectId getId() {
         return id;
     }
@@ -107,6 +132,7 @@ public class UsuarioMongoEntidad {
                 + ", apellidoPaterno=" + apellidoPaterno 
                 + ", apellidoMaterno=" + apellidoMaterno 
                 + ", correo=" + correo 
+                + ", perfilFiscal=" + perfilFiscal 
                 + '}';
     }
     

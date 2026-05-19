@@ -4,6 +4,7 @@
  */
 package entidadesmongo;
 
+import entidadesresumenmongo.FacturaResumenMongo;
 import entidadesresumenmongo.UsuarioResumenMongo;
 import java.time.LocalDateTime;
 import org.bson.codecs.pojo.annotations.BsonId;
@@ -25,7 +26,9 @@ public class ReservacionMongoEntidad {
     private UsuarioResumenMongo usuario;
     private LocalDateTime fechaRegistro;
     private String estado;
-
+    
+    // caso uso factura
+    private FacturaResumenMongo factura;
     public ReservacionMongoEntidad() {
     }
 

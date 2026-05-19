@@ -31,6 +31,7 @@ public class EventoMongoEntidad {
     private String tipo;
     private int disponibilidad;
 
+
     public EventoMongoEntidad() {
     }
 
@@ -61,6 +62,7 @@ public class EventoMongoEntidad {
         this.disponibilidad = disponibilidad;
     }
 
+    
     public ObjectId getId() {
         return id;
     }
@@ -170,7 +172,7 @@ public class EventoMongoEntidad {
                 + ", urlImagen=" + urlImagen 
                 + ", gratuito=" + gratuito 
                 + ", tipo=" + tipo 
-                + ", disponibilidad=" + disponibilidad 
+                + ", disponibilidad=" + disponibilidad
                 + '}';
     }
     

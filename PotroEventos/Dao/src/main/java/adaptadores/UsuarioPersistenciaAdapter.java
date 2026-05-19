@@ -4,8 +4,11 @@
  */
 package adaptadores;
 
+import Entitys.ENUMS.RegimenFiscal;
+import Entitys.PerfilFiscal;
 import Entitys.Usuario;
 import entidadesmongo.UsuarioMongoEntidad;
+import entidadesresumenmongo.PerfilFiscalResumenMongo;
 import excepciones.PersistenciaException;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -29,6 +32,20 @@ public class UsuarioPersistenciaAdapter {
         if(dominio.getApellidoMaterno() != null){
             mongo.setApellidoMaterno(dominio.getApellidoMaterno());
         }
+        
+        // caso invidual
+        if(dominio.getPerfilFiscal() != null){
+            
+            PerfilFiscalResumenMongo resumen = new PerfilFiscalResumenMongo();
+            
+            resumen.setRfc(dominio.getPerfilFiscal().getRfc());
+            resumen.setNombre(dominio.getPerfilFiscal().getNombre());
+            resumen.setCodigoPostal(dominio.getPerfilFiscal().getCodigoPostal());
+            resumen.setRegimenFiscal(dominio.getPerfilFiscal().getRegimenFiscal().getCodigo());
+            resumen.setCorreo(dominio.getPerfilFiscal().getCorreo());
+            mongo.setPerfilFiscal(resumen);
+        }
+        
         mongo.setCorreo(dominio.getCorreo());
         mongo.setContrasenia(dominio.getContrasenia());
         
@@ -49,6 +66,24 @@ public class UsuarioPersistenciaAdapter {
         dominio.setCorreo(mongo.getCorreo());
         dominio.setContrasenia(mongo.getContrasenia());
         
+        // caso individual  perfil
+        if(mongo.getPerfilFiscal() != null){
+            
+            PerfilFiscal perfil = new PerfilFiscal();
+            perfil.setRfc(mongo.getPerfilFiscal().getRfc());
+            perfil.setNombre(mongo.getPerfilFiscal().getNombre());
+            perfil.setCodigoPostal(mongo.getPerfilFiscal().getCodigoPostal());
+            String regimenStr = mongo.getPerfilFiscal().getRegimenFiscal();
+            
+        if (regimenStr != null && !regimenStr.isEmpty()) {
+            
+            perfil.setRegimenFiscal(RegimenFiscal.valueOf(regimenStr));
+        }
+        
+        dominio.setPerfilFiscal(perfil);
+        }
+        
+        
         return dominio;
     }
     
@@ -66,6 +101,23 @@ public class UsuarioPersistenciaAdapter {
         dominio.setCorreo(mongo.getString("correo"));
         dominio.setContrasenia(mongo.getString("contrasenia"));
         
+        // caso de uso factura
+        Document perfilDoc = (Document) mongo.get("perfilFiscal");
+        if(perfilDoc != null){
+            PerfilFiscal perfil = new PerfilFiscal();
+            perfil.setRfc(perfilDoc.getString("rfc"));
+            perfil.setNombre(perfilDoc.getString("nombre"));
+            perfil.setCodigoPostal(perfilDoc.getString("codigoPostal"));
+            String regimenStr = perfilDoc.getString("regimenFiscal");
+            
+            if (regimenStr != null && !regimenStr.isEmpty()) {
+                perfil.setRegimenFiscal(RegimenFiscal.valueOf(regimenStr));
+            }
+            
+            perfil.setCorreo(perfilDoc.getString("correo"));
+            dominio.setPerfilFiscal(perfil);
+        }
+
         return dominio;
     }
     

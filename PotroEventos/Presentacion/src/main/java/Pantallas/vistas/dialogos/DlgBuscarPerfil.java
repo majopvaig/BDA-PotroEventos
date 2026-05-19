@@ -4,9 +4,13 @@
  */
 package Pantallas.vistas.dialogos;
 
+import Controlador.interfaz.ICoordinadorAplicacion;
+import dtos.PerfilFiscalDTO;
+import excepciones.CoordinadorException;
 import java.awt.Image;
 import javax.swing.ImageIcon;
-
+import javax.swing.JOptionPane;
+import utilerias.TextUtileria;
 /**
  *
  * @author aaron
@@ -14,32 +18,49 @@ import javax.swing.ImageIcon;
 public class DlgBuscarPerfil extends javax.swing.JDialog {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DlgBuscarPerfil.class.getName());
-
+    private ICoordinadorAplicacion coordinador;
     /**
      * Creates new form DlgBuscarPerfil
      */
-    public DlgBuscarPerfil(java.awt.Frame parent, boolean modal) {
+    public DlgBuscarPerfil(java.awt.Frame parent, boolean modal, ICoordinadorAplicacion coordinador) {
         super(parent, modal);
+        this.coordinador = coordinador;
         initComponents();
         configuraciones();
     }
+
     private void configuraciones(){
+        
+        setTitle("Busqueda de PerfilFiscal");
+        TextUtileria.estilizarText(txtEntrada, "Introduce rfc...");
+        java.net.URL url = getClass().getResource("/img/hacienda.png");
 
-           java.net.URL url = getClass().getResource("/img/hacienda.png");
-
-           if(url != null){
+        if(url != null){
 
 
-               ImageIcon icon = new ImageIcon(url);
+            ImageIcon icon = new ImageIcon(url);
 
-               int lblW = 150;
-               int lblH = 80;
+            int lblW = 143;
+            int lblH = 33;
 
-               Image img = icon.getImage().getScaledInstance(lblW, lblH, Image.SCALE_SMOOTH);
+            Image img = icon.getImage().getScaledInstance(lblW, lblH, Image.SCALE_SMOOTH);
 
-               lblHacienda.setIcon(new ImageIcon(img));
-           }
-       }
+            lblHacienda.setIcon(new ImageIcon(img));
+        }
+    }
+    
+    private boolean validacionesEntrada(){
+        if(txtEntrada.getText() == null || txtEntrada.getText().isBlank() || txtEntrada.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Campo vacío.");
+            return false;
+        }
+        
+        if(txtEntrada.getText().strip().length() != 12 && txtEntrada.getText().strip().length() != 13){
+            JOptionPane.showMessageDialog(this, "El RFC debe ser entre 12-13 caracteres.");
+            return false;
+        }
+        return true;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -54,7 +75,7 @@ public class DlgBuscarPerfil extends javax.swing.JDialog {
         lblHacienda = new javax.swing.JLabel();
         txtTotal = new javax.swing.JLabel();
         txtRFC = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtEntrada = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -62,7 +83,7 @@ public class DlgBuscarPerfil extends javax.swing.JDialog {
 
         pnlContenedor.setBackground(new java.awt.Color(255, 255, 255));
 
-        pnlSuperior.setBackground(new java.awt.Color(54, 76, 62));
+        pnlSuperior.setBackground(new java.awt.Color(58, 91, 70));
 
         lblHacienda.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblHacienda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hacienda.png"))); // NOI18N
@@ -89,30 +110,33 @@ public class DlgBuscarPerfil extends javax.swing.JDialog {
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
-        txtTotal.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        txtTotal.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         txtTotal.setForeground(new java.awt.Color(74, 21, 21));
         txtTotal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtTotal.setText("Buscar perfil fiscal");
 
-        txtRFC.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        txtRFC.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtRFC.setForeground(new java.awt.Color(51, 51, 51));
         txtRFC.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtRFC.setText("RFC:");
 
-        jTextField1.setEditable(false);
-        jTextField1.setBackground(java.awt.Color.white);
-        jTextField1.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(51, 51, 51));
-        jTextField1.setText("Introduce rfc...");
-        jTextField1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTextField1.setMaximumSize(new java.awt.Dimension(100, 21));
-        jTextField1.setMinimumSize(new java.awt.Dimension(100, 21));
-        jTextField1.setOpaque(true);
-        jTextField1.setPreferredSize(new java.awt.Dimension(100, 21));
+        txtEntrada.setBackground(java.awt.Color.white);
+        txtEntrada.setForeground(new java.awt.Color(51, 51, 51));
+        txtEntrada.setText("Introduce rfc...");
+        txtEntrada.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        txtEntrada.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        txtEntrada.setMaximumSize(new java.awt.Dimension(100, 21));
+        txtEntrada.setMinimumSize(new java.awt.Dimension(100, 21));
+        txtEntrada.setOpaque(true);
+        txtEntrada.setPreferredSize(new java.awt.Dimension(100, 21));
+        txtEntrada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEntradaActionPerformed(evt);
+            }
+        });
 
-        btnBuscar.setBackground(new java.awt.Color(54, 76, 62));
-        btnBuscar.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        btnBuscar.setBackground(new java.awt.Color(58, 91, 70));
+        btnBuscar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
         btnBuscar.setText("Buscar perfil");
         btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -136,9 +160,9 @@ public class DlgBuscarPerfil extends javax.swing.JDialog {
                             .addComponent(txtTotal)
                             .addGroup(pnlContenedorLayout.createSequentialGroup()
                                 .addGap(6, 6, 6)
-                                .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnBuscar)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtEntrada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                 .addContainerGap())
         );
         pnlContenedorLayout.setVerticalGroup(
@@ -150,37 +174,52 @@ public class DlgBuscarPerfil extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtRFC)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnBuscar)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addComponent(txtEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pnlContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlContenedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(pnlContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
+        if(validacionesEntrada()){
+            try {
+                PerfilFiscalDTO busquedaPerfil = coordinador.buscarPerfilFiscal(txtEntrada.getText(), null);
+                if(busquedaPerfil!= null){
+                    coordinador.mostrarDatosFactura(busquedaPerfil);
+                }
+            } catch (CoordinadorException ex) {
+                JOptionPane.showMessageDialog(this, ex, "Fallo de operación", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-
+    private void txtEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEntradaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEntradaActionPerformed
+    public static void main(String args[]) {
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblHacienda;
     private javax.swing.JPanel pnlContenedor;
     private javax.swing.JPanel pnlSuperior;
+    private javax.swing.JTextField txtEntrada;
     private javax.swing.JLabel txtRFC;
     private javax.swing.JLabel txtTotal;
     // End of variables declaration//GEN-END:variables

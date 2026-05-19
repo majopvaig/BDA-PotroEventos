@@ -18,6 +18,9 @@ public class UsuarioResumenMongo {
     private String apellido;
     private String correo;
 
+    // caso individual
+    private PerfilFiscalResumenMongo perfil;
+    
     public UsuarioResumenMongo() {
     }
 

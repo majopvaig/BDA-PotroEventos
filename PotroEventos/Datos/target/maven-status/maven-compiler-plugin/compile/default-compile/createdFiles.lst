@@ -1,7 +1,9 @@
 Entitys\Boleto.class
+Entitys\ENUMS\RegimenFiscal.class
 Entitys\Evento.class
 Entitys\Reservacion.class
 Entitys\Asiento.class
+Entitys\ENUMS\UsoCfdi.class
 Entitys\ENUMS\ReservacionEstado.class
 Entitys\Pago.class
 Entitys\Ubicacion.class
@@ -11,6 +13,7 @@ Entitys\Categoria.class
 Entitys\AsientoEvento.class
 Entitys\ENUMS\TipoUbicacionP.class
 Entitys\Seccion.class
+Entitys\PerfilFiscal.class
 Entitys\ENUMS\CategoriaEvento.class
 Entitys\ENUMS\TipoEventoP.class
 Entitys\ENUMS\EstadoAsiento.class

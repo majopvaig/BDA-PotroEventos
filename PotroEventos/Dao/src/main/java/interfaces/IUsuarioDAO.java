@@ -6,7 +6,7 @@ package interfaces;
 
 import Entitys.Usuario;
 import excepciones.PersistenciaException;
-
+import Entitys.PerfilFiscal;
 /**
  *
  * @author aaron
@@ -18,4 +18,8 @@ public interface IUsuarioDAO {
     Usuario obtenerUsuario(Usuario usuario) throws PersistenciaException;
 
     Usuario guardarUsuario(Usuario usuario) throws PersistenciaException;
+    
+    //caso factura
+    boolean guardarPerfilFiscal(PerfilFiscal perfil, String idUsuario);
+    
 }

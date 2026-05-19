@@ -42,7 +42,13 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import Pantallas.FrmDatosFacturar;
-
+import excepciones.FacturaException;
+import factura.FachadaFactura;
+import factura.IFactura;
+import Pantallas.vistas.dialogos.DlgBuscarPerfil;
+import Pantallas.vistas.dialogos.DlgDetalleFactura;
+import Pantallas.vistas.dialogos.DlgProcesando;
+import dtos.PerfilFiscalDTO;
 /**
  * Clase que actúa como coordinador principal de la aplicación. Se encarga de
  * gestionar la navegación entre las diferentes pantallas y de comunicar la capa
@@ -59,7 +65,9 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
     private final ICompraBoleto controlCompra = new CompraBoletoFachada();
     private final IFachadaGestionEvento controlEvento = new GestionEventoFachada();
     private final IGestionUsuariosFachada controlUsuarios = new GestionUsuarioFachada();
-
+    private final IFactura controlFactura = new FachadaFactura();
+    
+    
     private FrmInicioSesion frmInicioSesion;
     private FrmRegistrarse frmRegistrarse;
     private FrmPago frmPago;
@@ -68,7 +76,7 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
     private FrmRegistroItson frmRegistro;
     private ReservacionDTO reservacionActual;
     private FrmDatosFacturar frmDatosFacturar;
-
+    private DlgBuscarPerfil dlgBuscarPerfil;
     /**
      * Oculta todas las ventanas instanciadas actualmente en el sistema. Es
      * utilizado como un paso previo antes de mostrar una nueva pantalla para
@@ -218,13 +226,25 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
     }
 
     @Override
-    public void mostrarDatosFactura() {
-       if(frmDatosFacturar == null){
-           frmDatosFacturar = new FrmDatosFacturar(this);
-       }
-       frmDatosFacturar.setVisible(true);
+    public void mostrarDatosFactura(PerfilFiscalDTO perfil) {
+        if(frmDatosFacturar == null){
+            frmDatosFacturar = new FrmDatosFacturar(this);
+        }
+        frmDatosFacturar.setVisible(true);
+        frmDatosFacturar.setLocationRelativeTo(null);
     }
-    
+
+    @Override
+    public void mostrarBuscarRFC() {
+        if(frmPlantilla != null){
+            frmPlantilla = new FrmPlantillaSistema(this);
+        }
+        if(dlgBuscarPerfil == null){
+            dlgBuscarPerfil = new DlgBuscarPerfil(frmPlantilla, true, this);
+        }
+        dlgBuscarPerfil.setLocationRelativeTo(null);
+        dlgBuscarPerfil.setVisible(true);
+    }
     
     @Override
     public List<EventoDTO> consultarEventos(CategoriaDTO categoria) throws GestionEventoException {
@@ -422,6 +442,41 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
         return frmRegistro.registroExitoso();
     }
 
-    
-    
+    @Override
+    public boolean facturar(String idReservacion) throws CoordinadorException {
+        try {
+            return controlFactura.obtenerFactura(idReservacion);
+        } catch (FacturaException ex) {
+            throw new CoordinadorException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public void recuperarPerfilFiscal(String idUsuario)throws CoordinadorException{
+        try {
+            PerfilFiscalDTO perfil = controlFactura.buscarPerfil(idUsuario);
+            if(perfil == null){
+                mostrarBuscarRFC();
+                return;
+            }
+            mostrarDatosFactura(perfil);
+        } catch (FacturaException ex) {
+            throw new CoordinadorException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public PerfilFiscalDTO buscarPerfilFiscal(String rfc, String idUsuario) throws CoordinadorException {
+        try {
+            idUsuario = controlUsuarios.obtenerUsuarioActivo().getIdUsuario();
+            return controlFactura.buscarPerfilFiscal(rfc, idUsuario);
+        } catch (FacturaException ex) {
+            throw new CoordinadorException(ex.getMessage());
+        } catch (GestionUsuarioException ex) {
+            throw new CoordinadorException(ex.getMessage());
+        }
+    }
+
+
+
 }

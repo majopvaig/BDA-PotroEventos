@@ -20,7 +20,10 @@ public class Reservacion {
     private Usuario usuario;
     private LocalDateTime fechaHora;
     private ReservacionEstado estado;
-
+    
+    // factura
+    private String idFactura;
+            
     public Reservacion() {
     }
 
@@ -43,6 +46,29 @@ public class Reservacion {
         this.estado = estado;
     }
 
+    // para el caso individual de factura
+    
+    public Reservacion(String idReservacion, Double total, Boleto boleto, Pago pago, Usuario usuario, LocalDateTime fechaHora, ReservacionEstado estado, String idFactura) {
+        this.idReservacion = idReservacion;
+        this.total = total;
+        this.boleto = boleto;
+        this.pago = pago;
+        this.usuario = usuario;
+        this.fechaHora = fechaHora;
+        this.estado = estado;
+        this.idFactura = idFactura;
+    }
+
+    public String getIdFactura() {
+        return idFactura;
+    }
+
+    public void setIdFactura(String idFactura) {
+        this.idFactura = idFactura;
+    }
+    
+    // ----------------------------------
+    
     public String getIdReservacion() {
         return idReservacion;
     }

@@ -7,8 +7,8 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class BotonUtileria {
-
+public class BotonUtileria extends JButton{
+    
     private BotonUtileria() {
     }
 
@@ -69,12 +69,10 @@ public class BotonUtileria {
     // Perdon profe pero era esto o echarme lo que ya funcionaba de lo otro
     public static void btnFacturar(JButton boton) {
 
-        Color normal = new Color(44, 114, 243);
-        Color hover = new Color(0, 49, 141);
-
+        Color normal = new Color(69, 105, 82);
+        Color hover = new Color(99 ,153 , 119);
+        
         boton.setOpaque(true);
-        boton.setBackground(normal);
-
         boton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -86,7 +84,7 @@ public class BotonUtileria {
                 boton.setBackground(normal);
             }
         });
-
+        
         boton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 }

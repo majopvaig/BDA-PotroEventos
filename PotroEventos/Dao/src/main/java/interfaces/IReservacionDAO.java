@@ -20,4 +20,7 @@ public interface IReservacionDAO {
     List<Reservacion> obtenerReservacionesUsuario(String idUsuario) throws PersistenciaException;
     
     Boleto obtenerBoleto(String idReservacion) throws PersistenciaException;
+    
+    // caso factura
+    boolean tieneFactura(String idResevracion) throws PersistenciaException;
 }

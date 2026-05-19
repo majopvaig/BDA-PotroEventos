@@ -7,6 +7,7 @@ import dtos.CobroDTO;
 import dtos.EventoDTO;
 import dtos.LoginDTO;
 import dtos.PagoDTO;
+import dtos.PerfilFiscalDTO;
 import dtos.RegistroUsuarioDTO;
 import dtos.ReservacionDTO;
 import dtos.SeccionDTO;
@@ -50,7 +51,11 @@ public interface ICoordinadorAplicacion {
     public void mostrarPago(ReservacionDTO reservacion);
 
     public void volverAConsultarEvento();
-
+    
+    public void mostrarBuscarRFC();
+    
+    public void mostrarDatosFactura(PerfilFiscalDTO perfil);
+            
     public List<EventoDTO> consultarEventos(CategoriaDTO categoria) throws GestionEventoException;
 
     public List<CategoriaDTO> consultarCategorias();
@@ -89,5 +94,10 @@ public interface ICoordinadorAplicacion {
     
     boolean isUsuarioITSONRegistrado();
     
-    void mostrarDatosFactura();
+    boolean facturar(String idReservacion)throws CoordinadorException;
+    
+    void recuperarPerfilFiscal(String idUsuario)throws CoordinadorException;
+    
+    PerfilFiscalDTO buscarPerfilFiscal(String rfc, String idUsuario)throws CoordinadorException;
+    
 }

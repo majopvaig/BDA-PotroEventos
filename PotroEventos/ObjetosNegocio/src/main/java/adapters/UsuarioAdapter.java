@@ -5,7 +5,9 @@
 package adapters;
 
 import Entitys.Usuario;
+import Entitys.PerfilFiscal;
 import dtos.LoginDTO;
+import dtos.PerfilFiscalDTO;
 import dtos.RegistroUsuarioDTO;
 import dtos.UsuarioDTO;
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ public class UsuarioAdapter {
         if (usuario == null) {
             return null;
         }
+        
         UsuarioDTO dto = new UsuarioDTO();
         dto.setIdUsuario(usuario.getIdUsuario());
         dto.setNombre(usuario.getNombre());
@@ -28,6 +31,11 @@ public class UsuarioAdapter {
         dto.setApellidoMaterno(usuario.getApellidoMaterno());
         dto.setCorreo(usuario.getCorreo());
         dto.setCreditos(usuario.getCreditos());
+        if(usuario.getPerfilFiscal() != null){
+            PerfilFiscal perfil = usuario.getPerfilFiscal();
+            dto.setPerfil(PerfilFiscalAdapter.convertirADTO(perfil));
+        }
+        
         return dto;
     }
     
@@ -43,6 +51,11 @@ public class UsuarioAdapter {
         usuario.setApellidoMaterno(dto.getApellidoMaterno());
         usuario.setCorreo(dto.getCorreo());
         usuario.setCreditos(dto.getCreditos());
+        
+        if(dto.getPerfil() != null){
+            PerfilFiscalDTO perfilDTO = dto.getPerfil();
+            usuario.setPerfilFiscal(PerfilFiscalAdapter.convertirADominio(perfilDTO));
+        }
         
         return usuario;
     }

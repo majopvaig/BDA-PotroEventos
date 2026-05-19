@@ -16,6 +16,9 @@ public class Usuario {
     private String correo;
     private String contrasenia;
     private Integer creditos;
+    
+    // caso factura
+    private PerfilFiscal perfilFiscal;
 
     public Usuario() {
     }
@@ -37,6 +40,25 @@ public class Usuario {
         this.correo = correo;
         this.contrasenia = contrasenia;
         this.creditos = creditos;
+    }
+
+    public Usuario(String idUsuario, String nombre, String apellidoPaterno, String apellidoMaterno, String correo, String contrasenia, Integer creditos, PerfilFiscal perfilFiscal) {
+        this.idUsuario = idUsuario;
+        this.nombre = nombre;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.correo = correo;
+        this.contrasenia = contrasenia;
+        this.creditos = creditos;
+        this.perfilFiscal = perfilFiscal;
+    }
+
+    public PerfilFiscal getPerfilFiscal() {
+        return perfilFiscal;
+    }
+
+    public void setPerfilFiscal(PerfilFiscal perfilFiscal) {
+        this.perfilFiscal = perfilFiscal;
     }
 
     public String getIdUsuario() {

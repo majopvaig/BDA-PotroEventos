@@ -7,6 +7,7 @@ package Pantallas.vistas;
 import Controlador.interfaz.ICoordinadorAplicacion;
 import dtos.EventoDTO;
 import dtos.ReservacionDTO;
+import excepciones.CoordinadorException;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -14,6 +15,7 @@ import java.awt.Panel;
 import java.time.format.DateTimeFormatter;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import utilerias.BotonUtileria;
 
 /**
@@ -49,6 +51,7 @@ public class PnlEvento extends Panel {
         cargarEvento();
         configurarModo();
         utilerias.BotonUtileria.estilizarBoton(btnMostrar);
+        utilerias.BotonUtileria.btnFacturar(btnFacturar);
     }
 
     public static PnlEvento crearParaVista(EventoDTO evento, Component padre, ICoordinadorAplicacion coordinador) {
@@ -115,9 +118,11 @@ public class PnlEvento extends Panel {
 
     private void configurarModo() {
         if (modoConsulta) {
+            btnFacturar.setVisible(true);
             btnFacturar.setText("Facturar");
             btnMostrar.setText("Ver mis boletos");
         } else {
+            btnFacturar.setVisible(false);
             btnMostrar.setText("Mostrar Información");
         }
     }
@@ -136,6 +141,7 @@ public class PnlEvento extends Panel {
         lblUbicacion = new javax.swing.JLabel();
         iconEvento = new javax.swing.JLabel();
         btnMostrar = new javax.swing.JButton();
+        btnFacturar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(221, 212, 212));
         setMaximumSize(new java.awt.Dimension(270, 188));
@@ -159,6 +165,12 @@ public class PnlEvento extends Panel {
         btnMostrar.setText("Mostrar Información");
         btnMostrar.addActionListener(this::btnMostrarActionPerformed);
 
+        btnFacturar.setBackground(new java.awt.Color(69, 105, 82));
+        btnFacturar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnFacturar.setForeground(new java.awt.Color(255, 255, 255));
+        btnFacturar.setText("Facturar");
+        btnFacturar.addActionListener(this::btnFacturarActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -174,6 +186,8 @@ public class PnlEvento extends Panel {
                 .addContainerGap(16, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnFacturar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnMostrar)
                 .addGap(19, 19, 19))
         );
@@ -190,7 +204,9 @@ public class PnlEvento extends Panel {
                         .addGap(18, 18, 18)
                         .addComponent(lblUbicacion)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnMostrar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnMostrar)
+                    .addComponent(btnFacturar))
                 .addContainerGap(8, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -203,8 +219,20 @@ public class PnlEvento extends Panel {
         }
     }//GEN-LAST:event_btnMostrarActionPerformed
 
-    private JButton btnFacturar = new JButton("Facturar");
+    private void btnFacturarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturarActionPerformed
+        try {
+            if(coordinador.facturar(reservacion.getIdReservacion())){
+                JOptionPane.showMessageDialog(this, "La reserva ya ha sido facturada");
+                return;
+            }
+            coordinador.recuperarPerfilFiscal(reservacion.getUsuario().getIdUsuario());
+        } catch (CoordinadorException ex) {
+            JOptionPane.showMessageDialog(this, "Surgió algo inesperado: " + ex.getMessage());
+        }
+    }//GEN-LAST:event_btnFacturarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnFacturar;
     private javax.swing.JButton btnMostrar;
     private javax.swing.JLabel iconEvento;
     private javax.swing.JLabel lblFechaHora;
