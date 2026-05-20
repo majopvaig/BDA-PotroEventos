@@ -253,8 +253,11 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
     @Override
     public UsuarioDTO getUsuarioSesion() {
         try {
-            return controlUsuarios.obtenerUsuarioActivo();
+            UsuarioDTO u = controlUsuarios.obtenerUsuarioActivo();
+            System.out.println(u.getIdUsuario());
+            return u;
         } catch (GestionUsuarioException gue) {
+            System.out.println("Fallé al ir por el usuario.");
             return null;
         }
     }

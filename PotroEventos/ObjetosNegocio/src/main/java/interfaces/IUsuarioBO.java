@@ -18,4 +18,6 @@ public interface IUsuarioBO {
     public UsuarioDTO obtenerUsuarioPorId(String idUsuario) throws NegocioException;
 
     public RegistroUsuarioDTO iniciarSesion(LoginDTO sesion) throws NegocioException;
+    
+    public UsuarioDTO obtenerUsuarioPorCorreo(String correo) throws NegocioException;
 }

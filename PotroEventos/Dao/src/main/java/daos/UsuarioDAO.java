@@ -13,7 +13,6 @@ import excepciones.PersistenciaException;
 import interfaces.IUsuarioDAO;
 import org.bson.Document;
 import org.bson.types.ObjectId;
-import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -86,12 +85,24 @@ public class UsuarioDAO implements IUsuarioDAO {
     @Override
     public Usuario obtenerPorId(String idUsuario) throws PersistenciaException {
         try {
-            UsuarioMongoEntidad seccion = coleccionUsuarios
+            UsuarioMongoEntidad u = coleccionUsuarios
                     .find(eq("_id", new ObjectId(idUsuario)))
                     .first();
-            return UsuarioPersistenciaAdapter.convertirADominio(seccion);
+            return UsuarioPersistenciaAdapter.convertirADominio(u);
         } catch (MongoException me) {
             throw new PersistenciaException("No fue posible obtener al usuario.");
+        }
+    }
+    
+    @Override
+    public Usuario obtenerPorCorreo(String correo) throws PersistenciaException {
+        try{
+            UsuarioMongoEntidad u = coleccionUsuarios
+                    .find(eq("correo", correo))
+                    .first();
+            return UsuarioPersistenciaAdapter.convertirADominio(u);
+        } catch(MongoException me){
+            throw new PersistenciaException("No fue posible recuperar dicho usuario.");
         }
     }
 

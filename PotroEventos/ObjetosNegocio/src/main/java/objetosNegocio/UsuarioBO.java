@@ -84,5 +84,14 @@ public class UsuarioBO implements IUsuarioBO {
             throw new NegocioException(pe.getMessage());
         }
     }
+    
+    @Override
+    public UsuarioDTO obtenerUsuarioPorCorreo(String correo) throws NegocioException {
+        try{
+            return UsuarioAdapter.entidadADTO(usuarioDAO.obtenerPorCorreo(correo));
+        } catch(PersistenciaException pe){
+            throw new NegocioException(pe.getMessage());
+        }
+    }
 
 }

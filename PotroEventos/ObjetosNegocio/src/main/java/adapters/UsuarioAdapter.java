@@ -64,7 +64,12 @@ public class UsuarioAdapter {
         if (entidad == null) {
             return null;
         }
-        return new RegistroUsuarioDTO(entidad.getNombre(), entidad.getApellidoPaterno(), entidad.getApellidoMaterno(), entidad.getCorreo(), entidad.getContrasenia());
+        return new RegistroUsuarioDTO(
+                entidad.getNombre(), 
+                entidad.getApellidoPaterno(), 
+                entidad.getApellidoMaterno(), 
+                entidad.getCorreo(), 
+                entidad.getContrasenia());
     }
 
     public static Usuario dtoLoginAEntidad(LoginDTO loginDTO) {

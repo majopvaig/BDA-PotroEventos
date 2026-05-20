@@ -25,7 +25,7 @@ public class GestionUsuarioFachada implements IGestionUsuariosFachada {
         this.control = new ControlGestionUsuarios();
     }
 
-    // --- Método que regresa el usuario con la sesion activa --- 
+    // --- Método que regresa el usuario con la sesión activa --- 
     @Override
     public UsuarioDTO obtenerUsuarioActivo() throws GestionUsuarioException {
         return control.getUsuarioActivo();

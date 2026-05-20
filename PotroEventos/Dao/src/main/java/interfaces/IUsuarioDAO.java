@@ -18,4 +18,6 @@ public interface IUsuarioDAO {
     Usuario obtenerUsuario(Usuario usuario) throws PersistenciaException;
 
     Usuario guardarUsuario(Usuario usuario) throws PersistenciaException;
+    
+    Usuario obtenerPorCorreo(String correo) throws PersistenciaException;
 }

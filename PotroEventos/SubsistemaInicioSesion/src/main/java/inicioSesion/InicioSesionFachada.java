@@ -8,7 +8,6 @@ import dtos.LoginDTO;
 import dtos.RegistroUsuarioDTO;
 import dtos.UsuarioDTO;
 import excepciones.InicioSesionException;
-import excepciones.NegocioException;
 
 /**
  *
