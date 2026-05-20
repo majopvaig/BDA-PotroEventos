@@ -7,6 +7,8 @@ package adaptadores;
 import dtos.CobroDTO;
 import dtos.PagoDTO;
 import dtos.PaymentDTO;
+import dtos.ReembolsoDTO;
+import dtos.RefundDTO;
 import dtos.StripeChargeDTO;
 
 /**
@@ -43,4 +45,28 @@ public class BancoAdapter {
                 payment.getCharge(), 
                 payment.getPaymentMethod());
     } 
+    
+    public static RefundDTO dtoAInfraestructura(ReembolsoDTO dto){
+        if(dto == null){
+            return null;
+        }
+        
+        return new RefundDTO(
+                dto.getIdOperacion(), 
+                dto.getFechaOperacion(), 
+                dto.getImporte(), 
+                dto.getMetodoPago());
+    }
+    
+    public static ReembolsoDTO infraestructuraADTO(RefundDTO infraestructura){
+        if(infraestructura == null){
+            return null;
+        }
+        
+        return new ReembolsoDTO(
+                infraestructura.getRefundID(), 
+                infraestructura.getRefundDate(), 
+                infraestructura.getAmountRefunded(), 
+                infraestructura.getRefundMethod());
+    }
 }

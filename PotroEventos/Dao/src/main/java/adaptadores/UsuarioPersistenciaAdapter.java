@@ -17,21 +17,27 @@ import org.bson.types.ObjectId;
 public class UsuarioPersistenciaAdapter {
     
     public static UsuarioMongoEntidad convertirAMongo(Usuario dominio) throws PersistenciaException {
-        if(dominio == null){
+        if (dominio == null) {
             return null;
         }
-        
+
         UsuarioMongoEntidad mongo = new UsuarioMongoEntidad();
-        
+
         mongo.setId(convertirStringAObjectId(dominio.getIdUsuario()));
         mongo.setNombre(dominio.getNombre());
         mongo.setApellidoPaterno(dominio.getApellidoPaterno());
-        if(dominio.getApellidoMaterno() != null){
+        if (dominio.getApellidoMaterno() != null) {
             mongo.setApellidoMaterno(dominio.getApellidoMaterno());
         }
         mongo.setCorreo(dominio.getCorreo());
         mongo.setContrasenia(dominio.getContrasenia());
-        
+        Integer creditos = dominio.getCreditos();
+        if (creditos == null) {
+            mongo.setCreditos(0);
+        } else {
+            mongo.setCreditos(dominio.getCreditos());
+        }
+
         return mongo;
     }
     
@@ -48,6 +54,7 @@ public class UsuarioPersistenciaAdapter {
         dominio.setApellidoMaterno(mongo.getApellidoMaterno());
         dominio.setCorreo(mongo.getCorreo());
         dominio.setContrasenia(mongo.getContrasenia());
+        dominio.setCreditos(mongo.getCreditos());
         
         return dominio;
     }
@@ -65,6 +72,12 @@ public class UsuarioPersistenciaAdapter {
         dominio.setApellidoMaterno(mongo.getString("apellidoMaterno"));
         dominio.setCorreo(mongo.getString("correo"));
         dominio.setContrasenia(mongo.getString("contrasenia"));
+        Integer creditos = mongo.getInteger("creditos");
+        if(creditos != null){
+            dominio.setCreditos(creditos);
+        } else {
+            dominio.setCreditos(0);
+        }
         
         return dominio;
     }

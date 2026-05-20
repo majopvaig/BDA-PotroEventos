@@ -141,6 +141,7 @@ public class PnlConsultar extends javax.swing.JPanel {
         for (ReservacionDTO proximo : proximos) {
             PnlEvento panel = PnlEvento.crearParaConsulta(proximo, this, coordinador);
             panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, panel.getPreferredSize().height));
+            panel.mostrarBotonCancelar();
             pnlEventos.add(panel);
             pnlEventos.add(Box.createRigidArea(new Dimension(0, 15)));
             JSeparator separador = new JSeparator(SwingConstants.HORIZONTAL);

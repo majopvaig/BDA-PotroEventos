@@ -20,4 +20,8 @@ public interface IFachadaGestionEvento {
     List<EventoDTO> consultarEventosPorCategoria(CategoriaDTO categoria) throws GestionEventoException;
 
     List<CategoriaDTO> consultarCategorias() throws GestionEventoException;
+    
+    boolean aumentarCapacidad(String idEvento) throws GestionEventoException;
+    
+    boolean reducirCapacidad(String idEvento) throws GestionEventoException;
 }

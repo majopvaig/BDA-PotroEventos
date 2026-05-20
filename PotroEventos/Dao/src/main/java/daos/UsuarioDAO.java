@@ -4,14 +4,18 @@ import Entitys.Usuario;
 import adaptadores.UsuarioPersistenciaAdapter;
 import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
 import static com.mongodb.client.model.Filters.eq;
 import com.mongodb.client.model.IndexOptions;
+import static com.mongodb.client.model.Updates.inc;
 import com.mongodb.client.result.InsertOneResult;
+import com.mongodb.client.result.UpdateResult;
 import conexion.ConexionMongo;
 import entidadesmongo.UsuarioMongoEntidad;
 import excepciones.PersistenciaException;
 import interfaces.IUsuarioDAO;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 /**
@@ -93,16 +97,48 @@ public class UsuarioDAO implements IUsuarioDAO {
             throw new PersistenciaException("No fue posible obtener al usuario.");
         }
     }
-    
+
     @Override
     public Usuario obtenerPorCorreo(String correo) throws PersistenciaException {
-        try{
+        try {
             UsuarioMongoEntidad u = coleccionUsuarios
                     .find(eq("correo", correo))
                     .first();
             return UsuarioPersistenciaAdapter.convertirADominio(u);
-        } catch(MongoException me){
+        } catch (MongoException me) {
             throw new PersistenciaException("No fue posible recuperar dicho usuario.");
+        }
+    }
+
+    @Override
+    public boolean restarCreditos(String idUsuario, Integer cantidad) throws PersistenciaException {
+        try {
+            Bson filtro = Filters.and(
+                    Filters.eq("_id", new ObjectId(idUsuario)),
+                    Filters.gte("creditos", cantidad));
+
+            Bson actualizacion = inc("creditos", -cantidad);
+
+            UpdateResult resultado = coleccionUsuarios.updateOne(filtro, actualizacion);
+
+            return resultado.getModifiedCount() > 0;
+        } catch (MongoException me) {
+            throw new PersistenciaException("No fue posible restar los créditos al usuario");
+        }
+    }
+
+    @Override
+    public boolean aumentarCreditos(String idUsuario, Integer cantidad) throws PersistenciaException {
+        try {
+            Bson filtro = Filters.eq("_id", new ObjectId(idUsuario));
+
+            Bson actualizacion = inc("creditos", +cantidad);
+
+            UpdateResult resultado = coleccionUsuarios.updateOne(filtro, actualizacion);
+
+            return resultado.getModifiedCount() > 0;
+        } catch (MongoException me) {
+            throw new PersistenciaException("No fue posible agregar los créditos al usuario");
         }
     }
 

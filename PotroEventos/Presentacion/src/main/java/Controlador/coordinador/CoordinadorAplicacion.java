@@ -1,6 +1,7 @@
 package Controlador.coordinador;
 
 import Controlador.interfaz.ICoordinadorAplicacion;
+import Controlador.interfaz.ICoordinadorDevolucion;
 import Pantallas.FrmInicioSesion;
 import Pantallas.FrmPago;
 import Pantallas.FrmPlantillaSistema;
@@ -58,6 +59,8 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
     private final ICompraBoleto controlCompra = new CompraBoletoFachada();
     private final IFachadaGestionEvento controlEvento = new GestionEventoFachada();
     private final IGestionUsuariosFachada controlUsuarios = new GestionUsuarioFachada();
+    
+    private final ICoordinadorDevolucion coordinadorDevolucion = new CoordinadorDevolucion(this); 
 
     private FrmInicioSesion frmInicioSesion;
     private FrmRegistrarse frmRegistrarse;
@@ -136,6 +139,7 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
         frmPlantilla.ocultarInicio();
         frmPlantilla.mostrarConsultar();
         frmPlantilla.setCategorias();
+        frmPlantilla.setCreditos(getUsuarioSesion().getCreditos().toString());
         frmPlantilla.setVisible(true);
         if (frmInicioSesion != null) {
             frmInicioSesion.dispose();
@@ -150,6 +154,7 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
         }
         frmPlantilla.ocultarConsultar();
         frmPlantilla.mostrarInicio();
+        frmPlantilla.setCreditos(getUsuarioSesion().getCreditos().toString());
         frmPlantilla.setContenido(new PnlConsultar(this, tipoEvento));
         frmPlantilla.setVisible(true);
     }
@@ -162,6 +167,7 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
         }
         frmPlantilla.ocultarConsultar();
         frmPlantilla.mostrarInicio();
+        frmPlantilla.setCreditos(getUsuarioSesion().getCreditos().toString());
         frmPlantilla.setContenido(new PnlConsultarMenu(this));
         frmPlantilla.setVisible(true);
     }
@@ -174,6 +180,7 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
         }
         frmPlantilla.mostrarConsultar();
         frmPlantilla.mostrarInicio();
+        frmPlantilla.setCreditos(getUsuarioSesion().getCreditos().toString());
         frmPlantilla.setContenido(new PnlConsultarEvento(this, evento));
         frmPlantilla.setVisible(true);
     }
@@ -210,6 +217,7 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
         } catch (GestionEventoException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
+        frmPlantilla.setCreditos(getUsuarioSesion().getCreditos().toString());
         frmPlantilla.mostrarInicio();
         frmPlantilla.mostrarConsultar();
         frmPlantilla.setVisible(true);
@@ -412,6 +420,13 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
     @Override
     public boolean isUsuarioITSONRegistrado() {
         return frmRegistro.registroExitoso();
+    }
+    
+    // lo agregó la majo
+    @Override
+    public void cancelarReservacion(ReservacionDTO reservacion) {
+        ocultarTodo();
+        coordinadorDevolucion.abrirMostrarEventoCancelar(reservacion);
     }
 
 }

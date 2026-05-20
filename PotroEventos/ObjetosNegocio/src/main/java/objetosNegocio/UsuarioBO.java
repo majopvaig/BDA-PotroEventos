@@ -84,14 +84,31 @@ public class UsuarioBO implements IUsuarioBO {
             throw new NegocioException(pe.getMessage());
         }
     }
-    
+
     @Override
-    public UsuarioDTO obtenerUsuarioPorCorreo(String correo) throws NegocioException {
-        try{
-            return UsuarioAdapter.entidadADTO(usuarioDAO.obtenerPorCorreo(correo));
-        } catch(PersistenciaException pe){
+    public boolean aumentarCreditos(Integer cantidad, String idUsuario) throws NegocioException {
+        try {
+            return usuarioDAO.aumentarCreditos(idUsuario, cantidad);
+        } catch (PersistenciaException pe) {
             throw new NegocioException(pe.getMessage());
         }
     }
 
+    @Override
+    public UsuarioDTO obtenerUsuarioPorCorreo(String correo) throws NegocioException {
+        try {
+            return UsuarioAdapter.entidadADTO(usuarioDAO.obtenerPorCorreo(correo));
+        } catch (PersistenciaException pe) {
+            throw new NegocioException(pe.getMessage());
+        }
+    }
+
+    @Override
+    public boolean restarCreditos(Integer cantidad, String idUsuario) throws NegocioException {
+        try {
+            return usuarioDAO.restarCreditos(idUsuario, cantidad);
+        } catch (PersistenciaException pe) {
+            throw new NegocioException(pe.getMessage());
+        }
+    }
 }

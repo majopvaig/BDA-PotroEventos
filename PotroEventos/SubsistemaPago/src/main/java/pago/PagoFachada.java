@@ -3,6 +3,8 @@ package pago;
 import adaptadores.BancoAdapter;
 import dtos.CobroDTO;
 import dtos.PagoDTO;
+import dtos.ReembolsoDTO;
+import dtos.RefundDTO;
 import dtos.TarjetaDTO;
 import excepciones.PagoException;
 import java.util.logging.Level;
@@ -61,5 +63,12 @@ public class PagoFachada implements IPago {
             LOG.log(Level.SEVERE, "Error al procesar pago en fachada.", ex);
             throw ex;
         }
+    }
+    
+    @Override
+    public ReembolsoDTO regresarDinero(String idTransaccion) throws PagoException {
+        RefundDTO reembolso = control.crearReembolso(idTransaccion);
+        LOG.log(Level.INFO, "Reembolso procesado correctamente.");
+        return BancoAdapter.infraestructuraADTO(reembolso);
     }
 }

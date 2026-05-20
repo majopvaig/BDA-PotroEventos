@@ -48,14 +48,23 @@ public class EventoBO implements IEventoBO {
             throw new NegocioException(ex.getMessage());
         }
     }
-    
+
     @Override
     public boolean reducirDisponibilidadEvento(String id) throws NegocioException {
-        try{
+        try {
             return eventoDAO.reducirDisponibilidad(id);
-        } catch(PersistenciaException ex){
+        } catch (PersistenciaException ex) {
             throw new NegocioException(ex.getMessage());
         }
     }
-    
+
+    @Override
+    public boolean aumentarDisponibilidadEvento(String idEvento) throws NegocioException {
+        try {
+            return eventoDAO.aumentarDisponibilidad(idEvento);
+        } catch (PersistenciaException pe) {
+            throw new NegocioException(pe.getMessage());
+        }
+    }
+
 }

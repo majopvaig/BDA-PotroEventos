@@ -10,6 +10,7 @@ import interfaces.IAsientoBO;
 import interfaces.IAsientoEventoBO;
 import interfaces.IReservacionBO;
 import interfaces.ISeccionBO;
+import interfaces.IUsuarioBO;
 import itson.IITSON;
 import java.io.File;
 import java.nio.file.Files;
@@ -39,6 +40,7 @@ public class ControlCompraBoleto{
     private final IAsientoBO asientoBO;
     private final IAsientoEventoBO asientoEventoBO;
     private final IReservacionBO reservacionBO;
+    private final IUsuarioBO usuarioBO;
     private final IPago controlPago;
     private final IITSON controlItson;
 
@@ -60,6 +62,7 @@ public class ControlCompraBoleto{
         this.asientoBO = AsientoBO.getInstance();
         this.asientoEventoBO = AsientoEventoBO.getInstance();
         this.reservacionBO = ReservacionBO.getInstance();
+        this.usuarioBO = UsuarioBO.getInstance();
         this.controlPago = new PagoFachada();
         this.controlItson = new FachadaITSON();
 
@@ -257,6 +260,17 @@ public class ControlCompraBoleto{
                 reservacionBO.agregarReservacion(reservacion);
                 return true;
             }
+            
+            if (reservacion.getPago() != null) {
+                System.out.println((int) (totalCompra / 100.0 * 2));
+                if (usuarioBO.restarCreditos((int) (totalCompra / 100.0 * 2), reservacion.getUsuario().getIdUsuario())) {
+                    asientoEventoBO.venderAsiento(reservacion.getBoleto().getAsiento().getIdAsientoEvento());
+                    reservacionBO.agregarReservacion(reservacion);
+                    return true;
+                }
+                return false;
+            }
+            
             this.asientosPendientesCompra = new ArrayList<>(asientosSeleccionados);
             this.totalPendienteCompra = totalCompra;
 

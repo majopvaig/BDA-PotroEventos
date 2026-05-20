@@ -20,4 +20,9 @@ public interface IUsuarioBO {
     public RegistroUsuarioDTO iniciarSesion(LoginDTO sesion) throws NegocioException;
     
     public UsuarioDTO obtenerUsuarioPorCorreo(String correo) throws NegocioException;
+    
+    public boolean restarCreditos(Integer cantidad, String idUsuario) throws NegocioException;
+    
+    public boolean aumentarCreditos(Integer cantidad, String idUsuario) throws NegocioException;
+
 }

@@ -2,6 +2,7 @@ package pago;
 
 import dtos.CobroDTO;
 import dtos.PagoDTO;
+import dtos.ReembolsoDTO;
 import dtos.TarjetaDTO;
 import excepciones.PagoException;
 
@@ -27,4 +28,6 @@ public interface IPago {
      * @throws PagoException si ocurre un error durante el proceso
      */
     PagoDTO procesarPago(TarjetaDTO tarjetaDTO, CobroDTO cobroDTO) throws PagoException;
+    
+    ReembolsoDTO regresarDinero(String idTransaccion) throws PagoException;
 }

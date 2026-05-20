@@ -28,7 +28,6 @@ public class ReservacionPersistenciaAdapter {
         }
         
         ReservacionMongoEntidad mongo = new ReservacionMongoEntidad();
-        
         mongo.setId(convertirStringAObjectId(dominio.getIdReservacion()));
         mongo.setTotal(dominio.getTotal());
         mongo.setBoleto(BoletoPersistenciaAdapter.convertirAMongo(dominio.getBoleto()));
@@ -49,6 +48,10 @@ public class ReservacionPersistenciaAdapter {
             mongo.setFechaRegistro(dominio.getFechaHora());
         }
         mongo.setEstado(dominio.getEstado().name());
+        
+        if(dominio.getDevolucion() != null){
+            mongo.setDevolucion(DevolucionPersistenciaAdapter.convertirAMongo(dominio.getDevolucion()));
+        }
         
         return mongo;
     }
@@ -80,6 +83,11 @@ public class ReservacionPersistenciaAdapter {
                 .atZone(ZoneId.systemDefault())
                 .toLocalDateTime());
         dominio.setEstado(ReservacionEstado.valueOf(mongo.getString("estado")));
+        
+        Document devolucion = (Document) mongo.get("devolucion");
+        if(devolucion != null){
+            dominio.setDevolucion(DevolucionPersistenciaAdapter.convertirADominio(devolucion));
+        } 
         
         return dominio;
     }

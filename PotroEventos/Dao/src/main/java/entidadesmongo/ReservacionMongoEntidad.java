@@ -25,20 +25,22 @@ public class ReservacionMongoEntidad {
     private UsuarioResumenMongo usuario;
     private LocalDateTime fechaRegistro;
     private String estado;
+    private DevolucionMongoEntidad devolucion;
 
     public ReservacionMongoEntidad() {
     }
 
-    public ReservacionMongoEntidad(double total, BoletoMongoEntidad boleto, PagoMongoEntidad pago, UsuarioResumenMongo usuario, LocalDateTime fechaRegistro, String estado) {
+    public ReservacionMongoEntidad(double total, BoletoMongoEntidad boleto, PagoMongoEntidad pago, UsuarioResumenMongo usuario, LocalDateTime fechaRegistro, String estado, DevolucionMongoEntidad devolucion) {
         this.total = total;
         this.boleto = boleto;
         this.pago = pago;
         this.usuario = usuario;
         this.fechaRegistro = fechaRegistro;
         this.estado = estado;
+        this.devolucion = devolucion;
     }
 
-    public ReservacionMongoEntidad(ObjectId id, double total, BoletoMongoEntidad boleto, PagoMongoEntidad pago, UsuarioResumenMongo usuario, LocalDateTime fechaRegistro, String estado) {
+    public ReservacionMongoEntidad(ObjectId id, double total, BoletoMongoEntidad boleto, PagoMongoEntidad pago, UsuarioResumenMongo usuario, LocalDateTime fechaRegistro, String estado, DevolucionMongoEntidad devolucion) {
         this.id = id;
         this.total = total;
         this.boleto = boleto;
@@ -46,6 +48,7 @@ public class ReservacionMongoEntidad {
         this.usuario = usuario;
         this.fechaRegistro = fechaRegistro;
         this.estado = estado;
+        this.devolucion = devolucion;
     }
 
     public ObjectId getId() {
@@ -112,6 +115,14 @@ public class ReservacionMongoEntidad {
         this.estado = estado;
     }
 
+    public DevolucionMongoEntidad getDevolucion() {
+        return devolucion;
+    }
+
+    public void setDevolucion(DevolucionMongoEntidad devolucion) {
+        this.devolucion = devolucion;
+    }
+
     @Override
     public String toString() {
         return "ReservacionMongoEntidad{" 
@@ -122,6 +133,7 @@ public class ReservacionMongoEntidad {
                 + ", usuario=" + usuario 
                 + ", fechaRegistro=" + fechaRegistro 
                 + ", estado=" + estado 
+                + ", devolucion=" + devolucion
                 + '}';
     }
     

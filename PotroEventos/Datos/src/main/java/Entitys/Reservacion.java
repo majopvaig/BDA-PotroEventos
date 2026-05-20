@@ -20,11 +20,12 @@ public class Reservacion {
     private Usuario usuario;
     private LocalDateTime fechaHora;
     private ReservacionEstado estado;
+    private Devolucion devolucion;
 
     public Reservacion() {
     }
 
-    public Reservacion(String idReservacion, Double total, Boleto boleto, Pago pago, Usuario usuario, LocalDateTime fechaHora, ReservacionEstado estado) {
+    public Reservacion(String idReservacion, Double total, Boleto boleto, Pago pago, Usuario usuario, LocalDateTime fechaHora, ReservacionEstado estado, Devolucion devolucion) {
         this.idReservacion = idReservacion;
         this.total = total;
         this.boleto = boleto;
@@ -32,15 +33,17 @@ public class Reservacion {
         this.usuario = usuario;
         this.fechaHora = fechaHora;
         this.estado = estado;
+        this.devolucion = devolucion;
     }
 
-    public Reservacion(Double total, Boleto boleto, Pago pago, Usuario usuario, LocalDateTime fechaHora, ReservacionEstado estado) {
+    public Reservacion(Double total, Boleto boleto, Pago pago, Usuario usuario, LocalDateTime fechaHora, ReservacionEstado estado, Devolucion devolucion) {
         this.total = total;
         this.boleto = boleto;
         this.pago = pago;
         this.usuario = usuario;
         this.fechaHora = fechaHora;
         this.estado = estado;
+        this.devolucion = devolucion;
     }
 
     public String getIdReservacion() {
@@ -98,5 +101,13 @@ public class Reservacion {
     public void setEstado(ReservacionEstado estado) {
         this.estado = estado;
     }
-    
+
+    public Devolucion getDevolucion() {
+        return devolucion;
+    }
+
+    public void setDevolucion(Devolucion devolucion) {
+        this.devolucion = devolucion;
+    }
+  
 }

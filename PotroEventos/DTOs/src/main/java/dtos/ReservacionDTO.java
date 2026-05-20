@@ -20,11 +20,12 @@ public class ReservacionDTO {
     private UsuarioDTO usuario;
     private LocalDateTime fechaHora;
     private ReservacionEstadoDTO estado;
+    private DevolucionDTO devolucion;
 
     public ReservacionDTO() {
     }
 
-    public ReservacionDTO(String idReservacion, Double total, BoletoDTO boleto, PagoDTO pago, UsuarioDTO usuario, LocalDateTime fechaHora, ReservacionEstadoDTO estado) {
+    public ReservacionDTO(String idReservacion, Double total, BoletoDTO boleto, PagoDTO pago, UsuarioDTO usuario, LocalDateTime fechaHora, ReservacionEstadoDTO estado, DevolucionDTO devolucion) {
         this.idReservacion = idReservacion;
         this.total = total;
         this.boleto = boleto;
@@ -32,15 +33,17 @@ public class ReservacionDTO {
         this.usuario = usuario;
         this.fechaHora = fechaHora;
         this.estado = estado;
+        this.devolucion = devolucion;
     }
 
-    public ReservacionDTO(Double total, BoletoDTO boleto, PagoDTO pago, UsuarioDTO usuario, LocalDateTime fechaHora, ReservacionEstadoDTO estado) {
+    public ReservacionDTO(Double total, BoletoDTO boleto, PagoDTO pago, UsuarioDTO usuario, LocalDateTime fechaHora, ReservacionEstadoDTO estado, DevolucionDTO devolucion) {
         this.total = total;
         this.boleto = boleto;
         this.pago = pago;
         this.usuario = usuario;
         this.fechaHora = fechaHora;
         this.estado = estado;
+        this.devolucion = devolucion;
     }
 
     public String getIdReservacion() {
@@ -98,4 +101,13 @@ public class ReservacionDTO {
     public void setEstado(ReservacionEstadoDTO estado) {
         this.estado = estado;
     }
+
+    public DevolucionDTO getDevolucion() {
+        return devolucion;
+    }
+
+    public void setDevolucion(DevolucionDTO devolucion) {
+        this.devolucion = devolucion;
+    }
+    
 }

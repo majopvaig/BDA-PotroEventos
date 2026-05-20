@@ -31,7 +31,8 @@ public class ReservacionAdapter {
                 PagoAdapter.convertirADTO(reservacion.getPago()), 
                 UsuarioAdapter.entidadADTO(reservacion.getUsuario()), 
                 reservacion.getFechaHora(), 
-                ReservacionEstadoDTO.valueOf(reservacion.getEstado().name()));
+                ReservacionEstadoDTO.valueOf(reservacion.getEstado().name()),
+                DevolucionAdapter.convertirADTO(reservacion.getDevolucion()));
     }
     
     public static Reservacion dtoAEntidad(ReservacionDTO reservacion){
@@ -46,7 +47,8 @@ public class ReservacionAdapter {
                 PagoAdapter.convertirAEntidad(reservacion.getPago()),
                 UsuarioAdapter.dtoAEntidad(reservacion.getUsuario()),
                 reservacion.getFechaHora(),
-                ReservacionEstado.valueOf(reservacion.getEstado().name())
+                ReservacionEstado.valueOf(reservacion.getEstado().name()),
+                DevolucionAdapter.convertirAEntidad(reservacion.getDevolucion())
         );
     }
     
