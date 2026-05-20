@@ -5,10 +5,12 @@
 package Pantallas;
 
 import Controlador.interfaz.ICoordinadorAplicacion;
+import dtos.EmpleadoDTO;
 import dtos.LoginDTO;
 import dtos.UsuarioDTO;
 import excepciones.CoordinadorException;
 import java.awt.Color;
+import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 import utilerias.BotonUtileria;
 
@@ -20,9 +22,9 @@ import utilerias.BotonUtileria;
  * @author María Valdez - 262775
  */
 public class FrmInicioSesion extends javax.swing.JFrame {
-    
+
     private ICoordinadorAplicacion coordinador;
-    
+
     /**
      * Creates new form frmInicioSesion
      *
@@ -33,7 +35,7 @@ public class FrmInicioSesion extends javax.swing.JFrame {
         initComponents();
         BotonUtileria.estilizarBoton(btnIngresar);
     }
-    
+
     private void mostrarMensaje(String message) {
         JOptionPane.showMessageDialog(null, message, "Advertencia", JOptionPane.WARNING_MESSAGE);
     }
@@ -234,28 +236,53 @@ public class FrmInicioSesion extends javax.swing.JFrame {
         try {
             String correo = txtCorreo.getText();
             String contrasenia = String.valueOf(txtContrasenia.getPassword());
+
             if (correo.equals("Ingrese un correo") || contrasenia.equals("********************")) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Por favor complete todos los campos.");
                 return;
             }
+
             LoginDTO login = new LoginDTO(correo, contrasenia);
             UsuarioDTO usuario = coordinador.iniciarSesion(login);
+
             if (usuario != null) {
+
                 javax.swing.JOptionPane.showMessageDialog(this, "Bienvenido " + usuario.getNombre());
-                if(!coordinador.setUsuarioSesion(usuario)){
-                    JOptionPane.showMessageDialog(this, "No se pudo asociar al usuario en la sesión.");
-                    return;
-                }
                 coordinador.mostrarInicio();
                 this.dispose();
+
             } else {
-                javax.swing.JOptionPane.showMessageDialog(this, "Correo o contraseña incorrectos", "Error de acceso", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+                EmpleadoDTO empleado = new EmpleadoDTO(correo, contrasenia);
+
+                try {
+                    // Encerramos la lógica del empleado en su propio try-catch
+                    EmpleadoDTO empleadoObtenido = coordinador.obtenerEmpleado(empleado);
+
+                    if (empleadoObtenido != null) {
+                        javax.swing.JOptionPane.showMessageDialog(
+                                this,
+                                "¡Bienvenido al equipo de PotroEventos!\n\nEsperamos que tengas una excelente jornada de trabajo.",
+                                "Inicio de sesión",
+                                javax.swing.JOptionPane.INFORMATION_MESSAGE
+                        );
+                        coordinador.mostrarConsultarEventos();
+                    } else {
+                        javax.swing.JOptionPane.showMessageDialog(this, "Correo o contraseña incorrectos", "Error de acceso", javax.swing.JOptionPane.ERROR_MESSAGE);
+                    }
+
+                } catch (CoordinadorException | HeadlessException exEmpleado) {
+                    // Si ocurre una excepción al buscar el empleado, la atrapamos aquí.
+                    javax.swing.JOptionPane.showMessageDialog(this, "Correo o contraseña incorrectos", "Error de acceso", javax.swing.JOptionPane.ERROR_MESSAGE);
+                }
             }
+
         } catch (CoordinadorException ex) {
+            // Este catch ahora solo mostrará excepciones que vengan de iniciarSesion (Usuario)
             mostrarMensaje(ex.getMessage());
         }
     }//GEN-LAST:event_btnIngresarActionPerformed
-    
+
     public void limpiarCampos() {
         txtCorreo.setText("Ingrese un correo");
         txtCorreo.setForeground(new java.awt.Color(153, 153, 153));

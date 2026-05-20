@@ -9,5 +9,6 @@ package Entitys.ENUMS;
  */
 public enum EstadoBoleto {
     ACTIVO,
-    CANCELADO
+    CANCELADO,
+    USADO
 }

@@ -35,14 +35,18 @@ public class ControlInicioSesion {
     }
 
     protected UsuarioDTO iniciarSesion(LoginDTO login) throws InicioSesionException {
-        RegistroUsuarioDTO registroRecuperado;
         try {
-            registroRecuperado = usuarioBO.iniciarSesion(login);
+            RegistroUsuarioDTO registroRecuperado = usuarioBO.iniciarSesion(login);
+            if (registroRecuperado == null) {
+                return null;
+            }
+
             if (!BCrypt.checkpw(login.getContrasenia(), registroRecuperado.getContrasenia())) {
                 throw new InicioSesionException("La contraseña o el correo es incorrecto.");
             }
-            UsuarioDTO usuarioDTO = usuarioBO.obtenerUsuarioPorCorreo(registroRecuperado.getCorreo());
-            return usuarioDTO;
+
+            return usuarioBO.obtenerUsuarioPorCorreo(registroRecuperado.getCorreo());
+
         } catch (NegocioException ex) {
             throw new InicioSesionException(ex.getMessage());
         }

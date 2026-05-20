@@ -686,7 +686,7 @@ public class PnlConsultarEvento extends javax.swing.JPanel {
             // 2. Generar la ruta del QR usando ese token
             String rutaQR = coordinador.generarQR(evento, null, tokenNuevo);
 
-            BoletoDTO boletoGratis = new BoletoDTO(rutaQR, EstadoBoletoDTO.ACTIVO, evento, null, tokenNuevo);
+            BoletoDTO boletoGratis = new BoletoDTO(rutaQR, 0.0, EstadoBoletoDTO.ACTIVO, evento, null, tokenNuevo);
 
             reservacionParcial.setBoleto(boletoGratis);
             reservacionParcial.setPago(null);
@@ -720,7 +720,7 @@ public class PnlConsultarEvento extends javax.swing.JPanel {
                 asientosSeleccionados.get(0).getAsiento(),
                 asientosSeleccionados.get(0).getEvento()
         );
-        
+
         // en el peor d los casos esto puede ser comentareado!
         int opcion = JOptionPane.showConfirmDialog(this, "¿Desea pagar con créditos de la aplicación?");
 
@@ -732,12 +732,11 @@ public class PnlConsultarEvento extends javax.swing.JPanel {
             reservacionParcial.setPago(
                     new PagoDTO(null, LocalDateTime.now(), total.doubleValue() * 2, "CREDITO")
             );
-            
+
             reservacionParcial.setUsuario(coordinador.getUsuarioSesion());
             String tokenPago = UUID.randomUUID().toString();
             String rutaQR = coordinador.generarQR(evento, asientoDTO, tokenPago);
-            BoletoDTO boleto = new BoletoDTO(rutaQR, EstadoBoletoDTO.ACTIVO, evento, asientoDTO, tokenPago);
-            reservacionParcial.setTotal(totalCompra.doubleValue()*2);
+            BoletoDTO boleto = new BoletoDTO(rutaQR, totalCompra.doubleValue() * 2, EstadoBoletoDTO.ACTIVO, evento, asientoDTO, tokenPago);
             reservacionParcial.setFechaHora(LocalDateTime.now());
             reservacionParcial.setEstado(ReservacionEstadoDTO.ACTIVA);
             reservacionParcial.setBoleto(boleto);
@@ -762,7 +761,7 @@ public class PnlConsultarEvento extends javax.swing.JPanel {
         String rutaQR = coordinador.generarQR(evento, asientoDTO, tokenPago);
 
         // 3. Crear DTO
-        BoletoDTO boleto = new BoletoDTO(rutaQR, EstadoBoletoDTO.ACTIVO, evento, asientoDTO, tokenPago);
+        BoletoDTO boleto = new BoletoDTO(rutaQR, totalCompra.doubleValue(), EstadoBoletoDTO.ACTIVO, evento, asientoDTO, tokenPago);
 
         reservacionParcial.setBoleto(boleto);
 

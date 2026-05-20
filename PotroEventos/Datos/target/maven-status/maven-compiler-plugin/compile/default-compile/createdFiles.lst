@@ -13,6 +13,8 @@ Entitys\ENUMS\TipoDevolucionP.class
 Entitys\ENUMS\TipoUbicacionP.class
 Entitys\Reembolso.class
 Entitys\Seccion.class
+Entitys\Empleado.class
+Entitys\Asistencia.class
 Entitys\ENUMS\CategoriaEvento.class
 Entitys\ENUMS\TipoEventoP.class
 Entitys\Devolucion.class
