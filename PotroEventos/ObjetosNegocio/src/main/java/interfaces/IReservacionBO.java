@@ -4,6 +4,7 @@
  */
 package interfaces;
 
+import dtos.DevolucionDTO;
 import dtos.ReservacionDTO;
 import excepciones.NegocioException;
 import java.util.List;
@@ -18,4 +19,5 @@ public interface IReservacionBO {
     
     List<ReservacionDTO> obtenerReservacionesUsuario(String idUsuario) throws NegocioException;
     
+    boolean cancelarReservacion(DevolucionDTO devolucion, String idReservacion) throws NegocioException;
 }

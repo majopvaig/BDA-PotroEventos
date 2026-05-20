@@ -5,8 +5,6 @@
 package gestionEvento;
 
 import dtos.CategoriaDTO;
-import dtos.ENUMS.CategoriaEventoDTO;
-import dtos.ENUMS.EstadoEventoDTO;
 import dtos.EventoDTO;
 import excepciones.GestionEventoException;
 import excepciones.NegocioException;
@@ -41,13 +39,8 @@ public class ControlGestionEvento {
         return instance;
     }
 
-    protected EventoDTO consultarEvento(String idEvento) {
-        for (EventoDTO e : listaEventos) {
-            if (e.getIdEvento() == idEvento) {
-                return e;
-            }
-        }
-        return null;
+    protected EventoDTO consultarEvento(String idEvento) throws NegocioException {
+        return eventoBO.obtenerEventoPorId(idEvento);
     }
 
     protected List<EventoDTO> consultarEventosPorCategoria(CategoriaDTO categoria) throws NegocioException {
@@ -59,6 +52,22 @@ public class ControlGestionEvento {
             return categoriaBO.consultarCategorias();
         } catch (NegocioException ex) {
             throw new GestionEventoException(ex.getMessage());
+        }
+    }
+    
+    protected boolean aumentarCapacidad(String idEvento) throws GestionEventoException {
+        try {
+            return eventoBO.aumentarDisponibilidadEvento(idEvento);
+        } catch (NegocioException ne) {
+            throw new GestionEventoException(ne.getMessage());
+        }
+    }
+    
+    protected boolean reducirCapacidad(String idEvento) throws GestionEventoException {
+        try{
+            return eventoBO.reducirDisponibilidadEvento(idEvento);
+        } catch(NegocioException ne){
+            throw new GestionEventoException(ne.getMessage());
         }
     }
 }

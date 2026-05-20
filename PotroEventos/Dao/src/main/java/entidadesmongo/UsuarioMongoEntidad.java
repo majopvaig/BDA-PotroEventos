@@ -22,25 +22,28 @@ public class UsuarioMongoEntidad {
     private String apellidoMaterno;
     private String correo;
     private String contrasenia;
+    private int creditos;
 
     public UsuarioMongoEntidad() {
     }
 
-    public UsuarioMongoEntidad(String nombre, String apellidoPaterno, String apellidoMaterno, String correo, String contrasenia) {
+    public UsuarioMongoEntidad(String nombre, String apellidoPaterno, String apellidoMaterno, String correo, String contrasenia, int creditos) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.correo = correo;
         this.contrasenia = contrasenia;
+        this.creditos = creditos;
     }
 
-    public UsuarioMongoEntidad(ObjectId id, String nombre, String apellidoPaterno, String apellidoMaterno, String correo, String contrasenia) {
+    public UsuarioMongoEntidad(ObjectId id, String nombre, String apellidoPaterno, String apellidoMaterno, String correo, String contrasenia, int creditos) {
         this.id = id;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.correo = correo;
         this.contrasenia = contrasenia;
+        this.creditos = creditos;
     }
 
     public ObjectId getId() {
@@ -99,6 +102,14 @@ public class UsuarioMongoEntidad {
         this.contrasenia = contrasenia;
     }
 
+    public int getCreditos() {
+        return creditos;
+    }
+
+    public void setCreditos(int creditos) {
+        this.creditos = creditos;
+    }
+
     @Override
     public String toString() {
         return "UsuarioMongoEntidad{" 
@@ -107,6 +118,7 @@ public class UsuarioMongoEntidad {
                 + ", apellidoPaterno=" + apellidoPaterno 
                 + ", apellidoMaterno=" + apellidoMaterno 
                 + ", correo=" + correo 
+                + ", créditos=" + creditos
                 + '}';
     }
     

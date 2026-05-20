@@ -19,4 +19,6 @@ public interface IEventoBO {
     EventoDTO obtenerEventoPorId(String id) throws NegocioException;
     
     boolean reducirDisponibilidadEvento(String id) throws NegocioException;
+    
+    boolean aumentarDisponibilidadEvento(String idEvento) throws NegocioException;
 }

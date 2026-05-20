@@ -88,4 +88,7 @@ public interface ICoordinadorAplicacion {
     boolean validarCredenciales(UsuarioInstitucionalDTO credenciales);
     
     boolean isUsuarioITSONRegistrado();
+    
+    // lo agregó la majo
+    void cancelarReservacion(ReservacionDTO reservacion);
 }

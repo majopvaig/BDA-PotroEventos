@@ -12,15 +12,15 @@ import dtos.UsuarioDTO;
  */
 import dtos.LoginDTO;
 import dtos.RegistroUsuarioDTO;
+import excepciones.InicioSesionException;
 import excepciones.NegocioException;
 import interfaces.IUsuarioBO;
 import objetosNegocio.UsuarioBO;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class ControlInicioSesion {
 
     private static ControlInicioSesion instance;
-
-    private UsuarioDTO usuario;
 
     private final IUsuarioBO usuarioBO = UsuarioBO.getInstance();
 
@@ -34,11 +34,18 @@ public class ControlInicioSesion {
         return instance;
     }
 
-    protected UsuarioDTO iniciarSesion(LoginDTO login) throws NegocioException {
-        if (verificarUsuario(login)) {
-
+    protected UsuarioDTO iniciarSesion(LoginDTO login) throws InicioSesionException {
+        RegistroUsuarioDTO registroRecuperado;
+        try {
+            registroRecuperado = usuarioBO.iniciarSesion(login);
+            if (!BCrypt.checkpw(login.getContrasenia(), registroRecuperado.getContrasenia())) {
+                throw new InicioSesionException("La contraseña o el correo es incorrecto.");
+            }
+            UsuarioDTO usuarioDTO = usuarioBO.obtenerUsuarioPorCorreo(registroRecuperado.getCorreo());
+            return usuarioDTO;
+        } catch (NegocioException ex) {
+            throw new InicioSesionException(ex.getMessage());
         }
-        return usuarioBO.obtenerUsuario(login);
     }
 
     protected boolean verificarUsuario(LoginDTO login) {
@@ -48,25 +55,12 @@ public class ControlInicioSesion {
         return true;
     }
 
-    /*
-    no se usa, denle cuello
-    */
-    protected void registrarSesion(UsuarioDTO usuario) {
-        this.usuario = usuario;
-    }
-
-    protected void eliminarSesion() {
-        this.usuario = null;
-    }
-
-    /*
-    ni se usa, denle cuello x2
-    */
-    protected UsuarioDTO obtenerUsuarioActual() {
-        return usuario;
-    }
-
-    protected UsuarioDTO registrarUsuario(RegistroUsuarioDTO usuario) throws NegocioException {
-        return usuarioBO.guardarUsuario(usuario);
+    protected UsuarioDTO registrarUsuario(RegistroUsuarioDTO usuario) throws InicioSesionException {
+        usuario.setContrasenia(BCrypt.hashpw(usuario.getContrasenia(), BCrypt.gensalt()));
+        try {
+            return usuarioBO.guardarUsuario(usuario);
+        } catch (NegocioException ex) {
+            throw new InicioSesionException(ex.getMessage());
+        }
     }
 }

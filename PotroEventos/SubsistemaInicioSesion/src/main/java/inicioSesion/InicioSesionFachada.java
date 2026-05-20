@@ -8,7 +8,6 @@ import dtos.LoginDTO;
 import dtos.RegistroUsuarioDTO;
 import dtos.UsuarioDTO;
 import excepciones.InicioSesionException;
-import excepciones.NegocioException;
 
 /**
  *
@@ -36,25 +35,15 @@ public class InicioSesionFachada implements IFachadaInicioSesion {
 
     @Override
     public UsuarioDTO iniciarSesion(LoginDTO login) throws InicioSesionException {
-        try {
-            return control.iniciarSesion(login);
-        } catch (NegocioException ex) {
-            throw new InicioSesionException(ex.getMessage());
-        }
-    }
+        return control.iniciarSesion(login);
 
-    @Override
-    public void cerrarSesion() {
-        control.eliminarSesion();
     }
 
     @Override
     public UsuarioDTO registrarUsuario(RegistroUsuarioDTO usuario) throws InicioSesionException {
-        try {
-            return control.registrarUsuario(usuario);
-        } catch (NegocioException ex) {
-            throw new InicioSesionException(ex.getMessage());
-        }
+
+        return control.registrarUsuario(usuario);
+
     }
 
 }

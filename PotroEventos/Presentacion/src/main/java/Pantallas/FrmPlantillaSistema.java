@@ -32,7 +32,13 @@ public class FrmPlantillaSistema extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         jpnlContenedor.setLayout(new GridLayout(0, 3, 10, 10));
-
+        if(coordinador.getUsuarioSesion().getCreditos() != null){
+            txtCreditos.setText(coordinador.getUsuarioSesion().getCreditos().toString());
+        }
+    }
+    
+    public void setCreditos(String creditos){
+        txtCreditos.setText(creditos);
     }
 
     public void ocultarConsultar() {
@@ -100,6 +106,9 @@ public class FrmPlantillaSistema extends javax.swing.JFrame {
         btnConsultar = new javax.swing.JButton();
         botonInicio1 = new javax.swing.JButton();
         btnCerrarSesion = new javax.swing.JButton();
+        lblCreditosN = new javax.swing.JLabel();
+        txtCreditos = new javax.swing.JLabel();
+        iconCreditos = new javax.swing.JLabel();
         jpnlContenedor = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -162,6 +171,17 @@ public class FrmPlantillaSistema extends javax.swing.JFrame {
             }
         });
 
+        lblCreditosN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblCreditosN.setForeground(new java.awt.Color(255, 255, 255));
+        lblCreditosN.setText("Créditos:");
+
+        txtCreditos.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        txtCreditos.setForeground(new java.awt.Color(255, 255, 255));
+        txtCreditos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtCreditos.setText("-");
+
+        iconCreditos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/creditos.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanelAzulOscuroLayout = new javax.swing.GroupLayout(jPanelAzulOscuro);
         jPanelAzulOscuro.setLayout(jPanelAzulOscuroLayout);
         jPanelAzulOscuroLayout.setHorizontalGroup(
@@ -172,17 +192,26 @@ public class FrmPlantillaSistema extends javax.swing.JFrame {
                 .addGap(54, 54, 54)
                 .addComponent(btnConsultar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(iconCreditos, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblCreditosN)
+                .addGap(28, 28, 28)
+                .addComponent(txtCreditos, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(162, 162, 162)
                 .addComponent(btnCerrarSesion)
                 .addGap(18, 18, 18))
         );
         jPanelAzulOscuroLayout.setVerticalGroup(
             jPanelAzulOscuroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelAzulOscuroLayout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addGroup(jPanelAzulOscuroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnConsultar)
-                    .addComponent(botonInicio1)
-                    .addComponent(btnCerrarSesion))
+                .addGroup(jPanelAzulOscuroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(iconCreditos)
+                    .addGroup(jPanelAzulOscuroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnConsultar)
+                        .addComponent(botonInicio1)
+                        .addComponent(btnCerrarSesion)
+                        .addComponent(lblCreditosN)
+                        .addComponent(txtCreditos)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -271,10 +300,13 @@ public class FrmPlantillaSistema extends javax.swing.JFrame {
     private javax.swing.JButton botonInicio1;
     private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnConsultar;
+    private javax.swing.JLabel iconCreditos;
     private javax.swing.JPanel jPanelAzul;
     private javax.swing.JPanel jPanelAzulOscuro;
     private javax.swing.JPanel jPanelBase;
     private javax.swing.JPanel jpnlContenedor;
+    private javax.swing.JLabel lblCreditosN;
     private javax.swing.JLabel textPotroEventos;
+    private javax.swing.JLabel txtCreditos;
     // End of variables declaration//GEN-END:variables
 }

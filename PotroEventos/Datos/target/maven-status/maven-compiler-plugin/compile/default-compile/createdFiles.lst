@@ -9,9 +9,13 @@ Entitys\ENUMS\EstadoBoleto.class
 Entitys\ENUMS\EstadoEvento.class
 Entitys\Categoria.class
 Entitys\AsientoEvento.class
+Entitys\ENUMS\TipoDevolucionP.class
 Entitys\ENUMS\TipoUbicacionP.class
+Entitys\Reembolso.class
 Entitys\Seccion.class
 Entitys\ENUMS\CategoriaEvento.class
 Entitys\ENUMS\TipoEventoP.class
+Entitys\Devolucion.class
 Entitys\ENUMS\EstadoAsiento.class
+Entitys\ENUMS\MotivoDevolucionP.class
 Entitys\Usuario.class

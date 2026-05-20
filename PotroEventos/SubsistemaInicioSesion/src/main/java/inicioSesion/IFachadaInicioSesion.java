@@ -21,7 +21,5 @@ public interface IFachadaInicioSesion {
     //inicia sesion
     public UsuarioDTO iniciarSesion(LoginDTO login) throws InicioSesionException;
 
-    public void cerrarSesion();
-
     public UsuarioDTO registrarUsuario(RegistroUsuarioDTO usuario) throws InicioSesionException;
 }

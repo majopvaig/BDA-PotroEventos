@@ -50,6 +50,10 @@ public class ControlGestionUsuarios {
         }
     }
 
+    protected void cerrarSesion() {
+        usuarioActivo = null;
+    }
+
     protected List<ReservacionDTO> obtenerReservacionUsuario(String idUsuario) throws GestionUsuarioException {
         try {
             return reservacionBO.obtenerReservacionesUsuario(idUsuario);

@@ -41,11 +41,27 @@ public class UsuarioBO implements IUsuarioBO {
 
             UsuarioDTO usuarioBaseDatos = UsuarioAdapter.entidadADTO(usuarioDAO.obtenerUsuario(UsuarioAdapter.dtoLoginAEntidad(sesion)));
 
-            if(usuarioBaseDatos == null){
+            if (usuarioBaseDatos == null) {
                 return null;
             }
-            
+
             return usuarioBaseDatos;
+        } catch (PersistenciaException ex) {
+            throw new NegocioException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public RegistroUsuarioDTO iniciarSesion(LoginDTO sesion) throws NegocioException {
+        try {
+
+            RegistroUsuarioDTO registro = UsuarioAdapter.registroEntidadADto(usuarioDAO.obtenerUsuario(UsuarioAdapter.dtoLoginAEntidad(sesion)));
+
+            if (registro == null) {
+                return null;
+            }
+
+            return registro;
         } catch (PersistenciaException ex) {
             throw new NegocioException(ex.getMessage());
         }
@@ -69,4 +85,30 @@ public class UsuarioBO implements IUsuarioBO {
         }
     }
 
+    @Override
+    public boolean aumentarCreditos(Integer cantidad, String idUsuario) throws NegocioException {
+        try {
+            return usuarioDAO.aumentarCreditos(idUsuario, cantidad);
+        } catch (PersistenciaException pe) {
+            throw new NegocioException(pe.getMessage());
+        }
+    }
+
+    @Override
+    public UsuarioDTO obtenerUsuarioPorCorreo(String correo) throws NegocioException {
+        try {
+            return UsuarioAdapter.entidadADTO(usuarioDAO.obtenerPorCorreo(correo));
+        } catch (PersistenciaException pe) {
+            throw new NegocioException(pe.getMessage());
+        }
+    }
+
+    @Override
+    public boolean restarCreditos(Integer cantidad, String idUsuario) throws NegocioException {
+        try {
+            return usuarioDAO.restarCreditos(idUsuario, cantidad);
+        } catch (PersistenciaException pe) {
+            throw new NegocioException(pe.getMessage());
+        }
+    }
 }

@@ -58,8 +58,13 @@ public class PnlEvento extends Panel {
         // Le pasamos la reservación y true al modoConsulta
         return new PnlEvento(reservacion.getBoleto().getEvento(), reservacion, padre, true, coordinador);
     }
+    
+    public void mostrarBotonCancelar(){
+        btnCancelar.setVisible(true);
+    }
 
     private void cargarEvento() {
+        btnCancelar.setVisible(false);
         if (modoConsulta) {
             if (reservacion.getBoleto().getEvento().getUrlImagen() != null && !reservacion.getBoleto().getEvento().getUrlImagen().isEmpty()) {
 
@@ -133,6 +138,7 @@ public class PnlEvento extends Panel {
         lblUbicacion = new javax.swing.JLabel();
         iconEvento = new javax.swing.JLabel();
         btnMostrar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(221, 212, 212));
         setMaximumSize(new java.awt.Dimension(270, 188));
@@ -156,23 +162,33 @@ public class PnlEvento extends Panel {
         btnMostrar.setText("Mostrar Información");
         btnMostrar.addActionListener(this::btnMostrarActionPerformed);
 
+        btnCancelar.setBackground(new java.awt.Color(255, 0, 0));
+        btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
+        btnCancelar.setText("Cancelar");
+        btnCancelar.setBorderPainted(false);
+        btnCancelar.addActionListener(this::btnCancelarActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(iconEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(lblFechaHora, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
-                    .addComponent(lblNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblUbicacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(iconEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(lblFechaHora, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
+                            .addComponent(lblNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblUbicacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnMostrar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCancelar)))
                 .addContainerGap(16, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnMostrar)
-                .addGap(19, 19, 19))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,8 +203,12 @@ public class PnlEvento extends Panel {
                         .addGap(18, 18, 18)
                         .addComponent(lblUbicacion)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnMostrar)
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnMostrar)
+                        .addGap(0, 2, Short.MAX_VALUE))
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -200,8 +220,13 @@ public class PnlEvento extends Panel {
         }
     }//GEN-LAST:event_btnMostrarActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        coordinador.cancelarReservacion(reservacion);
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnMostrar;
     private javax.swing.JLabel iconEvento;
     private javax.swing.JLabel lblFechaHora;

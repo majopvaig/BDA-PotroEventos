@@ -25,7 +25,7 @@ public class GestionUsuarioFachada implements IGestionUsuariosFachada {
         this.control = new ControlGestionUsuarios();
     }
 
-    // --- Método que regresa el usuario con la sesion activa --- 
+    // --- Método que regresa el usuario con la sesión activa --- 
     @Override
     public UsuarioDTO obtenerUsuarioActivo() throws GestionUsuarioException {
         return control.getUsuarioActivo();
@@ -38,9 +38,14 @@ public class GestionUsuarioFachada implements IGestionUsuariosFachada {
 
     @Override
     public boolean asociarUsuario(UsuarioDTO usuario) throws GestionUsuarioException {
-        if(control.asociarUsuario(usuario) != null){
+        if (control.asociarUsuario(usuario) != null) {
             return true;
         }
         throw new GestionUsuarioException("No se pudo asociar el usuario a la sesión.");
+    }
+
+    @Override
+    public void cerrarSesion() {
+        control.cerrarSesion();
     }
 }

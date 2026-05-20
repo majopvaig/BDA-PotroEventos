@@ -5,6 +5,7 @@
 package daos;
 
 import Entitys.Boleto;
+import Entitys.Devolucion;
 import Entitys.Reservacion;
 import adaptadores.BoletoPersistenciaAdapter;
 import adaptadores.ReservacionPersistenciaAdapter;
@@ -17,7 +18,9 @@ import com.mongodb.client.model.IndexOptions;
 import com.mongodb.client.model.Indexes;
 import com.mongodb.client.model.Projections;
 import com.mongodb.client.model.UnwindOptions;
+import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.InsertOneResult;
+import com.mongodb.client.result.UpdateResult;
 import conexion.ConexionMongo;
 import entidadesmongo.ReservacionMongoEntidad;
 import excepciones.PersistenciaException;
@@ -26,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 /**

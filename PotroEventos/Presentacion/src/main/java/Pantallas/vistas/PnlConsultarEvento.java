@@ -12,6 +12,7 @@ import dtos.ENUMS.EstadoBoletoDTO;
 import dtos.ENUMS.ReservacionEstadoDTO;
 import dtos.ENUMS.TipoEventoN;
 import dtos.EventoDTO;
+import dtos.PagoDTO;
 import dtos.ReservacionDTO;
 import dtos.SeccionDTO;
 import java.awt.Image;
@@ -719,6 +720,40 @@ public class PnlConsultarEvento extends javax.swing.JPanel {
                 asientosSeleccionados.get(0).getAsiento(),
                 asientosSeleccionados.get(0).getEvento()
         );
+        
+        // en el peor d los casos esto puede ser comentareado!
+        int opcion = JOptionPane.showConfirmDialog(this, "¿Desea pagar con créditos de la aplicación?");
+
+        // ================= PAGO CON CRÉDITOS =================
+        if (opcion == JOptionPane.OK_OPTION) {
+
+            Long total = totalCompra;
+
+            reservacionParcial.setPago(
+                    new PagoDTO(null, LocalDateTime.now(), total.doubleValue() * 2, "CREDITO")
+            );
+            
+            reservacionParcial.setUsuario(coordinador.getUsuarioSesion());
+            String tokenPago = UUID.randomUUID().toString();
+            String rutaQR = coordinador.generarQR(evento, asientoDTO, tokenPago);
+            BoletoDTO boleto = new BoletoDTO(rutaQR, EstadoBoletoDTO.ACTIVO, evento, asientoDTO, tokenPago);
+            reservacionParcial.setTotal(totalCompra.doubleValue()*2);
+            reservacionParcial.setFechaHora(LocalDateTime.now());
+            reservacionParcial.setEstado(ReservacionEstadoDTO.ACTIVA);
+            reservacionParcial.setBoleto(boleto);
+
+            boolean exito = coordinador.venderAsientos(asientosSeleccionados, total, false, reservacionParcial);
+
+            if (exito) {
+                JOptionPane.showMessageDialog(this, "Compra realizada con créditos.");
+                coordinador.mostrarDetalles(reservacionParcial);
+                return;
+            } else {
+                JOptionPane.showMessageDialog(this, "No tienes créditos suficientes.");
+                return;
+            }
+
+        }
 
         // 1. Generar token
         String tokenPago = UUID.randomUUID().toString();
