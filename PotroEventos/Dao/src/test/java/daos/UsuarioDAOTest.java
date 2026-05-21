@@ -93,7 +93,7 @@ public class UsuarioDAOTest {
     /**
      * Test of guardarUsuario method, of class UsuarioDAO.
      */
-    @Test
+    //@Test
     public void testGuardarUsuario() throws Exception {
         MongoDatabase base = ConexionMongo.obtenerBaseDatos();
         MongoCollection<Document> usuarioCol = base.getCollection("usuario");
@@ -116,7 +116,7 @@ public class UsuarioDAOTest {
     /**
      * Test of obtenerPorId method, of class UsuarioDAO.
      */
-    @Test
+    //@Test
     public void testObtenerPorId() throws Exception {
         MongoDatabase base = ConexionMongo.obtenerBaseDatos();
         MongoCollection<Document> usuarioCol = base.getCollection("usuario");

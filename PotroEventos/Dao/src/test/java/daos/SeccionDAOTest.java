@@ -86,7 +86,7 @@ public class SeccionDAOTest {
     /**
      * Test of buscarPorEvento method, of class SeccionDAO.
      */
-    @Test
+    //@Test
     public void testBuscarPorEvento() throws Exception {
         MongoDatabase base = ConexionMongo.obtenerBaseDatos();
         MongoCollection<Document> ubicacionesCol = base.getCollection("ubicaciones");

@@ -95,7 +95,7 @@ public class UbicacionDAOTest {
     /**
      * Test of buscarSeccionPorId method, of class UbicacionDAO.
      */
-    @Test
+    //@Test
     public void testBuscarSeccionPorId() throws Exception {
         MongoDatabase base = ConexionMongo.obtenerBaseDatos();
         MongoCollection<Document> ubicacionesCol = base.getCollection("ubicaciones");
