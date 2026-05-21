@@ -228,7 +228,7 @@ public class ReservacionDAO implements IReservacionDAO {
             asistenciaMongo.setFechaHoraRegistro(LocalDateTime.now());
 
             Bson actualizacion = Updates.combine(
-                    Updates.set("boleto.estado", EstadoBoleto.USADO.name()),
+                    Updates.set("boleto.estado", "USADO"),
                     Updates.set("boleto.asistencia", asistenciaMongo)
             );
 

@@ -292,7 +292,9 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
     public void cerrarSesion() {
         controlUsuarios.cerrarSesion();
         controlEmpleados.cerrarSesion();
-        frmRegistro.eliminarRegistro();
+        if (frmRegistro != null) {
+            frmRegistro.eliminarRegistro();
+        }
         this.mostrarInicioSesion();
     }
 
