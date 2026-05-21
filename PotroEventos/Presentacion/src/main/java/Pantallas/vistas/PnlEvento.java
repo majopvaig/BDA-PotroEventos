@@ -132,6 +132,7 @@ public class PnlEvento extends Panel {
             btnMostrar.setText("Ver mis boletos");
             if (evento.isGratuito()) {
                 btnFacturar.setVisible(false);
+                btnCambiarAsiento.setVisible(false);
             }
             btnMostrar.setText("Ver mis boletos");
         } else {
