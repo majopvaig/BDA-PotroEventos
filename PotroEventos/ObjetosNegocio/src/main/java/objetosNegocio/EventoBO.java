@@ -67,4 +67,22 @@ public class EventoBO implements IEventoBO {
         }
     }
 
+    @Override
+    public List<EventoDTO> obtenerEventosActuales() throws NegocioException {
+        try {
+            return EventoAdapter.listaDTOs(eventoDAO.obtenerEventosActuales());
+        } catch (PersistenciaException ex) {
+            throw new NegocioException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public List<EventoDTO> buscarPorNombre(String nombre) throws NegocioException {
+        try {
+            return EventoAdapter.listaDTOs(eventoDAO.buscarPorNombre(nombre));
+        } catch (PersistenciaException ex) {
+            throw new NegocioException(ex.getMessage());
+        }
+    }
+
 }

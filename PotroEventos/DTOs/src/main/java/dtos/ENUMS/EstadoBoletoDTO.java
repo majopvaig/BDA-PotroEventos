@@ -9,5 +9,6 @@ package dtos.ENUMS;
  */
 public enum EstadoBoletoDTO {
     ACTIVO,
-    CANCELADO
+    CANCELADO,
+    USADO
 }

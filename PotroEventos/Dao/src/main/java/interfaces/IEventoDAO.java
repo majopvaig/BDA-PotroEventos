@@ -17,8 +17,13 @@ public interface IEventoDAO {
     Evento buscarPorId(String idEvento) throws PersistenciaException;
 
     List<Evento> buscarTodosCategoria(Categoria categoria) throws PersistenciaException;
-    
+
     boolean reducirDisponibilidad(String idEvento) throws PersistenciaException;
-    
+
     boolean aumentarDisponibilidad(String idEvento) throws PersistenciaException;
+
+    List<Evento> obtenerEventosActuales() throws PersistenciaException;
+
+    List<Evento> buscarPorNombre(String nombre) throws PersistenciaException;
+
 }

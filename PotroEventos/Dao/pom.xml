@@ -44,7 +44,6 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-
             <groupId>org.testcontainers</groupId>
             <artifactId>testcontainers</artifactId>
             <version>1.20.6</version>
@@ -80,7 +79,6 @@
             <artifactId>jbcrypt</artifactId>
             <version>0.4</version>
         </dependency>
-
     </dependencies>
     <properties>
         <maven.compiler.release>23</maven.compiler.release>

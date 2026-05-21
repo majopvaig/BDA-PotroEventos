@@ -1,13 +1,18 @@
 package Controlador.interfaz;
 
+import Pantallas.FrmAsistencias;
 import dtos.AsientoDTO;
 import dtos.AsientoEventoDTO;
+import dtos.AsistenciaDTO;
+import dtos.BoletoDTO;
 import dtos.CategoriaDTO;
 import dtos.CobroDTO;
+import dtos.EmpleadoDTO;
 import dtos.EventoDTO;
 import dtos.LoginDTO;
 import dtos.PagoDTO;
 import dtos.RegistroUsuarioDTO;
+import dtos.ReporteAsistenciaDTO;
 import dtos.ReservacionDTO;
 import dtos.SeccionDTO;
 import dtos.TarjetaDTO;
@@ -15,6 +20,7 @@ import dtos.UsuarioDTO;
 import dtos.UsuarioInstitucionalDTO;
 import excepciones.CoordinadorException;
 import excepciones.GestionEventoException;
+import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Map;
 
@@ -86,9 +92,43 @@ public interface ICoordinadorAplicacion {
     String generarQR(EventoDTO evento, AsientoEventoDTO asiento, String token);
 
     boolean validarCredenciales(UsuarioInstitucionalDTO credenciales);
-    
+
     boolean isUsuarioITSONRegistrado();
-    
+
     // lo agregó la majo
     void cancelarReservacion(ReservacionDTO reservacion);
+
+    //Caso de uso brian
+    void mostrarCamara(EventoDTO evento) throws CoordinadorException;
+
+    void mostrarConsultarEventos() throws CoordinadorException;
+
+    boolean iniciarCamara() throws CoordinadorException;
+
+    BufferedImage obtenerFrameActual() throws CoordinadorException;
+
+    String leerQR(BufferedImage frame) throws CoordinadorException;
+
+    AsistenciaDTO registrarAsistencia(String token, AsistenciaDTO asistenciaDTO, String idEvento) throws CoordinadorException;
+
+    EventoDTO buscarEventoRevision(String idEvento) throws CoordinadorException;
+
+    List<EventoDTO> buscarEventosPorNombre(String nombre) throws CoordinadorException;
+
+    List<AsientoEventoDTO> obtenerAsientosConAsistencia(String idEvento) throws CoordinadorException;
+
+    EmpleadoDTO obtenerEmpleado(EmpleadoDTO empleado) throws CoordinadorException;
+
+    EmpleadoDTO obtenerSesionEmpleado() throws CoordinadorException;
+
+    List<EventoDTO> obtenerEventosActuales() throws CoordinadorException;
+
+    BoletoDTO obtenerBoletoPorToken(String token) throws CoordinadorException;
+
+    public ReporteAsistenciaDTO obtenerAsistencias(String idEvento) throws CoordinadorException;
+
+    void mostrarAsistencias(EventoDTO eventoDTO) throws CoordinadorException;
+
+    public FrmAsistencias getFrmAsistencias();
+
 }

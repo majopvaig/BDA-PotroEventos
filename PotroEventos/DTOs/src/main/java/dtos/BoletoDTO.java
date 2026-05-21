@@ -11,21 +11,54 @@ import dtos.ENUMS.EstadoBoletoDTO;
  */
 public class BoletoDTO {
 
+    private String idBoleto;
     private String codigoQR;
+    private Double precio;
     private EstadoBoletoDTO estadoBoleto;
     private EventoDTO evento;
     private AsientoEventoDTO asiento;
     private String token;
+    private AsistenciaDTO asistenciaDTO;
 
     public BoletoDTO() {
     }
 
-    public BoletoDTO(String codigoQR, EstadoBoletoDTO estadoBoleto, EventoDTO evento, AsientoEventoDTO asiento, String token) {
+    public BoletoDTO(String idBoleto, String codigoQR, Double precio, EstadoBoletoDTO estadoBoleto, EventoDTO evento, AsientoEventoDTO asiento, String token, AsistenciaDTO asistenciaDTO) {
+        this.idBoleto = idBoleto;
         this.codigoQR = codigoQR;
+        this.precio = precio;
         this.estadoBoleto = estadoBoleto;
         this.evento = evento;
         this.asiento = asiento;
         this.token = token;
+        this.asistenciaDTO = asistenciaDTO;
+    }
+
+    public BoletoDTO(String codigoQR, Double precio, EstadoBoletoDTO estadoBoleto, EventoDTO evento, AsientoEventoDTO asiento, String token, AsistenciaDTO asistenciaDTO) {
+        this.codigoQR = codigoQR;
+        this.precio = precio;
+        this.estadoBoleto = estadoBoleto;
+        this.evento = evento;
+        this.asiento = asiento;
+        this.token = token;
+        this.asistenciaDTO = asistenciaDTO;
+    }
+
+    public BoletoDTO(String codigoQR, Double precio, EstadoBoletoDTO estadoBoleto, EventoDTO evento, AsientoEventoDTO asiento, String token) {
+        this.codigoQR = codigoQR;
+        this.precio = precio;
+        this.estadoBoleto = estadoBoleto;
+        this.evento = evento;
+        this.asiento = asiento;
+        this.token = token;
+    }
+
+    public String getIdBoleto() {
+        return idBoleto;
+    }
+
+    public void setIdBoleto(String idBoleto) {
+        this.idBoleto = idBoleto;
     }
 
     public String getCodigoQR() {
@@ -34,6 +67,14 @@ public class BoletoDTO {
 
     public void setCodigoQR(String codigoQR) {
         this.codigoQR = codigoQR;
+    }
+
+    public Double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Double precio) {
+        this.precio = precio;
     }
 
     public EstadoBoletoDTO getEstadoBoleto() {
@@ -66,6 +107,14 @@ public class BoletoDTO {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public AsistenciaDTO getAsistenciaDTO() {
+        return asistenciaDTO;
+    }
+
+    public void setAsistenciaDTO(AsistenciaDTO asistenciaDTO) {
+        this.asistenciaDTO = asistenciaDTO;
     }
 
 }

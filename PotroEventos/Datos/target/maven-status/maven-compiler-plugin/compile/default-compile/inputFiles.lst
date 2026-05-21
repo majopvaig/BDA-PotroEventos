@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 C:\Users\dayan\ProyectoDiseño\Dise-o\PotroEventos\Datos\src\main\java\Entitys\Asiento.java
 C:\Users\dayan\ProyectoDiseño\Dise-o\PotroEventos\Datos\src\main\java\Entitys\AsientoEvento.java
 C:\Users\dayan\ProyectoDiseño\Dise-o\PotroEventos\Datos\src\main\java\Entitys\Boleto.java
@@ -16,26 +15,3 @@ C:\Users\dayan\ProyectoDiseño\Dise-o\PotroEventos\Datos\src\main\java\Entitys\R
 C:\Users\dayan\ProyectoDiseño\Dise-o\PotroEventos\Datos\src\main\java\Entitys\Seccion.java
 C:\Users\dayan\ProyectoDiseño\Dise-o\PotroEventos\Datos\src\main\java\Entitys\Ubicacion.java
 C:\Users\dayan\ProyectoDiseño\Dise-o\PotroEventos\Datos\src\main\java\Entitys\Usuario.java
-=======
-C:\Users\maria\OneDrive\Desktop\Dise-o\PotroEventos\Datos\src\main\java\Entitys\Asiento.java
-C:\Users\maria\OneDrive\Desktop\Dise-o\PotroEventos\Datos\src\main\java\Entitys\AsientoEvento.java
-C:\Users\maria\OneDrive\Desktop\Dise-o\PotroEventos\Datos\src\main\java\Entitys\Boleto.java
-C:\Users\maria\OneDrive\Desktop\Dise-o\PotroEventos\Datos\src\main\java\Entitys\Categoria.java
-C:\Users\maria\OneDrive\Desktop\Dise-o\PotroEventos\Datos\src\main\java\Entitys\Devolucion.java
-C:\Users\maria\OneDrive\Desktop\Dise-o\PotroEventos\Datos\src\main\java\Entitys\ENUMS\CategoriaEvento.java
-C:\Users\maria\OneDrive\Desktop\Dise-o\PotroEventos\Datos\src\main\java\Entitys\ENUMS\EstadoAsiento.java
-C:\Users\maria\OneDrive\Desktop\Dise-o\PotroEventos\Datos\src\main\java\Entitys\ENUMS\EstadoBoleto.java
-C:\Users\maria\OneDrive\Desktop\Dise-o\PotroEventos\Datos\src\main\java\Entitys\ENUMS\EstadoEvento.java
-C:\Users\maria\OneDrive\Desktop\Dise-o\PotroEventos\Datos\src\main\java\Entitys\ENUMS\MotivoDevolucionP.java
-C:\Users\maria\OneDrive\Desktop\Dise-o\PotroEventos\Datos\src\main\java\Entitys\ENUMS\ReservacionEstado.java
-C:\Users\maria\OneDrive\Desktop\Dise-o\PotroEventos\Datos\src\main\java\Entitys\ENUMS\TipoDevolucionP.java
-C:\Users\maria\OneDrive\Desktop\Dise-o\PotroEventos\Datos\src\main\java\Entitys\ENUMS\TipoEventoP.java
-C:\Users\maria\OneDrive\Desktop\Dise-o\PotroEventos\Datos\src\main\java\Entitys\ENUMS\TipoUbicacionP.java
-C:\Users\maria\OneDrive\Desktop\Dise-o\PotroEventos\Datos\src\main\java\Entitys\Evento.java
-C:\Users\maria\OneDrive\Desktop\Dise-o\PotroEventos\Datos\src\main\java\Entitys\Pago.java
-C:\Users\maria\OneDrive\Desktop\Dise-o\PotroEventos\Datos\src\main\java\Entitys\Reembolso.java
-C:\Users\maria\OneDrive\Desktop\Dise-o\PotroEventos\Datos\src\main\java\Entitys\Reservacion.java
-C:\Users\maria\OneDrive\Desktop\Dise-o\PotroEventos\Datos\src\main\java\Entitys\Seccion.java
-C:\Users\maria\OneDrive\Desktop\Dise-o\PotroEventos\Datos\src\main\java\Entitys\Ubicacion.java
-C:\Users\maria\OneDrive\Desktop\Dise-o\PotroEventos\Datos\src\main\java\Entitys\Usuario.java
->>>>>>> 3d899176d7a4ef312e8399cf82635627e4b9ad65

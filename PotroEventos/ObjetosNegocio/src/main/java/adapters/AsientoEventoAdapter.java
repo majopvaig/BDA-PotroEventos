@@ -25,7 +25,7 @@ public class AsientoEventoAdapter {
         dto.setEvento(EventoAdapter.entidadADTO(entidad.getEvento()));
         return dto;
     }
-    
+
     public static AsientoEvento dtoAEntidad(AsientoEventoDTO dto) {
         if (dto == null) {
             return null;
@@ -35,7 +35,9 @@ public class AsientoEventoAdapter {
 
         entidad.setIdAsientoEvento(dto.getIdAsientoEvento());
         entidad.setPrecio(dto.getPrecio());
-        entidad.setEstadoAsiento(EstadoAsiento.valueOf(dto.getEstadoAsiento().name()));
+        if (dto.getEstadoAsiento() != null) {
+            entidad.setEstadoAsiento(EstadoAsiento.valueOf(dto.getEstadoAsiento().name()));
+        }
         entidad.setAsiento(AsientoAdapter.dtoAEntidad(dto.getAsiento()));
         entidad.setEvento(EventoAdapter.dtoAEntidad(dto.getEvento()));
 

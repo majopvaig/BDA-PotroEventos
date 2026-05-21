@@ -10,6 +10,7 @@ import entidadesmongo.AsientoEventoMongoEntidad;
 import entidadesmongo.AsientoMongoEntidad;
 import entidadesmongo.BoletoMongoEntidad;
 import entidadesmongo.CategoriaMongoEntidad;
+import entidadesmongo.EmpleadoMongoEntidad;
 import entidadesmongo.EventoMongoEntidad;
 import entidadesmongo.ReservacionMongoEntidad;
 import entidadesmongo.SeccionMongoEntidad;
@@ -81,7 +82,7 @@ public class ConexionMongo {
         }
         return obtenerCliente().getDatabase(BASE_DATOS);
     }
-    
+
     public static MongoCollection<AsientoMongoEntidad> obtenerColeccionAsientos() {
         return obtenerBaseDatos()
                 .getCollection("asientos", AsientoMongoEntidad.class);
@@ -91,39 +92,43 @@ public class ConexionMongo {
         return obtenerBaseDatos()
                 .getCollection("eventos", EventoMongoEntidad.class);
     }
-    
+
     public static MongoCollection<UsuarioMongoEntidad> obtenerColeccionUsuarios() {
         return obtenerBaseDatos()
                 .getCollection("usuarios", UsuarioMongoEntidad.class);
     }
-    
+
     public static MongoCollection<UbicacionMongoEntidad> obtenerColeccionUbicaciones() {
         return obtenerBaseDatos()
                 .getCollection("ubicaciones", UbicacionMongoEntidad.class);
     }
-    
+
     public static MongoCollection<CategoriaMongoEntidad> obtenerColeccionCategorias() {
         return obtenerBaseDatos()
                 .getCollection("categorias", CategoriaMongoEntidad.class);
     }
-    
+
     public static MongoCollection<SeccionMongoEntidad> obtenerColeccionSecciones() {
         return obtenerBaseDatos()
                 .getCollection("secciones", SeccionMongoEntidad.class);
     }
-    
+
     public static MongoCollection<ReservacionMongoEntidad> obtenerColeccionReservaciones() {
         return obtenerBaseDatos()
                 .getCollection("reservaciones", ReservacionMongoEntidad.class);
     }
-    
+
     public static MongoCollection<AsientoEventoMongoEntidad> obtenerColeccionAsientosEvento() {
         return obtenerBaseDatos()
                 .getCollection("asientoEventos", AsientoEventoMongoEntidad.class);
     }
-    
-    public static MongoCollection<UbicacionMongoEntidad> obtenerColeccionUbicacionea(){
+
+    public static MongoCollection<UbicacionMongoEntidad> obtenerColeccionUbicacionea() {
         return obtenerBaseDatos()
                 .getCollection("ubicaciones", UbicacionMongoEntidad.class);
+    }
+
+    public static MongoCollection<EmpleadoMongoEntidad> obtenerColeccionEmpleados() {
+        return obtenerBaseDatos().getCollection("empleados", EmpleadoMongoEntidad.class);
     }
 }

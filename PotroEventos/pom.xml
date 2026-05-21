@@ -19,6 +19,9 @@
         <module>SubsistemaITSON</module>
         <module>SubsistemaInicioSesion</module>
         <module>SubsistemaDevolucionBoleto</module>
+        <module>SubsistemaRevisionBoletos</module>
+        <module>SubsistemaIpWebcam</module>
+        <module>SubsistemaInicioSesionEmpleado</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

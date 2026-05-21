@@ -17,8 +17,12 @@ public interface IEventoBO {
     List<EventoDTO> obtenerEventosPorCategoria(CategoriaDTO categoria) throws NegocioException;
 
     EventoDTO obtenerEventoPorId(String id) throws NegocioException;
-    
+
     boolean reducirDisponibilidadEvento(String id) throws NegocioException;
-    
+
     boolean aumentarDisponibilidadEvento(String idEvento) throws NegocioException;
+
+    List<EventoDTO> obtenerEventosActuales() throws NegocioException;
+
+    List<EventoDTO> buscarPorNombre(String nombre) throws NegocioException;
 }

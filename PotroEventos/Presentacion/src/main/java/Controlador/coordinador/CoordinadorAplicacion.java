@@ -2,6 +2,11 @@ package Controlador.coordinador;
 
 import Controlador.interfaz.ICoordinadorAplicacion;
 import Controlador.interfaz.ICoordinadorDevolucion;
+import InicioSesionEmpleado.FachadaInicioSesionEmpleado;
+import InicioSesionEmpleado.IInicioSesionEmpleado;
+import Pantallas.FrmAsistencias;
+import Pantallas.FrmCamara;
+import Pantallas.FrmConsultarEventosActuales;
 import Pantallas.FrmInicioSesion;
 import Pantallas.FrmPago;
 import Pantallas.FrmPlantillaSistema;
@@ -14,54 +19,57 @@ import Pantallas.vistas.PnlConsultarMenu;
 import Pantallas.vistas.PnlEventos;
 import dtos.AsientoDTO;
 import dtos.AsientoEventoDTO;
+import dtos.AsistenciaDTO;
+import dtos.BoletoDTO;
 import dtos.CategoriaDTO;
 import dtos.CobroDTO;
+import dtos.EmpleadoDTO;
 import dtos.EventoDTO;
 import dtos.LoginDTO;
 import dtos.PagoDTO;
 import dtos.RegistroUsuarioDTO;
+import dtos.ReporteAsistenciaDTO;
 import dtos.ReservacionDTO;
 import dtos.SeccionDTO;
 import dtos.TarjetaDTO;
 import dtos.UsuarioDTO;
 import dtos.UsuarioInstitucionalDTO;
+import inicioSesion.IFachadaInicioSesion;
 import inicioSesion.InicioSesionFachada;
 import excepciones.CompraBoletoException;
 import excepciones.CoordinadorException;
+import excepciones.EmpleadoException;
 import excepciones.GestionEventoException;
 import excepciones.GestionUsuarioException;
 import excepciones.InicioSesionException;
+import excepciones.RevisionBoletosException;
 import compraBoleto.CompraBoletoFachada;
-import gestionEvento.GestionEventoFachada;
-import gestionUsuarios.GestionUsuarioFachada;
-import gestionEvento.IFachadaGestionEvento;
-import inicioSesion.IFachadaInicioSesion;
-import gestionUsuarios.IGestionUsuariosFachada;
 import compraBoleto.ICompraBoleto;
+import gestionEvento.GestionEventoFachada;
+import gestionEvento.IFachadaGestionEvento;
+import gestionUsuarios.GestionUsuarioFachada;
+import gestionUsuarios.IGestionUsuariosFachada;
+import RevisionBoletos.IRevisionBoletos;
+import RevisionBoletos.RevisionBoletos;
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
 
-/**
- * Clase que actúa como coordinador principal de la aplicación. Se encarga de
- * gestionar la navegación entre las diferentes pantallas y de comunicar la capa
- * de presentación (vistas) con la capa de negocio (fachadas y BOs).
- *
- * @author Aaron Burciaga - 262788
- * @author Brian Sandoval - 262741
- * @author Dayanara Peralta - 262695
- * @author María Valdez - 262775
- */
 public class CoordinadorAplicacion implements ICoordinadorAplicacion {
 
     private final IFachadaInicioSesion controlInicioSesion = InicioSesionFachada.getInstance();
     private final ICompraBoleto controlCompra = new CompraBoletoFachada();
     private final IFachadaGestionEvento controlEvento = new GestionEventoFachada();
     private final IGestionUsuariosFachada controlUsuarios = new GestionUsuarioFachada();
-    
-    private final ICoordinadorDevolucion coordinadorDevolucion = new CoordinadorDevolucion(this); 
+    private final IRevisionBoletos controlRevision = new RevisionBoletos();
+    private final IInicioSesionEmpleado controlEmpleados = new FachadaInicioSesionEmpleado();
+    private final ICoordinadorDevolucion coordinadorDevolucion = new CoordinadorDevolucion(this);
 
+    private FrmAsistencias frmAsistencias;
+    private FrmCamara frmCamara;
+    private FrmConsultarEventosActuales frmConsultarEventosActuales;
     private FrmInicioSesion frmInicioSesion;
     private FrmRegistrarse frmRegistrarse;
     private FrmPago frmPago;
@@ -70,11 +78,6 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
     private FrmRegistroItson frmRegistro;
     private ReservacionDTO reservacionActual;
 
-    /**
-     * Oculta todas las ventanas instanciadas actualmente en el sistema. Es
-     * utilizado como un paso previo antes de mostrar una nueva pantalla para
-     * asegurar que no queden ventanas superpuestas.
-     */
     private void ocultarTodo() {
         if (frmInicioSesion != null) {
             frmInicioSesion.setVisible(false);
@@ -93,6 +96,9 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
         }
         if (frmPlantilla != null) {
             frmPlantilla.setVisible(false);
+        }
+        if (frmConsultarEventosActuales != null) {
+            frmConsultarEventosActuales.setVisible(false);
         }
     }
 
@@ -139,7 +145,7 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
         frmPlantilla.ocultarInicio();
         frmPlantilla.mostrarConsultar();
         frmPlantilla.setCategorias();
-        frmPlantilla.setCreditos(getUsuarioSesion().getCreditos().toString());
+        frmPlantilla.setCreditos(getUsuarioSesion().getCreditos().toString()); 
         frmPlantilla.setVisible(true);
         if (frmInicioSesion != null) {
             frmInicioSesion.dispose();
@@ -154,7 +160,7 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
         }
         frmPlantilla.ocultarConsultar();
         frmPlantilla.mostrarInicio();
-        frmPlantilla.setCreditos(getUsuarioSesion().getCreditos().toString());
+        frmPlantilla.setCreditos(getUsuarioSesion().getCreditos().toString()); 
         frmPlantilla.setContenido(new PnlConsultar(this, tipoEvento));
         frmPlantilla.setVisible(true);
     }
@@ -167,7 +173,7 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
         }
         frmPlantilla.ocultarConsultar();
         frmPlantilla.mostrarInicio();
-        frmPlantilla.setCreditos(getUsuarioSesion().getCreditos().toString());
+        frmPlantilla.setCreditos(getUsuarioSesion().getCreditos().toString()); 
         frmPlantilla.setContenido(new PnlConsultarMenu(this));
         frmPlantilla.setVisible(true);
     }
@@ -180,7 +186,7 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
         }
         frmPlantilla.mostrarConsultar();
         frmPlantilla.mostrarInicio();
-        frmPlantilla.setCreditos(getUsuarioSesion().getCreditos().toString());
+        frmPlantilla.setCreditos(getUsuarioSesion().getCreditos().toString()); 
         frmPlantilla.setContenido(new PnlConsultarEvento(this, evento));
         frmPlantilla.setVisible(true);
     }
@@ -211,7 +217,6 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
         if (frmRegistro == null) {
             frmRegistro = new FrmRegistroItson(this, categoria);
         }
-
         try {
             frmPlantilla.setContenido(new PnlEventos(this, categoria));
         } catch (GestionEventoException ex) {
@@ -261,11 +266,8 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
     @Override
     public UsuarioDTO getUsuarioSesion() {
         try {
-            UsuarioDTO u = controlUsuarios.obtenerUsuarioActivo();
-            System.out.println(u.getIdUsuario());
-            return u;
+            return controlUsuarios.obtenerUsuarioActivo();
         } catch (GestionUsuarioException gue) {
-            System.out.println("Fallé al ir por el usuario.");
             return null;
         }
     }
@@ -273,6 +275,7 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
     @Override
     public void cerrarSesion() {
         controlUsuarios.cerrarSesion();
+        controlEmpleados.cerrarSesion();
         this.mostrarInicioSesion();
     }
 
@@ -295,16 +298,6 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
         }
     }
 
-    /**
-     * Construye un mapa estructurado que relaciona cada sección del evento con
-     * la lista de sus asientos y su estado de ocupación respectivo. Utiliza el
-     * catálogo de asientos para saber a qué sección pertenece cada asiento y
-     * evitar duplicados en la interfaz gráfica.
-     *
-     * @param idEvento El identificador único del evento a consultar.
-     * @return Un mapa que vincula objetos SeccionDTO con listas de
-     * AsientoEventoDTO.
-     */
     @Override
     public Map<SeccionDTO, List<AsientoEventoDTO>> obtenerMapaOcupacion(EventoDTO evento) {
         try {
@@ -315,14 +308,6 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
         }
     }
 
-    /**
-     * Obtiene el catálogo completo de asientos disponibles en el sistema. Sirve
-     * como base técnica para conocer la estructura de filas y números
-     * independientemente del evento.
-     *
-     * @return Una lista de objetos AsientoDTO. Retorna una lista vacía en caso
-     * de error.
-     */
     @Override
     public List<AsientoDTO> obtenerCatalogoAsientos() {
         try {
@@ -395,9 +380,7 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
     @Override
     public void mostrarPago(ReservacionDTO reservacion) {
         ocultarTodo();
-
         this.reservacionActual = reservacion;
-
         frmPago = new FrmPago(this, reservacionActual);
         frmPago.setVisible(true);
         frmPago.setLocationRelativeTo(null);
@@ -421,12 +404,160 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
     public boolean isUsuarioITSONRegistrado() {
         return frmRegistro.registroExitoso();
     }
-    
-    // lo agregó la majo
+
     @Override
     public void cancelarReservacion(ReservacionDTO reservacion) {
         ocultarTodo();
         coordinadorDevolucion.abrirMostrarEventoCancelar(reservacion);
     }
 
+    @Override
+    public boolean iniciarCamara() throws CoordinadorException {
+        try {
+            return controlRevision.iniciarCamara();
+        } catch (RevisionBoletosException e) {
+            throw new CoordinadorException(e.getMessage());
+        }
+    }
+
+    @Override
+    public BufferedImage obtenerFrameActual() throws CoordinadorException {
+        try {
+            return controlRevision.obtenerFrameActual();
+        } catch (RevisionBoletosException e) {
+            throw new CoordinadorException(e.getMessage());
+        }
+    }
+
+    @Override
+    public String leerQR(BufferedImage frame) throws CoordinadorException {
+        try {
+            return controlRevision.leerQR(frame);
+        } catch (RevisionBoletosException e) {
+            throw new CoordinadorException(e.getMessage());
+        }
+    }
+
+    @Override
+    public AsistenciaDTO registrarAsistencia(String token, AsistenciaDTO asistenciaDTO, String idEvento) throws CoordinadorException {
+        try {
+            return controlRevision.registrarAsistencia(token, asistenciaDTO, idEvento);
+        } catch (RevisionBoletosException e) {
+            throw new CoordinadorException(e.getMessage());
+        }
+    }
+
+    @Override
+    public EventoDTO buscarEventoRevision(String idEvento) throws CoordinadorException {
+        try {
+            return controlRevision.buscarEvento(idEvento);
+        } catch (RevisionBoletosException e) {
+            throw new CoordinadorException(e.getMessage());
+        }
+    }
+
+    @Override
+    public List<EventoDTO> buscarEventosPorNombre(String nombre) throws CoordinadorException {
+        try {
+            return controlRevision.buscarEventosPorNombre(nombre);
+        } catch (RevisionBoletosException e) {
+            throw new CoordinadorException(e.getMessage());
+        }
+    }
+
+    @Override
+    public List<AsientoEventoDTO> obtenerAsientosConAsistencia(String idEvento) throws CoordinadorException {
+        try {
+            return controlRevision.obtenerAsientosConAsistencia(idEvento);
+        } catch (RevisionBoletosException e) {
+            throw new CoordinadorException(e.getMessage());
+        }
+    }
+
+    @Override
+    public EmpleadoDTO obtenerEmpleado(EmpleadoDTO empleado) throws CoordinadorException {
+        try {
+            return controlEmpleados.obtenerEmpleado(empleado);
+        } catch (EmpleadoException e) {
+            throw new CoordinadorException(e.getMessage());
+        }
+    }
+
+    @Override
+    public EmpleadoDTO obtenerSesionEmpleado() throws CoordinadorException {
+        return controlEmpleados.getEmpleadoSesion();
+    }
+
+    @Override
+    public void mostrarCamara(EventoDTO evento) throws CoordinadorException {
+        try {
+            if (frmCamara != null) {
+                frmCamara.dispose();
+            }
+            frmCamara = new FrmCamara(this, evento);
+        } catch (CoordinadorException e) {
+            return;
+        }
+        frmCamara.setVisible(true);
+        frmConsultarEventosActuales.setVisible(false);
+    }
+
+    @Override
+    public void mostrarAsistencias(EventoDTO eventoDTO) throws CoordinadorException {
+        ocultarTodo();
+        if (frmAsistencias != null) {
+            frmAsistencias.dispose();
+        }
+        frmAsistencias = new FrmAsistencias(eventoDTO, this);
+        frmAsistencias.setVisible(true);
+        frmConsultarEventosActuales.setVisible(false);
+    }
+
+    @Override
+    public void mostrarConsultarEventos() {
+        ocultarTodo();
+        if (frmConsultarEventosActuales == null) {
+            frmConsultarEventosActuales = new FrmConsultarEventosActuales(this);
+        }
+        frmConsultarEventosActuales.setVisible(true);
+        if (frmAsistencias != null) {
+            frmAsistencias.dispose();
+            frmAsistencias = null;
+        }
+        if (frmCamara != null) {
+            frmCamara.setVisible(false);
+        }
+    }
+
+    @Override
+    public List<EventoDTO> obtenerEventosActuales() throws CoordinadorException {
+        try {
+            return controlRevision.obtenerEventosActuales();
+        } catch (RevisionBoletosException ex) {
+            throw new CoordinadorException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public BoletoDTO obtenerBoletoPorToken(String token) throws CoordinadorException {
+        try {
+            return controlRevision.obtenerBoletoPorToken(token);
+        } catch (RevisionBoletosException e) {
+            throw new CoordinadorException(e.getMessage());
+        }
+    }
+
+    @Override
+    public ReporteAsistenciaDTO obtenerAsistencias(String idEvento) throws CoordinadorException {
+        try {
+            return controlRevision.obtenerResumen(idEvento);
+        } catch (RevisionBoletosException e) {
+            throw new CoordinadorException(e.getMessage());
+        }
+    }
+
+    @Override
+    public FrmAsistencias getFrmAsistencias() {
+        return frmAsistencias;
+    }
 }
