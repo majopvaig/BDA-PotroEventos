@@ -26,14 +26,14 @@ public class FacturaMongoEntidad {
     private LocalDateTime fechaReserva;
     private LocalDateTime fechaTimbrado;
     private String timbrado;
-
+    private String uuid;
     
     // --- Contructores ---
     public FacturaMongoEntidad() {
         
     }
 
-    public FacturaMongoEntidad(ObjectId id, PerfilFiscalResumenMongo perfilFiscal, String usoCfdi, Double totalPagado, String moneda, LocalDateTime fechaReserva, LocalDateTime fechaTimbrado, String timbrado) {
+    public FacturaMongoEntidad(ObjectId id, PerfilFiscalResumenMongo perfilFiscal, String usoCfdi, Double totalPagado, String moneda, LocalDateTime fechaReserva, LocalDateTime fechaTimbrado, String timbrado, String uuid) {
         this.id = id;
         this.perfilFiscal = perfilFiscal;
         this.usoCfdi = usoCfdi;
@@ -42,9 +42,10 @@ public class FacturaMongoEntidad {
         this.fechaReserva = fechaReserva;
         this.fechaTimbrado = fechaTimbrado;
         this.timbrado = timbrado;
+        this.uuid = uuid;
     }
 
-    public FacturaMongoEntidad(PerfilFiscalResumenMongo perfilFiscal, String usoCfdi, Double totalPagado, String moneda, LocalDateTime fechaReserva, LocalDateTime fechaTimbrado, String timbrado) {
+    public FacturaMongoEntidad(PerfilFiscalResumenMongo perfilFiscal, String usoCfdi, Double totalPagado, String moneda, LocalDateTime fechaReserva, LocalDateTime fechaTimbrado, String timbrado, String uuid) {
         this.perfilFiscal = perfilFiscal;
         this.usoCfdi = usoCfdi;
         this.totalPagado = totalPagado;
@@ -52,7 +53,19 @@ public class FacturaMongoEntidad {
         this.fechaReserva = fechaReserva;
         this.fechaTimbrado = fechaTimbrado;
         this.timbrado = timbrado;
+        this.uuid = uuid;
     }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    
+    
 
     public ObjectId getId() {
         return id;

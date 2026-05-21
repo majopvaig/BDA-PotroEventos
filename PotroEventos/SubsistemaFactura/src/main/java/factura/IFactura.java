@@ -4,7 +4,11 @@
  */
 package factura;
 
+import dtos.BoletoDTO;
+import dtos.FacturaDTO;
+import dtos.PagoDTO;
 import dtos.PerfilFiscalDTO;
+import dtos.ReservacionDTO;
 import excepciones.FacturaException;
 
 /**
@@ -18,4 +22,8 @@ public interface IFactura {
     PerfilFiscalDTO buscarPerfil(String idUsuario) throws FacturaException;
     
     PerfilFiscalDTO buscarPerfilFiscal(String rfc, String idUsuario)throws FacturaException;
+    
+    FacturaDTO crearFactura(PerfilFiscalDTO perfil, ReservacionDTO reserva)throws FacturaException;
+    
+    boolean generarFactura(FacturaDTO factura)throws FacturaException;
 }

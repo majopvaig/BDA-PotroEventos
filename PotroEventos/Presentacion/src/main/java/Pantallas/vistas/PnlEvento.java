@@ -6,6 +6,8 @@ package Pantallas.vistas;
 
 import Controlador.interfaz.ICoordinadorAplicacion;
 import dtos.EventoDTO;
+import dtos.FacturaDTO;
+import dtos.PerfilFiscalDTO;
 import dtos.ReservacionDTO;
 import excepciones.CoordinadorException;
 import java.awt.Component;
@@ -121,6 +123,9 @@ public class PnlEvento extends Panel {
             btnFacturar.setVisible(true);
             btnFacturar.setText("Facturar");
             btnMostrar.setText("Ver mis boletos");
+            if (evento.isGratuito()) {
+                btnFacturar.setVisible(false);
+            }
         } else {
             btnFacturar.setVisible(false);
             btnMostrar.setText("Mostrar Información");
@@ -225,7 +230,13 @@ public class PnlEvento extends Panel {
                 JOptionPane.showMessageDialog(this, "La reserva ya ha sido facturada");
                 return;
             }
-            coordinador.recuperarPerfilFiscal(reservacion.getUsuario().getIdUsuario());
+            PerfilFiscalDTO perfilObtenido = coordinador.recuperarPerfilFiscal(reservacion.getUsuario().getIdUsuario());
+            
+            if(perfilObtenido == null){
+                return;
+            }
+            FacturaDTO factura = coordinador.crearFactura(perfilObtenido, reservacion);
+            coordinador.mostrarDatosFactura(factura);
         } catch (CoordinadorException ex) {
             JOptionPane.showMessageDialog(this, "Surgió algo inesperado: " + ex.getMessage());
         }

@@ -8,6 +8,8 @@ import Entitys.PerfilFiscal;
 import adapters.PerfilFiscalAdapter;
 import daos.UsuarioDAO;
 import dtos.PerfilFiscalDTO;
+import fabricas.FabricaFacturaBO;
+import fabricas.IFabricaFacturaBO;
 import interfaces.IPerfilFiscalBO;
 import interfaces.IUsuarioDAO;
 
@@ -40,5 +42,8 @@ public class PerfilFiscalBO implements IPerfilFiscalBO{
         
         return usuarioDAO.guardarPerfilFiscal(perfilGuardar, idUsuario);
     }
+
+
+    
     
 }

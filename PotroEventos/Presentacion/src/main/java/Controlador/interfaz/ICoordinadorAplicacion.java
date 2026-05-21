@@ -2,9 +2,11 @@ package Controlador.interfaz;
 
 import dtos.AsientoDTO;
 import dtos.AsientoEventoDTO;
+import dtos.BoletoDTO;
 import dtos.CategoriaDTO;
 import dtos.CobroDTO;
 import dtos.EventoDTO;
+import dtos.FacturaDTO;
 import dtos.LoginDTO;
 import dtos.PagoDTO;
 import dtos.PerfilFiscalDTO;
@@ -54,8 +56,10 @@ public interface ICoordinadorAplicacion {
     
     public void mostrarBuscarRFC();
     
-    public void mostrarDatosFactura(PerfilFiscalDTO perfil);
-            
+    public void mostrarDatosFactura(FacturaDTO factura);
+
+    public void mostrarResumenDatosFactura(FacturaDTO factura);
+    
     public List<EventoDTO> consultarEventos(CategoriaDTO categoria) throws GestionEventoException;
 
     public List<CategoriaDTO> consultarCategorias();
@@ -96,8 +100,11 @@ public interface ICoordinadorAplicacion {
     
     boolean facturar(String idReservacion)throws CoordinadorException;
     
-    void recuperarPerfilFiscal(String idUsuario)throws CoordinadorException;
+    PerfilFiscalDTO recuperarPerfilFiscal(String idUsuario)throws CoordinadorException;
     
     PerfilFiscalDTO buscarPerfilFiscal(String rfc, String idUsuario)throws CoordinadorException;
     
+    FacturaDTO crearFactura(PerfilFiscalDTO perfil, ReservacionDTO reserva)throws CoordinadorException;
+    
+    boolean timbrarFactura(FacturaDTO factura)throws CoordinadorException;
 }

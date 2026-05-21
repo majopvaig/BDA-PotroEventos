@@ -72,6 +72,7 @@ public class UsuarioPersistenciaAdapter {
             PerfilFiscal perfil = new PerfilFiscal();
             perfil.setRfc(mongo.getPerfilFiscal().getRfc());
             perfil.setNombre(mongo.getPerfilFiscal().getNombre());
+            perfil.setCorreo(mongo.getPerfilFiscal().getCorreo());
             perfil.setCodigoPostal(mongo.getPerfilFiscal().getCodigoPostal());
             String regimenStr = mongo.getPerfilFiscal().getRegimenFiscal();
             

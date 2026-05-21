@@ -47,7 +47,8 @@ import factura.FachadaFactura;
 import factura.IFactura;
 import Pantallas.vistas.dialogos.DlgBuscarPerfil;
 import Pantallas.vistas.dialogos.DlgDetalleFactura;
-import Pantallas.vistas.dialogos.DlgProcesando;
+import dtos.BoletoDTO;
+import dtos.FacturaDTO;
 import dtos.PerfilFiscalDTO;
 /**
  * Clase que actúa como coordinador principal de la aplicación. Se encarga de
@@ -77,6 +78,7 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
     private ReservacionDTO reservacionActual;
     private FrmDatosFacturar frmDatosFacturar;
     private DlgBuscarPerfil dlgBuscarPerfil;
+    private DlgDetalleFactura dlgResumenFactura;
     /**
      * Oculta todas las ventanas instanciadas actualmente en el sistema. Es
      * utilizado como un paso previo antes de mostrar una nueva pantalla para
@@ -226,12 +228,23 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
     }
 
     @Override
-    public void mostrarDatosFactura(PerfilFiscalDTO perfil) {
-        if(frmDatosFacturar == null){
-            frmDatosFacturar = new FrmDatosFacturar(this);
+    public void mostrarDatosFactura(FacturaDTO factura) {
+        if (frmDatosFacturar != null) {
+            frmDatosFacturar.dispose();
+            frmDatosFacturar = null;
         }
-        frmDatosFacturar.setVisible(true);
+        if(dlgResumenFactura != null){
+            dlgResumenFactura.dispose();
+            dlgResumenFactura = null;
+        }
+
+        if (dlgBuscarPerfil != null) {
+            dlgBuscarPerfil.dispose();
+            dlgBuscarPerfil = null;
+        }
+        frmDatosFacturar = new FrmDatosFacturar(this, factura);
         frmDatosFacturar.setLocationRelativeTo(null);
+        frmDatosFacturar.setVisible(true);
     }
 
     @Override
@@ -239,11 +252,28 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
         if(frmPlantilla != null){
             frmPlantilla = new FrmPlantillaSistema(this);
         }
-        if(dlgBuscarPerfil == null){
-            dlgBuscarPerfil = new DlgBuscarPerfil(frmPlantilla, true, this);
+        if(dlgBuscarPerfil != null){
+            dlgBuscarPerfil.dispose();
         }
+        dlgBuscarPerfil = new DlgBuscarPerfil(frmPlantilla, true, this);
         dlgBuscarPerfil.setLocationRelativeTo(null);
         dlgBuscarPerfil.setVisible(true);
+    }
+
+    @Override
+    public void mostrarResumenDatosFactura(FacturaDTO factura) {
+        if (dlgResumenFactura != null) {
+            dlgResumenFactura.dispose();
+            dlgResumenFactura = null;
+        }
+    
+        if (frmDatosFacturar != null) {
+            frmDatosFacturar.dispose();
+            frmDatosFacturar = null;
+        }
+        dlgResumenFactura = new DlgDetalleFactura(frmPlantilla, true, this, factura);
+        dlgResumenFactura.setLocationRelativeTo(null);
+        dlgResumenFactura.setVisible(true);
     }
     
     @Override
@@ -452,14 +482,14 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
     }
 
     @Override
-    public void recuperarPerfilFiscal(String idUsuario)throws CoordinadorException{
+    public PerfilFiscalDTO recuperarPerfilFiscal(String idUsuario)throws CoordinadorException{
         try {
             PerfilFiscalDTO perfil = controlFactura.buscarPerfil(idUsuario);
             if(perfil == null){
                 mostrarBuscarRFC();
-                return;
+                return null;
             }
-            mostrarDatosFactura(perfil);
+            return perfil;
         } catch (FacturaException ex) {
             throw new CoordinadorException(ex.getMessage());
         }
@@ -477,6 +507,23 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
         }
     }
 
+    @Override
+    public FacturaDTO crearFactura(PerfilFiscalDTO perfil, ReservacionDTO reserva) throws CoordinadorException {
+        try{
+            return controlFactura.crearFactura(perfil, reserva);
+        }catch(FacturaException ex){
+            throw new CoordinadorException(ex.getMessage());
+        }
+    }
 
-
+    @Override
+    public boolean timbrarFactura(FacturaDTO factura) throws CoordinadorException {
+        try {
+            return controlFactura.generarFactura(factura);
+        } catch (FacturaException ex) {
+            throw new CoordinadorException(ex.getMessage());
+        }
+    }
+    
+    
 }

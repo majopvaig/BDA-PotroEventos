@@ -28,7 +28,7 @@ public class ReservacionMongoEntidad {
     private String estado;
     
     // caso uso factura
-    private FacturaResumenMongo factura;
+    private ObjectId factura;
     public ReservacionMongoEntidad() {
     }
 
@@ -49,6 +49,25 @@ public class ReservacionMongoEntidad {
         this.usuario = usuario;
         this.fechaRegistro = fechaRegistro;
         this.estado = estado;
+    }
+
+    public ReservacionMongoEntidad(ObjectId id, double total, BoletoMongoEntidad boleto, PagoMongoEntidad pago, UsuarioResumenMongo usuario, LocalDateTime fechaRegistro, String estado, ObjectId factura) {
+        this.id = id;
+        this.total = total;
+        this.boleto = boleto;
+        this.pago = pago;
+        this.usuario = usuario;
+        this.fechaRegistro = fechaRegistro;
+        this.estado = estado;
+        this.factura = factura;
+    }
+
+    public ObjectId getFactura() {
+        return factura;
+    }
+
+    public void setFactura(ObjectId factura) {
+        this.factura = factura;
     }
 
     public ObjectId getId() {

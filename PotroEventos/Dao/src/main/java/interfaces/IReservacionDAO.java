@@ -23,4 +23,7 @@ public interface IReservacionDAO {
     
     // caso factura
     boolean tieneFactura(String idResevracion) throws PersistenciaException;
+    
+    boolean asociarFactura(String idReservacion, String idFactura) throws PersistenciaException;
+    
 }

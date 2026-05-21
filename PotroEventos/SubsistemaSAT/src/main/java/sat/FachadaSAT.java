@@ -5,6 +5,7 @@
 package sat;
 
 import dtos.PerfilFiscalInfraestructuraDTO;
+import dtos.SatDTO;
 import excepciones.SatException;
 
 /**
@@ -24,6 +25,11 @@ public class FachadaSAT implements IComunicacionSAT{
     @Override
     public PerfilFiscalInfraestructuraDTO obtenerPerfilFiscal(String rfc) throws SatException {
         return control.obtenerPerfilFiscal(rfc);
+    }
+
+    @Override
+    public SatDTO timbrarXml(String xml, String rfc) throws SatException {
+        return control.timbrarXml(xml, rfc);
     }
     
 }

@@ -1,27 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>com.mycompany</groupId>
         <artifactId>PotroEventos</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
+
     <artifactId>SubsistemaFactura</artifactId>
     <packaging>jar</packaging>
+
     <dependencies>
+
+        <!-- Tus módulos -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>ObjetosNegocio</artifactId>
             <version>${project.version}</version>
         </dependency>
+
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>SubsistemaSAT</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <!-- Jasper -->
+        <dependency>
+            <groupId>net.sf.jasperreports</groupId>
+            <artifactId>jasperreports-pdf</artifactId>
+            <version>7.0.1</version>
+        </dependency>
+
+        <!-- JAVA MAIL COMPLETO -->
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+
+        <!-- ACTIVATION -->
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>SubsistemaZeroBounce</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
+
     <properties>
         <maven.compiler.release>24</maven.compiler.release>
         <exec.mainClass>com.mycompany.subsistemafactura.SubsistemaFactura</exec.mainClass>
     </properties>
+
 </project>

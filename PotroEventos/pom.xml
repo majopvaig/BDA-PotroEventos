@@ -20,6 +20,7 @@
         <module>SubsistemaInicioSesion</module>
         <module>SubsistemaFactura</module>
         <module>SubsistemaSAT</module>
+        <module>SubsistemaZeroBounce</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

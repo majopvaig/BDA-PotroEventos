@@ -61,6 +61,7 @@ public class DlgBuscarPerfil extends javax.swing.JDialog {
         }
         return true;
     }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -199,12 +200,12 @@ public class DlgBuscarPerfil extends javax.swing.JDialog {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         if(validacionesEntrada()){
             try {
-                PerfilFiscalDTO busquedaPerfil = coordinador.buscarPerfilFiscal(txtEntrada.getText(), null);
-                if(busquedaPerfil!= null){
-                    coordinador.mostrarDatosFactura(busquedaPerfil);
+                if(coordinador.buscarPerfilFiscal(txtEntrada.getText(), null)!= null){
+                   JOptionPane.showMessageDialog(this, "Perfil encontrado");
+                   this.dispose();
                 }
             } catch (CoordinadorException ex) {
-                JOptionPane.showMessageDialog(this, ex, "Fallo de operación", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Suceso inesperado", "Fallo de operación", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnBuscarActionPerformed

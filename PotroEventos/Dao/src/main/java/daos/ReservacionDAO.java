@@ -17,7 +17,9 @@ import com.mongodb.client.model.IndexOptions;
 import com.mongodb.client.model.Indexes;
 import com.mongodb.client.model.Projections;
 import com.mongodb.client.model.UnwindOptions;
+import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.InsertOneResult;
+import com.mongodb.client.result.UpdateResult;
 import conexion.ConexionMongo;
 import entidadesmongo.ReservacionMongoEntidad;
 import excepciones.PersistenciaException;
@@ -172,7 +174,20 @@ public class ReservacionDAO implements IReservacionDAO {
         
                 
     }
-    
-    
-    
+    @Override
+    public boolean asociarFactura(String idReservacion, String idFactura) throws PersistenciaException {
+        try {
+            UpdateResult resultado = coleccionReservaciones.updateOne(
+                Filters.eq("_id", new ObjectId(idReservacion)),
+                Updates.set("idFactura", new ObjectId(idFactura))
+            );
+
+            if (resultado.getMatchedCount() == 0) {
+                throw new PersistenciaException("No se encontró la reservación con ID: " + idReservacion);
+            }
+            return true;
+        } catch (MongoException e) {
+            throw new PersistenciaException("Error al asociar factura a reservación: " + e.getMessage());
+        }
+    }
 }

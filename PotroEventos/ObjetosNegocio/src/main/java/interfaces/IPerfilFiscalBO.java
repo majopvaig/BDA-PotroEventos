@@ -4,7 +4,11 @@
  */
 package interfaces;
 
+import dtos.FacturaDTO;
+import dtos.PagoDTO;
 import dtos.PerfilFiscalDTO;
+import dtos.ReservacionDTO;
+import excepciones.NegocioException;
 
 /**
  *
@@ -13,4 +17,5 @@ import dtos.PerfilFiscalDTO;
 public interface IPerfilFiscalBO {
     
     public boolean guardarPerfilFiscal(PerfilFiscalDTO guardar, String idUsuario);
+    
 }

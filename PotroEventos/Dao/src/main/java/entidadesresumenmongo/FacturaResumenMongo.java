@@ -20,12 +20,11 @@ public class FacturaResumenMongo {
     private LocalDateTime fechaReserva;
     private LocalDateTime fechaHoraTimbrado;
     private String timbrado;
-
+    private String uuid;
     public FacturaResumenMongo() {
     }
 
-    
-    public FacturaResumenMongo(PerfilFiscalResumenMongo perfilFiscal, String usoCfdi, String moneda, Double totalPagado, LocalDateTime fechaReserva, LocalDateTime fechaHoraTimbrado, String timbrado) {
+    public FacturaResumenMongo(PerfilFiscalResumenMongo perfilFiscal, String usoCfdi, String moneda, Double totalPagado, LocalDateTime fechaReserva, LocalDateTime fechaHoraTimbrado, String timbrado, String uuid) {
         this.perfilFiscal = perfilFiscal;
         this.usoCfdi = usoCfdi;
         this.moneda = moneda;
@@ -33,7 +32,18 @@ public class FacturaResumenMongo {
         this.fechaReserva = fechaReserva;
         this.fechaHoraTimbrado = fechaHoraTimbrado;
         this.timbrado = timbrado;
+        this.uuid = uuid;
     }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    
 
     public PerfilFiscalResumenMongo getPerfilFiscal() {
         return perfilFiscal;

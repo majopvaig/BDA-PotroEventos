@@ -7,6 +7,7 @@ Entitys\ENUMS\UsoCfdi.class
 Entitys\ENUMS\ReservacionEstado.class
 Entitys\Pago.class
 Entitys\Ubicacion.class
+Entitys\Factura.class
 Entitys\ENUMS\EstadoBoleto.class
 Entitys\ENUMS\EstadoEvento.class
 Entitys\Categoria.class

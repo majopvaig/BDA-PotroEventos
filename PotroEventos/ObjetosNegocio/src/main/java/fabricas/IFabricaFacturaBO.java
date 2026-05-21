@@ -4,10 +4,16 @@
  */
 package fabricas;
 
+import dtos.FacturaDTO;
+import dtos.PagoDTO;
+import dtos.PerfilFiscalDTO;
+import dtos.ReservacionDTO;
+
 /**
  *
  * @author aaron
  */
 public interface IFabricaFacturaBO {
     
+    public FacturaDTO crearFactura(PerfilFiscalDTO perfil, ReservacionDTO reserva);
 }

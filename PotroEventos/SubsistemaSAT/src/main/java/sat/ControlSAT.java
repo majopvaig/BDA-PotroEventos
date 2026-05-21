@@ -6,7 +6,7 @@ package sat;
 
 import com.google.gson.Gson;
 import conexion.ConexionSAT;
-import dtos.PerfilFiscalInfraestructuraDTO;
+import dtos.*;
 import excepciones.SatException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -75,5 +75,38 @@ public class ControlSAT {
         }
     }
     
-    
+    protected SatDTO timbrarXml(String xml, String rfc) throws SatException {
+        try {
+
+            // --- Construir objeto con los datos de la solicitud ---
+            TimbradoRequest request = new TimbradoRequest();
+            request.setRfcEmisor(rfc);
+            request.setXmlPlano(xml);
+
+            // --- Convertir objeto a JSON ---
+            String jsonRequest = gson.toJson(request);
+
+            // --- Construir peticion POST ---
+            HttpRequest httpRequest = HttpRequest.newBuilder()
+                    .uri(URI.create(this.baseUrl + "/timbrar"))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(jsonRequest))
+                    .build();
+
+            // --- Enviar petición ---
+            HttpResponse<String> response = httpClient
+                    .send(httpRequest, HttpResponse.BodyHandlers.ofString());
+
+            // --- Procesar respuesta ---
+            if (response.statusCode() == 200) {
+                // ✅ Retornar SatDTO completo
+                return gson.fromJson(response.body(), SatDTO.class);
+            } else {
+                throw new SatException("Error al timbrar: " + response.statusCode() + " - " + response.body());
+            }
+
+        } catch (Exception e) {
+            throw new SatException("Error al establecer conexion con API SAT: " + e.getMessage());
+        }
+    }
 }

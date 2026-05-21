@@ -5,6 +5,7 @@
 package sat;
 
 import dtos.PerfilFiscalInfraestructuraDTO;
+import dtos.SatDTO;
 import excepciones.SatException;
 
 /**
@@ -14,5 +15,7 @@ import excepciones.SatException;
 public interface IComunicacionSAT {
     
     public PerfilFiscalInfraestructuraDTO obtenerPerfilFiscal(String rfc) throws SatException;
+    
+    public SatDTO timbrarXml(String xml, String rfc)throws SatException;
     
 }

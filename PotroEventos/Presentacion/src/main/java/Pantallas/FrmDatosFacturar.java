@@ -5,10 +5,16 @@
 package Pantallas;
 
 import Controlador.interfaz.ICoordinadorAplicacion;
+import dtos.ENUMS.UsoCfdiDTO;
+import dtos.FacturaDTO;
+import dtos.PerfilFiscalDTO;
+import dtos.ReservacionDTO;
 import java.awt.Image;
-import javax.swing.Icon;
+import java.time.format.DateTimeFormatter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.ImageIcon;
-
+import javax.swing.JOptionPane;
 /**
  *
  * @author aaron
@@ -17,18 +23,17 @@ public class FrmDatosFacturar extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmDatosFacturar.class.getName());
     private ICoordinadorAplicacion coordinador;
+    private FacturaDTO factura;
     
-    // falta que lo implemente
-    //private FacturaDTO factura;
     /**
      * Creates new form FrmDatosFacturar
      */
-    public FrmDatosFacturar(ICoordinadorAplicacion coordinador) {
+    public FrmDatosFacturar(ICoordinadorAplicacion coordinador, FacturaDTO factura) {
         this.coordinador = coordinador;
+        this.factura = factura;
         initComponents();
         configuraciones();
     }
-    
     
     private void configuraciones(){
         
@@ -46,8 +51,64 @@ public class FrmDatosFacturar extends javax.swing.JFrame {
             
             lblHacienda.setIcon(new ImageIcon(img));
         }
+        
+        // setear los acampos de perfil fiscal
+        campoRfc.setText(factura.getPerfil().getRfc());
+        campoRazon.setText(factura.getPerfil().getNombre());
+        campoCorreo.setText(factura.getPerfil().getCorreo());
+        campoCP.setText(factura.getPerfil().getCodigoPostal());
+        campoRegimen.setText(factura.getPerfil().getRegimenFiscal().getCodigo() +" "+ factura.getPerfil().getRegimenFiscal().getDescripcion());
+        
+        // setteo de campos de boleto
+        campoTotal.setText(String.valueOf(factura.getTotal()));
+        campoMoneda.setText("MXN");
+        campoMetodo.setText(factura.getMetodoPago());
+        campoFecha.setText(factura.getFechaCompra().format(DateTimeFormatter.ISO_DATE));
+        
     }
     
+    private boolean recogerDatos(){
+        // Validar correo
+        if(campoCorreo.getText().isBlank() || campoCorreo.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "El correo no puede estar vacío.");
+            return false;
+        }
+        if(!validarCorreo()){
+            JOptionPane.showMessageDialog(this, "Formato incorrecto de correo.");
+            return false;
+        }
+
+        // Validar código postal
+        if(!esCodigoPostalValido(campoCP.getText())){
+            JOptionPane.showMessageDialog(this, "El código postal debe tener exactamente 5 números.");
+            return false;
+        }
+
+        // Si todo está bien, asignar valores
+        this.factura.getPerfil().setCorreo(campoCorreo.getText().strip());
+        this.factura.getPerfil().setCodigoPostal(campoCP.getText().strip());
+        this.factura.setUsoCfdi((UsoCfdiDTO) cbxUsocfdi.getSelectedItem());
+        return true;
+    }
+
+    public boolean esCodigoPostalValido(String str) {
+        if (str == null || str.isBlank()) {
+            return false;  
+        }
+        return str.matches("^\\d{5}$");
+    }
+
+    private boolean validarCorreo(){
+        if(campoCorreo.getText().isBlank() || campoCorreo.getText().isEmpty()){
+            return false;  
+        }
+
+        String regex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(campoCorreo.getText());
+
+        return matcher.matches();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -70,17 +131,17 @@ public class FrmDatosFacturar extends javax.swing.JFrame {
         txtMétodoPago = new javax.swing.JLabel();
         txtFechaReserva = new javax.swing.JLabel();
         txtMoneda = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        campoRfc = new javax.swing.JTextField();
+        campoRazon = new javax.swing.JTextField();
+        campoCorreo = new javax.swing.JTextField();
+        campoCP = new javax.swing.JTextField();
+        cbxUsocfdi = new javax.swing.JComboBox<>();
+        campoTotal = new javax.swing.JTextField();
+        campoFecha = new javax.swing.JTextField();
+        campoMetodo = new javax.swing.JTextField();
+        campoMoneda = new javax.swing.JTextField();
         btnGenerar = new javax.swing.JButton();
+        campoRegimen = new javax.swing.JTextField();
         pnlSuperior = new javax.swing.JPanel();
         lblHacienda = new javax.swing.JLabel();
 
@@ -159,119 +220,119 @@ public class FrmDatosFacturar extends javax.swing.JFrame {
         txtMoneda.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtMoneda.setText("Moneda:");
 
-        jTextField1.setEditable(false);
-        jTextField1.setBackground(java.awt.Color.white);
-        jTextField1.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(51, 51, 51));
-        jTextField1.setText("jTextField1");
-        jTextField1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTextField1.setMaximumSize(new java.awt.Dimension(100, 21));
-        jTextField1.setMinimumSize(new java.awt.Dimension(100, 21));
-        jTextField1.setOpaque(true);
-        jTextField1.setPreferredSize(new java.awt.Dimension(100, 21));
+        campoRfc.setEditable(false);
+        campoRfc.setBackground(java.awt.Color.white);
+        campoRfc.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        campoRfc.setForeground(new java.awt.Color(51, 51, 51));
+        campoRfc.setText("jTextField1");
+        campoRfc.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        campoRfc.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        campoRfc.setMaximumSize(new java.awt.Dimension(100, 21));
+        campoRfc.setMinimumSize(new java.awt.Dimension(100, 21));
+        campoRfc.setOpaque(true);
+        campoRfc.setPreferredSize(new java.awt.Dimension(100, 21));
 
-        jTextField2.setEditable(false);
-        jTextField2.setBackground(java.awt.Color.white);
-        jTextField2.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        jTextField2.setForeground(new java.awt.Color(51, 51, 51));
-        jTextField2.setText("jTextField1");
-        jTextField2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jTextField2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTextField2.setMaximumSize(new java.awt.Dimension(100, 21));
-        jTextField2.setMinimumSize(new java.awt.Dimension(100, 21));
-        jTextField2.setOpaque(true);
-        jTextField2.setPreferredSize(new java.awt.Dimension(100, 21));
+        campoRazon.setEditable(false);
+        campoRazon.setBackground(java.awt.Color.white);
+        campoRazon.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        campoRazon.setForeground(new java.awt.Color(51, 51, 51));
+        campoRazon.setText("jTextField1");
+        campoRazon.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        campoRazon.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        campoRazon.setMaximumSize(new java.awt.Dimension(100, 21));
+        campoRazon.setMinimumSize(new java.awt.Dimension(100, 21));
+        campoRazon.setOpaque(true);
+        campoRazon.setPreferredSize(new java.awt.Dimension(100, 21));
 
-        jTextField3.setBackground(java.awt.Color.white);
-        jTextField3.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        jTextField3.setText("jTextField1");
-        jTextField3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jTextField3.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextField3.setMaximumSize(new java.awt.Dimension(100, 21));
-        jTextField3.setMinimumSize(new java.awt.Dimension(100, 21));
-        jTextField3.setOpaque(true);
-        jTextField3.setPreferredSize(new java.awt.Dimension(100, 21));
+        campoCorreo.setBackground(java.awt.Color.white);
+        campoCorreo.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        campoCorreo.setText("jTextField1");
+        campoCorreo.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        campoCorreo.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        campoCorreo.setMaximumSize(new java.awt.Dimension(100, 21));
+        campoCorreo.setMinimumSize(new java.awt.Dimension(100, 21));
+        campoCorreo.setOpaque(true);
+        campoCorreo.setPreferredSize(new java.awt.Dimension(100, 21));
 
-        jTextField4.setBackground(java.awt.Color.white);
-        jTextField4.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        jTextField4.setText("jTextField1");
-        jTextField4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jTextField4.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextField4.setMaximumSize(new java.awt.Dimension(100, 21));
-        jTextField4.setMinimumSize(new java.awt.Dimension(100, 21));
-        jTextField4.setOpaque(true);
-        jTextField4.setPreferredSize(new java.awt.Dimension(100, 21));
+        campoCP.setBackground(java.awt.Color.white);
+        campoCP.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        campoCP.setText("jTextField1");
+        campoCP.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        campoCP.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        campoCP.setMaximumSize(new java.awt.Dimension(100, 21));
+        campoCP.setMinimumSize(new java.awt.Dimension(100, 21));
+        campoCP.setOpaque(true);
+        campoCP.setPreferredSize(new java.awt.Dimension(100, 21));
 
-        jComboBox1.setBackground(java.awt.Color.white);
-        jComboBox1.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jComboBox1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jComboBox1.setMaximumSize(new java.awt.Dimension(100, 21));
-        jComboBox1.setMinimumSize(new java.awt.Dimension(100, 21));
-        jComboBox1.setOpaque(true);
-        jComboBox1.setPreferredSize(new java.awt.Dimension(100, 21));
+        cbxUsocfdi.setBackground(java.awt.Color.white);
+        cbxUsocfdi.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        cbxUsocfdi.setModel(new javax.swing.DefaultComboBoxModel<>(UsoCfdiDTO.values()));
+        cbxUsocfdi.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        cbxUsocfdi.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cbxUsocfdi.setMaximumSize(new java.awt.Dimension(100, 21));
+        cbxUsocfdi.setMinimumSize(new java.awt.Dimension(100, 21));
+        cbxUsocfdi.setOpaque(true);
+        cbxUsocfdi.setPreferredSize(new java.awt.Dimension(100, 21));
+        cbxUsocfdi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxUsocfdiActionPerformed(evt);
+            }
+        });
 
-        jTextField5.setEditable(false);
-        jTextField5.setBackground(java.awt.Color.white);
-        jTextField5.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        jTextField5.setForeground(new java.awt.Color(51, 51, 51));
-        jTextField5.setText("jTextField1");
-        jTextField5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jTextField5.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTextField5.setMaximumSize(new java.awt.Dimension(100, 21));
-        jTextField5.setMinimumSize(new java.awt.Dimension(100, 21));
-        jTextField5.setOpaque(true);
-        jTextField5.setPreferredSize(new java.awt.Dimension(100, 21));
+        campoTotal.setEditable(false);
+        campoTotal.setBackground(java.awt.Color.white);
+        campoTotal.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        campoTotal.setForeground(new java.awt.Color(51, 51, 51));
+        campoTotal.setText("jTextField1");
+        campoTotal.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        campoTotal.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        campoTotal.setMaximumSize(new java.awt.Dimension(100, 21));
+        campoTotal.setMinimumSize(new java.awt.Dimension(100, 21));
+        campoTotal.setOpaque(true);
+        campoTotal.setPreferredSize(new java.awt.Dimension(100, 21));
 
-        jTextField6.setEditable(false);
-        jTextField6.setBackground(java.awt.Color.white);
-        jTextField6.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        jTextField6.setForeground(new java.awt.Color(51, 51, 51));
-        jTextField6.setText("jTextField1");
-        jTextField6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jTextField6.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTextField6.setMaximumSize(new java.awt.Dimension(100, 21));
-        jTextField6.setMinimumSize(new java.awt.Dimension(100, 21));
-        jTextField6.setOpaque(true);
-        jTextField6.setPreferredSize(new java.awt.Dimension(100, 21));
+        campoFecha.setEditable(false);
+        campoFecha.setBackground(java.awt.Color.white);
+        campoFecha.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        campoFecha.setForeground(new java.awt.Color(51, 51, 51));
+        campoFecha.setText("jTextField1");
+        campoFecha.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        campoFecha.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        campoFecha.setMaximumSize(new java.awt.Dimension(100, 21));
+        campoFecha.setMinimumSize(new java.awt.Dimension(100, 21));
+        campoFecha.setOpaque(true);
+        campoFecha.setPreferredSize(new java.awt.Dimension(100, 21));
 
-        jTextField7.setEditable(false);
-        jTextField7.setBackground(java.awt.Color.white);
-        jTextField7.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        jTextField7.setForeground(new java.awt.Color(51, 51, 51));
-        jTextField7.setText("jTextField1");
-        jTextField7.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jTextField7.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTextField7.setMaximumSize(new java.awt.Dimension(100, 21));
-        jTextField7.setMinimumSize(new java.awt.Dimension(100, 21));
-        jTextField7.setOpaque(true);
-        jTextField7.setPreferredSize(new java.awt.Dimension(100, 21));
+        campoMetodo.setEditable(false);
+        campoMetodo.setBackground(java.awt.Color.white);
+        campoMetodo.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        campoMetodo.setForeground(new java.awt.Color(51, 51, 51));
+        campoMetodo.setText("jTextField1");
+        campoMetodo.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        campoMetodo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        campoMetodo.setMaximumSize(new java.awt.Dimension(100, 21));
+        campoMetodo.setMinimumSize(new java.awt.Dimension(100, 21));
+        campoMetodo.setOpaque(true);
+        campoMetodo.setPreferredSize(new java.awt.Dimension(100, 21));
+        campoMetodo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoMetodoActionPerformed(evt);
+            }
+        });
 
-        jTextField8.setEditable(false);
-        jTextField8.setBackground(java.awt.Color.white);
-        jTextField8.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        jTextField8.setForeground(new java.awt.Color(51, 51, 51));
-        jTextField8.setText("jTextField1");
-        jTextField8.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jTextField8.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTextField8.setMaximumSize(new java.awt.Dimension(100, 21));
-        jTextField8.setMinimumSize(new java.awt.Dimension(100, 21));
-        jTextField8.setOpaque(true);
-        jTextField8.setPreferredSize(new java.awt.Dimension(100, 21));
+        campoMoneda.setEditable(false);
+        campoMoneda.setBackground(java.awt.Color.white);
+        campoMoneda.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        campoMoneda.setForeground(new java.awt.Color(51, 51, 51));
+        campoMoneda.setText("jTextField1");
+        campoMoneda.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        campoMoneda.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        campoMoneda.setMaximumSize(new java.awt.Dimension(100, 21));
+        campoMoneda.setMinimumSize(new java.awt.Dimension(100, 21));
+        campoMoneda.setOpaque(true);
+        campoMoneda.setPreferredSize(new java.awt.Dimension(100, 21));
 
-        jComboBox2.setBackground(java.awt.Color.white);
-        jComboBox2.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jComboBox2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jComboBox2.setMaximumSize(new java.awt.Dimension(100, 21));
-        jComboBox2.setMinimumSize(new java.awt.Dimension(100, 21));
-        jComboBox2.setOpaque(true);
-        jComboBox2.setPreferredSize(new java.awt.Dimension(100, 21));
-
-        btnGenerar.setBackground(new java.awt.Color(54, 76, 62));
+        btnGenerar.setBackground(new java.awt.Color(58, 91, 70));
         btnGenerar.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
         btnGenerar.setForeground(new java.awt.Color(255, 255, 255));
         btnGenerar.setText("Generar Factura");
@@ -282,6 +343,18 @@ public class FrmDatosFacturar extends javax.swing.JFrame {
             }
         });
 
+        campoRegimen.setEditable(false);
+        campoRegimen.setBackground(java.awt.Color.white);
+        campoRegimen.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        campoRegimen.setForeground(new java.awt.Color(51, 51, 51));
+        campoRegimen.setText("jTextField1");
+        campoRegimen.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        campoRegimen.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        campoRegimen.setMaximumSize(new java.awt.Dimension(100, 21));
+        campoRegimen.setMinimumSize(new java.awt.Dimension(100, 21));
+        campoRegimen.setOpaque(true);
+        campoRegimen.setPreferredSize(new java.awt.Dimension(100, 21));
+
         javax.swing.GroupLayout pnlContenedorLayout = new javax.swing.GroupLayout(pnlContenedor);
         pnlContenedor.setLayout(pnlContenedorLayout);
         pnlContenedorLayout.setHorizontalGroup(
@@ -290,38 +363,47 @@ public class FrmDatosFacturar extends javax.swing.JFrame {
                 .addComponent(pnlGris, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlContenedorLayout.createSequentialGroup()
-                        .addGap(174, 174, 174)
-                        .addComponent(lblDatosFiscales, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlContenedorLayout.createSequentialGroup()
-                        .addGap(130, 130, 130)
+                        .addGap(74, 74, 74)
                         .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnGenerar)
                             .addGroup(pnlContenedorLayout.createSequentialGroup()
-                                .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtCP)
-                                    .addComponent(txtRFC)
-                                    .addComponent(txtCorreo)
-                                    .addComponent(txtUsoCFDI)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtRazonSocial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(98, 98, 98)
+                                .addComponent(txtRFC)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(pnlContenedorLayout.createSequentialGroup()
                                 .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(campoCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+                                    .addComponent(campoRazon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cbxUsocfdi, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(campoCP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(pnlContenedorLayout.createSequentialGroup()
+                                        .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtCP)
+                                            .addComponent(txtCorreo)
+                                            .addComponent(txtUsoCFDI)
+                                            .addComponent(txtRazonSocial))
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(campoRfc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(98, 98, 98)
+                                .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txtTotal)
                                     .addComponent(txtMoneda)
                                     .addComponent(txtMétodoPago)
                                     .addComponent(txtFechaReserva)
                                     .addComponent(txtRegimenFiscal)
-                                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jTextField8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(138, Short.MAX_VALUE))
+                                    .addComponent(campoMoneda, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+                                    .addComponent(campoTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(campoMetodo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(campoFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(campoRegimen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(94, 94, 94))))
+                    .addGroup(pnlContenedorLayout.createSequentialGroup()
+                        .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlContenedorLayout.createSequentialGroup()
+                                .addGap(174, 174, 174)
+                                .addComponent(lblDatosFiscales, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlContenedorLayout.createSequentialGroup()
+                                .addGap(190, 190, 190)
+                                .addComponent(btnGenerar)))
+                        .addContainerGap())))
         );
         pnlContenedorLayout.setVerticalGroup(
             pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -335,48 +417,48 @@ public class FrmDatosFacturar extends javax.swing.JFrame {
                     .addComponent(txtTotal))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoRfc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtRazonSocial)
-                    .addComponent(txtMoneda))
+                .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtMoneda)
+                    .addComponent(txtRazonSocial))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoRazon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoMoneda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
                 .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlContenedorLayout.createSequentialGroup()
                         .addComponent(txtMétodoPago)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(campoMetodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtFechaReserva)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(campoFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(txtRegimenFiscal)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(campoRegimen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlContenedorLayout.createSequentialGroup()
                         .addComponent(txtCorreo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(campoCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtCP)
                         .addGap(6, 6, 6)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(campoCP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(txtUsoCFDI)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                        .addComponent(cbxUsocfdi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(32, 32, 32)
                 .addComponent(btnGenerar, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
-        pnlSuperior.setBackground(new java.awt.Color(54, 76, 62));
+        pnlSuperior.setBackground(new java.awt.Color(58, 91, 70));
 
         lblHacienda.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblHacienda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hacienda.png"))); // NOI18N
@@ -420,22 +502,33 @@ public class FrmDatosFacturar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
-        // TODO add your handling code here:
+        if(recogerDatos()){
+            this.coordinador.mostrarResumenDatosFactura(this.factura);
+        }
+        
+        
     }//GEN-LAST:event_btnGenerarActionPerformed
+    private void campoMetodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoMetodoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoMetodoActionPerformed
+
+    private void cbxUsocfdiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxUsocfdiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxUsocfdiActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGenerar;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField campoCP;
+    private javax.swing.JTextField campoCorreo;
+    private javax.swing.JTextField campoFecha;
+    private javax.swing.JTextField campoMetodo;
+    private javax.swing.JTextField campoMoneda;
+    private javax.swing.JTextField campoRazon;
+    private javax.swing.JTextField campoRegimen;
+    private javax.swing.JTextField campoRfc;
+    private javax.swing.JTextField campoTotal;
+    private javax.swing.JComboBox<UsoCfdiDTO> cbxUsocfdi;
     private javax.swing.JLabel lblDatosFiscales;
     private javax.swing.JLabel lblHacienda;
     private javax.swing.JPanel pnlContenedor;
