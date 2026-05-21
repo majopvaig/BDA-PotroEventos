@@ -40,7 +40,7 @@ public class ControlCambioAsiento {
     
     public BoletoDTO obtenerBoleto(String idReservacion) throws CambioAsientoException{
         try{
-            return reservacionBO.obtenerBoletoPorReservacion(idReservacion);
+            return reservacionBO.obtenerBoleto(idReservacion);
         }catch(Exception e ){
             throw new CambioAsientoException("Error al obtener el boleto: " + e.getMessage());
         }
@@ -49,7 +49,7 @@ public class ControlCambioAsiento {
     public boolean cambiarAsiento(String idReservacion, String idAsientoNuevo) throws CambioAsientoException{
         String idAsientoActual = null;
         try{
-            BoletoDTO boleto = reservacionBO.obtenerBoletoPorReservacion(idReservacion);
+            BoletoDTO boleto = reservacionBO.obtenerBoleto(idReservacion);
             if (boleto == null) {
                 throw new CambioAsientoException("No se encontró el boleto para la reservación.");
             }

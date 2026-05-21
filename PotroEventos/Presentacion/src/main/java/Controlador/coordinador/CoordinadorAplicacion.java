@@ -1,7 +1,10 @@
 package Controlador.coordinador;
 
+import CambioAsiento.CambioAsientoFachada;
+import CambioAsiento.ICambioAsiento;
 import Controlador.interfaz.ICoordinadorAplicacion;
 import Controlador.interfaz.ICoordinadorDevolucion;
+import Exception.CambioAsientoException;
 import InicioSesionEmpleado.FachadaInicioSesionEmpleado;
 import InicioSesionEmpleado.IInicioSesionEmpleado;
 import Pantallas.FrmAsistencias;
@@ -14,6 +17,7 @@ import Pantallas.FrmPlantillaSistema;
 import Pantallas.FrmRegistrarse;
 import Pantallas.FrmDetallesCompra;
 import Pantallas.FrmRegistroItson;
+import Pantallas.vistas.PnlCambioAsiento;
 import Pantallas.vistas.PnlConsultar;
 import Pantallas.vistas.PnlConsultarEvento;
 import Pantallas.vistas.PnlConsultarMenu;
@@ -56,9 +60,9 @@ import RevisionBoletos.IRevisionBoletos;
 import RevisionBoletos.RevisionBoletos;
 import dtos.FacturaDTO;
 import dtos.PerfilFiscalDTO;
-import excepciones.FacturaException;
-import factura.FachadaFactura;
-import factura.IFactura;
+//import excepciones.FacturaException;
+//import factura.FachadaFactura;
+//import factura.IFactura;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.List;
@@ -74,7 +78,8 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
     private final IRevisionBoletos controlRevision = new RevisionBoletos();
     private final IInicioSesionEmpleado controlEmpleados = new FachadaInicioSesionEmpleado();
     private final ICoordinadorDevolucion coordinadorDevolucion = new CoordinadorDevolucion(this);
-    private final IFactura controlFactura = new FachadaFactura();
+//    private final IFactura controlFactura = new FachadaFactura();
+    private final ICambioAsiento controlCambio = new CambioAsientoFachada();
     
     private FrmAsistencias frmAsistencias;
     private FrmCamara frmCamara;
@@ -570,105 +575,124 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
         return frmAsistencias;
     }
     
-    @Override
-    public boolean facturar(String idReservacion) throws CoordinadorException {
-        try {
-            return controlFactura.obtenerFactura(idReservacion);
-        } catch (FacturaException ex) {
-            throw new CoordinadorException(ex.getMessage());
-        }
-    }
-
-    @Override
-    public PerfilFiscalDTO recuperarPerfilFiscal(String idUsuario)throws CoordinadorException{
-        try {
-            PerfilFiscalDTO perfil = controlFactura.buscarPerfil(idUsuario);
-            if(perfil == null){
-                mostrarBuscarRFC();
-                return null;
-            }
-            return perfil;
-        } catch (FacturaException ex) {
-            throw new CoordinadorException(ex.getMessage());
-        }
-    }
-
-    @Override
-    public PerfilFiscalDTO buscarPerfilFiscal(String rfc, String idUsuario) throws CoordinadorException {
-        try {
-            idUsuario = controlUsuarios.obtenerUsuarioActivo().getIdUsuario();
-            return controlFactura.buscarPerfilFiscal(rfc, idUsuario);
-        } catch (FacturaException ex) {
-            throw new CoordinadorException(ex.getMessage());
-        } catch (GestionUsuarioException ex) {
-            throw new CoordinadorException(ex.getMessage());
-        }
-    }
-
-    @Override
-    public FacturaDTO crearFactura(PerfilFiscalDTO perfil, ReservacionDTO reserva) throws CoordinadorException {
-        try{
-            return controlFactura.crearFactura(perfil, reserva);
-        }catch(FacturaException ex){
-            throw new CoordinadorException(ex.getMessage());
-        }
-    }
-
-    @Override
-    public boolean timbrarFactura(FacturaDTO factura) throws CoordinadorException {
-        try {
-            return controlFactura.generarFactura(factura);
-        } catch (FacturaException ex) {
-            throw new CoordinadorException(ex.getMessage());
-        }
-    }
+//    @Override
+//    public boolean facturar(String idReservacion) throws CoordinadorException {
+//        try {
+//            return controlFactura.obtenerFactura(idReservacion);
+//        } catch (FacturaException ex) {
+//            throw new CoordinadorException(ex.getMessage());
+//        }
+//    }
+//
+//    @Override
+//    public PerfilFiscalDTO recuperarPerfilFiscal(String idUsuario)throws CoordinadorException{
+//        try {
+//            PerfilFiscalDTO perfil = controlFactura.buscarPerfil(idUsuario);
+//            if(perfil == null){
+//                mostrarBuscarRFC();
+//                return null;
+//            }
+//            return perfil;
+//        } catch (FacturaException ex) {
+//            throw new CoordinadorException(ex.getMessage());
+//        }
+//    }
+//
+//    @Override
+//    public PerfilFiscalDTO buscarPerfilFiscal(String rfc, String idUsuario) throws CoordinadorException {
+//        try {
+//            idUsuario = controlUsuarios.obtenerUsuarioActivo().getIdUsuario();
+//            return controlFactura.buscarPerfilFiscal(rfc, idUsuario);
+//        } catch (FacturaException ex) {
+//            throw new CoordinadorException(ex.getMessage());
+//        } catch (GestionUsuarioException ex) {
+//            throw new CoordinadorException(ex.getMessage());
+//        }
+//    }
+//
+//    @Override
+//    public FacturaDTO crearFactura(PerfilFiscalDTO perfil, ReservacionDTO reserva) throws CoordinadorException {
+//        try{
+//            return controlFactura.crearFactura(perfil, reserva);
+//        }catch(FacturaException ex){
+//            throw new CoordinadorException(ex.getMessage());
+//        }
+//    }
+//
+//    @Override
+//    public boolean timbrarFactura(FacturaDTO factura) throws CoordinadorException {
+//        try {
+//            return controlFactura.generarFactura(factura);
+//        } catch (FacturaException ex) {
+//            throw new CoordinadorException(ex.getMessage());
+//        }
+//    }
+//    
+//    @Override
+//    public void mostrarDatosFactura(FacturaDTO factura) {
+//        if (frmDatosFacturar != null) {
+//            frmDatosFacturar.dispose();
+//            frmDatosFacturar = null;
+//        }
+//        if(dlgResumenFactura != null){
+//            dlgResumenFactura.dispose();
+//            dlgResumenFactura = null;
+//        }
+//
+//        if (dlgBuscarPerfil != null) {
+//            dlgBuscarPerfil.dispose();
+//            dlgBuscarPerfil = null;
+//        }
+//        frmDatosFacturar = new FrmDatosFacturar(this, factura);
+//        frmDatosFacturar.setLocationRelativeTo(null);
+//        frmDatosFacturar.setVisible(true);
+//    }
+//
+//    @Override
+//    public void mostrarBuscarRFC() {
+//        if(frmPlantilla != null){
+//            frmPlantilla = new FrmPlantillaSistema(this);
+//        }
+//        if(dlgBuscarPerfil != null){
+//            dlgBuscarPerfil.dispose();
+//        }
+//        dlgBuscarPerfil = new DlgBuscarPerfil(frmPlantilla, true, this);
+//        dlgBuscarPerfil.setLocationRelativeTo(null);
+//        dlgBuscarPerfil.setVisible(true);
+//    }
+//
+//    @Override
+//    public void mostrarResumenDatosFactura(FacturaDTO factura) {
+//        if (dlgResumenFactura != null) {
+//            dlgResumenFactura.dispose();
+//            dlgResumenFactura = null;
+//        }
+//    
+//        if (frmDatosFacturar != null) {
+//            frmDatosFacturar.dispose();
+//            frmDatosFacturar = null;
+//        }
+//        dlgResumenFactura = new DlgDetalleFactura(frmPlantilla, true, this, factura);
+//        dlgResumenFactura.setLocationRelativeTo(null);
+//        dlgResumenFactura.setVisible(true);
+//    }
     
     @Override
-    public void mostrarDatosFactura(FacturaDTO factura) {
-        if (frmDatosFacturar != null) {
-            frmDatosFacturar.dispose();
-            frmDatosFacturar = null;
-        }
-        if(dlgResumenFactura != null){
-            dlgResumenFactura.dispose();
-            dlgResumenFactura = null;
-        }
-
-        if (dlgBuscarPerfil != null) {
-            dlgBuscarPerfil.dispose();
-            dlgBuscarPerfil = null;
-        }
-        frmDatosFacturar = new FrmDatosFacturar(this, factura);
-        frmDatosFacturar.setLocationRelativeTo(null);
-        frmDatosFacturar.setVisible(true);
-    }
-
-    @Override
-    public void mostrarBuscarRFC() {
-        if(frmPlantilla != null){
+    public void mostrarCambioAsiento(ReservacionDTO reservacion){
+        ocultarTodo();
+        if(frmPlantilla == null){
             frmPlantilla = new FrmPlantillaSistema(this);
         }
-        if(dlgBuscarPerfil != null){
-            dlgBuscarPerfil.dispose();
-        }
-        dlgBuscarPerfil = new DlgBuscarPerfil(frmPlantilla, true, this);
-        dlgBuscarPerfil.setLocationRelativeTo(null);
-        dlgBuscarPerfil.setVisible(true);
+        frmPlantilla.setContenido(new PnlCambioAsiento(this, reservacion));
+        frmPlantilla.setVisible(true);
     }
-
-    @Override
-    public void mostrarResumenDatosFactura(FacturaDTO factura) {
-        if (dlgResumenFactura != null) {
-            dlgResumenFactura.dispose();
-            dlgResumenFactura = null;
-        }
     
-        if (frmDatosFacturar != null) {
-            frmDatosFacturar.dispose();
-            frmDatosFacturar = null;
+    @Override
+    public boolean cambioAsiento(ReservacionDTO reservacion, AsientoEventoDTO nuevoAsiento) throws CoordinadorException{
+        try{
+            return controlCambio.cambiarAsiento(reservacion.getIdReservacion(), nuevoAsiento.getIdAsientoEvento());
+        }catch(CambioAsientoException e){
+            throw new CoordinadorException(e.getMessage());
         }
-        dlgResumenFactura = new DlgDetalleFactura(frmPlantilla, true, this, factura);
-        dlgResumenFactura.setLocationRelativeTo(null);
-        dlgResumenFactura.setVisible(true);
     }
 }
