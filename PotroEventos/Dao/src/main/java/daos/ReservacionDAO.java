@@ -97,26 +97,22 @@ public class ReservacionDAO implements IReservacionDAO {
         LOG.info("Iniciando consulta: obtenerReservacionesUsuario para el Usuario ID: " + idUsuario);
         try {
             List<Document> reservaciones = coleccionReservaciones
-                    .withDocumentClass(Document.class)
-                    .aggregate(Arrays.asList(
-                            Aggregates.match(Filters.eq("usuario._id", new ObjectId(idUsuario))),
-                            Aggregates.lookup("usuarios", "usuario._id", "_id", "usuario"),
-                            Aggregates.unwind("$usuario", new UnwindOptions().preserveNullAndEmptyArrays(true)),
-                            // Campo auxiliar que soluciona la búsqueda si no hay un idAsientoEvento asignado
-                            Aggregates.addFields(new Field<>("id_evento_busqueda",
-                                    new Document("$ifNull", Arrays.asList("$boleto.asiento.idAsientoEvento", "$evento"))
-                            )),
-                            Aggregates.lookup("eventos", "id_evento_busqueda", "_id", "evento_temp"),
-                            Aggregates.unwind("$evento_temp", new UnwindOptions().preserveNullAndEmptyArrays(true)),
-                            Aggregates.addFields(new Field<>("boleto.evento", "$evento_temp")),
-                            Aggregates.project(Projections.exclude("evento_temp", "id_evento_busqueda")),
-                            Aggregates.lookup("ubicaciones", "boleto.evento.ubicacion._id", "_id", "ubicacion_temp"),
-                            Aggregates.unwind("$ubicacion_temp", new UnwindOptions().preserveNullAndEmptyArrays(true)),
-                            Aggregates.addFields(new Field<>("boleto.evento.ubicacion", "$ubicacion_temp")),
-                            Aggregates.project(Projections.exclude("ubicacion_temp"))
-                    )).into(new ArrayList<>());
+                .withDocumentClass(Document.class)
+                .aggregate(Arrays.asList(
+                        Aggregates.match(Filters.eq("usuario._id", new ObjectId(idUsuario))),
+                        Aggregates.lookup("usuarios", "usuario._id", "_id", "usuario"),
+                        Aggregates.unwind("$usuario", new UnwindOptions().preserveNullAndEmptyArrays(true)),
+                        Aggregates.lookup("eventos", "boleto.evento._id", "_id", "evento_temp"),
+                        Aggregates.unwind("$evento_temp", new UnwindOptions().preserveNullAndEmptyArrays(true)),
+                        Aggregates.addFields(new Field<>("boleto.evento", "$evento_temp")),
+                        Aggregates.project(Projections.exclude("evento_temp")),
+                        Aggregates.lookup("ubicaciones", "boleto.evento.ubicacion._id", "_id", "ubicacion_temp"),
+                        Aggregates.unwind("$ubicacion_temp", new UnwindOptions().preserveNullAndEmptyArrays(true)),
+                        Aggregates.addFields(new Field<>("boleto.evento.ubicacion", "$ubicacion_temp")),
+                        Aggregates.project(Projections.exclude("ubicacion_temp"))
+                )).into(new ArrayList<>());
 
-            LOG.info("Consulta exitosa. Reservaciones encontradas: " + reservaciones.size());
+            LOG.info("Consulta éxitosa. Reservaciones encontradas: " + reservaciones.size());
             return ReservacionPersistenciaAdapter.convertirListaADominio(reservaciones);
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "Error durante la agregación de reservaciones para el usuario {0}: {1}", new Object[]{idUsuario, e.getMessage()});
@@ -172,7 +168,7 @@ public class ReservacionDAO implements IReservacionDAO {
                 return null;
             }
 
-            LOG.info("Boleto encontrado exitosamente para el token especificado.");
+            LOG.info("Boleto encontrado éxitosamente para el token especificado.");
             return BoletoPersistenciaAdapter.convertirADominio(reservacion.get("boleto", Document.class));
         } catch (MongoException e) {
             LOG.log(Level.SEVERE, "Excepción en MongoDB al buscar por token {0}: {1}", new Object[]{token, e.getMessage()});

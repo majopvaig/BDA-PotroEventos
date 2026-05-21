@@ -14,6 +14,7 @@ import Entitys.Ubicacion;
 import excepciones.PersistenciaException;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.bson.Document;
 
@@ -22,24 +23,35 @@ import org.bson.Document;
  * @author maria
  */
 public class EventoPersistenciaAdapter {
-    
+
     public static Evento convertirADominio(Document documento) throws PersistenciaException {
-        if(documento == null){
+        if (documento == null) {
             return null;
         }
         Evento dominio = new Evento();
-        dominio.setIdEvento(documento.getObjectId("_id").toHexString());
+        if (documento.getObjectId("_id") != null) {
+            dominio.setIdEvento(documento.getObjectId("_id").toHexString());
+        } else if (documento.getString("id") != null) {
+            dominio.setIdEvento(documento.getString("id"));
+        }
+        //dominio.setIdEvento(documento.getObjectId("_id").toHexString());
         dominio.setNombreEvento(documento.getString("nombre"));
         dominio.setInformacionEvento(documento.getString("informacion"));
-        dominio.setFechaHora(documento
-                .getDate("fechaHora")
-                .toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime());
+        Date fh = (Date) documento.getDate("fechaHora");
+        if (fh != null) {
+            dominio.setFechaHora(documento
+                    .getDate("fechaHora")
+                    .toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDateTime());
+        }
         dominio.setEstadoEvento(EstadoEvento.valueOf(documento.getString("estado")));
         dominio.setUrlImagen(documento.getString("urlImagen"));
         dominio.setGratuito(documento.getBoolean("gratuito"));
-        dominio.setTipoEvento(TipoEventoP.valueOf(documento.getString("tipo")));
+        String tipo = documento.getString("tipo");
+        if (tipo != null) {
+            dominio.setTipoEvento(TipoEventoP.valueOf(documento.getString("tipo")));
+        }
         dominio.setDisponibilidad(documento.getInteger("disponibilidad"));
 
         Document catDoc = (Document) documento.get("categoria");
@@ -64,19 +76,19 @@ public class EventoPersistenciaAdapter {
 
         return dominio;
     }
-    
+
     public static List<Evento> convetirListaADominio(List<Document> lista) throws PersistenciaException {
         List<Evento> eventos = new ArrayList<>();
-        
-        if(lista == null){
+
+        if (lista == null) {
             return eventos;
         }
-        
-        for(Document mongo: lista){
+
+        for (Document mongo : lista) {
             eventos.add(convertirADominio(mongo));
         }
-        
+
         return eventos;
     }
-    
+
 }

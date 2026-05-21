@@ -126,7 +126,6 @@ public class ControlDevolucion {
                 throw new DevolucionBoletoException("Me falló porque no tenía tipo de método de pago válido.");
             }*/
         }
-        System.out.println("Sí fue válida la devolución");
         return true;
     }
 
@@ -150,8 +149,6 @@ public class ControlDevolucion {
         if (reservacion.getUsuario() == null) {
             return false;
         }
-
-        System.out.println("Sí fue válida la reservación");
         return true;
     }
 }

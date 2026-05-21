@@ -33,6 +33,10 @@ public class FrmRegistroItson extends javax.swing.JFrame {
     public boolean registroExitoso() {
         return exitoRegistro;
     }
+    
+    public void eliminarRegistro(){
+        exitoRegistro = false;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

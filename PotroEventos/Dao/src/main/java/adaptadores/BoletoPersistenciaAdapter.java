@@ -1,6 +1,5 @@
 package adaptadores;
 
-import Entitys.Asiento;
 import Entitys.AsientoEvento;
 import Entitys.Boleto;
 import Entitys.Evento;
@@ -9,7 +8,9 @@ import entidadesmongo.BoletoMongoEntidad;
 import entidadesresumenmongo.AsientoEventoResumenMongo;
 import entidadesresumenmongo.EventoResumenMongo;
 import excepciones.PersistenciaException;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -43,6 +44,7 @@ public class BoletoPersistenciaAdapter {
             EventoResumenMongo erm = new EventoResumenMongo();
             erm.setId(new ObjectId(dominio.getEvento().getIdEvento()));
             erm.setNombre(dominio.getEvento().getNombreEvento());
+            erm.setFechaHora(dominio.getEvento().getFechaHora());
             mongo.setEvento(erm);
         }
 
@@ -106,15 +108,7 @@ public class BoletoPersistenciaAdapter {
         // Mapeo de Evento
         Document eventoDoc = (Document) mongo.get("evento");
         if (eventoDoc != null) {
-            Evento evento = new Evento();
-            if (eventoDoc.getObjectId("_id") != null) {
-                evento.setIdEvento(eventoDoc.getObjectId("_id").toHexString());
-            } else if (eventoDoc.getString("id") != null) {
-                evento.setIdEvento(eventoDoc.getString("id"));
-            }
-            evento.setNombreEvento(eventoDoc.getString("nombre"));
-            evento.setInformacionEvento(eventoDoc.getString("informacion"));
-            dominio.setEvento(evento);
+            dominio.setEvento(EventoPersistenciaAdapter.convertirADominio(eventoDoc));
         }
 
         // Mapeo de Asiento desde Lookup si existe

@@ -236,9 +236,19 @@ public class FrmInicioSesion extends javax.swing.JFrame {
         try {
             String correo = txtCorreo.getText();
             String contrasenia = String.valueOf(txtContrasenia.getPassword());
+            
+            if(correo == null || correo.isEmpty() || correo.isBlank()){
+               JOptionPane.showMessageDialog(this, "Por favor ingrese un correo.");
+               return; 
+            }
+            
+            if(!correo.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")){
+               JOptionPane.showMessageDialog(this, "Formato de correo inválido.");
+               return; 
+            }
 
             if (correo.equals("Ingrese un correo") || contrasenia.equals("********************")) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Por favor complete todos los campos.");
+                JOptionPane.showMessageDialog(this, "Por favor complete todos los campos.");
                 return;
             }
 
@@ -247,7 +257,7 @@ public class FrmInicioSesion extends javax.swing.JFrame {
 
             if (usuario != null) {
 
-                javax.swing.JOptionPane.showMessageDialog(this, "Bienvenido " + usuario.getNombre());
+                JOptionPane.showMessageDialog(this, "Bienvenido " + usuario.getNombre());
                 coordinador.mostrarInicio();
                 this.dispose();
 
@@ -264,16 +274,16 @@ public class FrmInicioSesion extends javax.swing.JFrame {
                                 this,
                                 "¡Bienvenido al equipo de PotroEventos!\n\nEsperamos que tengas una excelente jornada de trabajo.",
                                 "Inicio de sesión",
-                                javax.swing.JOptionPane.INFORMATION_MESSAGE
+                                JOptionPane.INFORMATION_MESSAGE
                         );
                         coordinador.mostrarConsultarEventos();
                     } else {
-                        javax.swing.JOptionPane.showMessageDialog(this, "Correo o contraseña incorrectos", "Error de acceso", javax.swing.JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Correo o contraseña incorrectos", "Error de acceso", JOptionPane.ERROR_MESSAGE);
                     }
 
                 } catch (CoordinadorException | HeadlessException exEmpleado) {
                     // Si ocurre una excepción al buscar el empleado, la atrapamos aquí.
-                    javax.swing.JOptionPane.showMessageDialog(this, "Correo o contraseña incorrectos", "Error de acceso", javax.swing.JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Correo o contraseña incorrectos", "Error de acceso", JOptionPane.ERROR_MESSAGE);
                 }
             }
 

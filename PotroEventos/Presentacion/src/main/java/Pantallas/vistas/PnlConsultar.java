@@ -73,7 +73,7 @@ public class PnlConsultar extends javax.swing.JPanel {
 
     private void mostrarEventosCancelados() {
 
-        lblNombreEventos.setText("Eventos Cancelados");
+        lblNombreEventos.setText("Reservaciones Canceladas");
 
         List<ReservacionDTO> cancelados = new ArrayList<>();
 

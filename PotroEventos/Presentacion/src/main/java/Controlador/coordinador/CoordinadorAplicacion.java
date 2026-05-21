@@ -238,7 +238,6 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
         try {
             return controlEvento.consultarCategorias();
         } catch (GestionEventoException ex) {
-            System.out.println("Fallo al consultar categorías: " + ex.getMessage());
             return null;
         }
     }
@@ -276,6 +275,7 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
     public void cerrarSesion() {
         controlUsuarios.cerrarSesion();
         controlEmpleados.cerrarSesion();
+        frmRegistro.eliminarRegistro();
         this.mostrarInicioSesion();
     }
 
@@ -284,7 +284,6 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
         try {
             return controlUsuarios.obtenerReservacionesUsuario(idUsuario);
         } catch (GestionUsuarioException ex) {
-            System.out.println("Fallo al consultar reservaciones: " + ex.getMessage());
             return null;
         }
     }
@@ -303,7 +302,6 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
         try {
             return controlCompra.obtenerMapaOcupacion(evento);
         } catch (CompraBoletoException e) {
-            System.err.println(e.getMessage());
             return new HashMap<>();
         }
     }
@@ -313,7 +311,6 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
         try {
             return controlCompra.obtenerAsientosPorSeccion(null);
         } catch (CompraBoletoException ex) {
-            System.err.println("Error al obtener catálogo de asientos: " + ex.getMessage());
             return new java.util.ArrayList<>();
         }
     }
