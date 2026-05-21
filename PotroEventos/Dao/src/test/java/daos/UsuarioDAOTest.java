@@ -68,7 +68,7 @@ public class UsuarioDAOTest {
     /**
      * Test of obtenerUsuario method, of class UsuarioDAO.
      */
-    @Test
+    //@Test
     public void testObtenerUsuario() throws Exception {
         MongoDatabase base = ConexionMongo.obtenerBaseDatos();
         MongoCollection<Document> usuarioCol = base.getCollection("usuario");

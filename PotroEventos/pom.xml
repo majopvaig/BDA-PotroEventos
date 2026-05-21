@@ -22,6 +22,7 @@
         <module>SubsistemaRevisionBoletos</module>
         <module>SubsistemaIpWebcam</module>
         <module>SubsistemaInicioSesionEmpleado</module>
+        <module>SubsistemaCambioAsiento</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

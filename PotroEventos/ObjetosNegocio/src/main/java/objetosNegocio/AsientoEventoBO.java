@@ -82,6 +82,19 @@ public class AsientoEventoBO implements IAsientoEventoBO {
     }
 
     @Override
+    public boolean ocuparAsiento(String idAsientoNuevo) throws NegocioException{
+        if (idAsientoNuevo == null) {
+            throw new NegocioException("ID de asientoEvento no válido.");
+        }
+
+        try {
+            return asientoEventoDAO.ocuparAsiento(idAsientoNuevo);
+        } catch (PersistenciaException e) {
+            throw new NegocioException("No fue posible liberar el asiento");
+        }
+    }
+    
+    @Override
     public boolean venderAsiento(String idAsiento) throws NegocioException {
         if (idAsiento == null) {
             throw new NegocioException("ID de asientoEvento no válido.");

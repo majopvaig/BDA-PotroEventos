@@ -22,5 +22,7 @@ public interface IAsientoEventoDAO {
 
     boolean liberarAsiento(String idAsiento) throws PersistenciaException;
     
+    public boolean ocuparAsiento(String idAsientoNuevo) throws PersistenciaException;
+    
     boolean venderAsiento(String idAsiento) throws PersistenciaException;
 }
