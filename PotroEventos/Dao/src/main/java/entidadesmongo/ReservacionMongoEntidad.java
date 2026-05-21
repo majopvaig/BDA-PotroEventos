@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package entidadesmongo;
 
 import entidadesresumenmongo.UsuarioResumenMongo;
@@ -25,7 +21,9 @@ public class ReservacionMongoEntidad {
     private UsuarioResumenMongo usuario;
     private LocalDateTime fechaRegistro;
     private String estado;
+    
     private DevolucionMongoEntidad devolucion;
+    private ObjectId factura;
 
     public ReservacionMongoEntidad() {
     }
@@ -49,6 +47,37 @@ public class ReservacionMongoEntidad {
         this.fechaRegistro = fechaRegistro;
         this.estado = estado;
         this.devolucion = devolucion;
+    }
+
+    public ReservacionMongoEntidad(ObjectId id, double total, BoletoMongoEntidad boleto, PagoMongoEntidad pago, UsuarioResumenMongo usuario, LocalDateTime fechaRegistro, String estado, ObjectId factura) {
+        this.id = id;
+        this.total = total;
+        this.boleto = boleto;
+        this.pago = pago;
+        this.usuario = usuario;
+        this.fechaRegistro = fechaRegistro;
+        this.estado = estado;
+        this.factura = factura;
+    }
+
+    public ReservacionMongoEntidad(ObjectId id, double total, BoletoMongoEntidad boleto, PagoMongoEntidad pago, UsuarioResumenMongo usuario, LocalDateTime fechaRegistro, String estado, DevolucionMongoEntidad devolucion, ObjectId factura) {
+        this.id = id;
+        this.total = total;
+        this.boleto = boleto;
+        this.pago = pago;
+        this.usuario = usuario;
+        this.fechaRegistro = fechaRegistro;
+        this.estado = estado;
+        this.devolucion = devolucion;
+        this.factura = factura;
+    }
+
+    public ObjectId getFactura() {
+        return factura;
+    }
+
+    public void setFactura(ObjectId factura) {
+        this.factura = factura;
     }
 
     public ObjectId getId() {
@@ -134,6 +163,7 @@ public class ReservacionMongoEntidad {
                 + ", fechaRegistro=" + fechaRegistro 
                 + ", estado=" + estado 
                 + ", devolucion=" + devolucion
+                + ", factura=" + factura
                 + '}';
     }
     

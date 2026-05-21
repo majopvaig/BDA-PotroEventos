@@ -1,5 +1,6 @@
 package daos;
 
+import Entitys.PerfilFiscal;
 import Entitys.Usuario;
 import adaptadores.UsuarioPersistenciaAdapter;
 import com.mongodb.MongoException;
@@ -7,6 +8,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import static com.mongodb.client.model.Filters.eq;
 import com.mongodb.client.model.IndexOptions;
+import com.mongodb.client.model.Updates;
 import static com.mongodb.client.model.Updates.inc;
 import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.result.UpdateResult;
@@ -141,5 +143,26 @@ public class UsuarioDAO implements IUsuarioDAO {
             throw new PersistenciaException("No fue posible agregar los créditos al usuario");
         }
     }
-
+    
+    @Override
+    public boolean guardarPerfilFiscal(PerfilFiscal perfil, String idUsuario) {
+        try{
+            if(perfil == null){
+                throw new MongoException("No puede almacenarse un campo vacío.");
+            }
+            
+            UpdateResult resultado = coleccionUsuarios
+                    .updateOne(Filters.eq("_id", new ObjectId(idUsuario))
+                            , Updates.set("perfilFiscal", perfil));
+            
+            if(resultado == null){
+                return false;
+            }
+            
+            return true;
+        }catch(MongoException me){
+            throw new MongoException("Error al guardar perfil fiscal.");
+        }
+        
+    }
 }

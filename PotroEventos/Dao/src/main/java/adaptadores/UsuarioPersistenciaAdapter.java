@@ -4,8 +4,11 @@
  */
 package adaptadores;
 
+import Entitys.ENUMS.RegimenFiscal;
+import Entitys.PerfilFiscal;
 import Entitys.Usuario;
 import entidadesmongo.UsuarioMongoEntidad;
+import entidadesresumenmongo.PerfilFiscalResumenMongo;
 import excepciones.PersistenciaException;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -29,8 +32,20 @@ public class UsuarioPersistenciaAdapter {
         if (dominio.getApellidoMaterno() != null) {
             mongo.setApellidoMaterno(dominio.getApellidoMaterno());
         }
+        
+        if (dominio.getPerfilFiscal() != null) {
+            PerfilFiscalResumenMongo resumen = new PerfilFiscalResumenMongo();
+            resumen.setRfc(dominio.getPerfilFiscal().getRfc());
+            resumen.setNombre(dominio.getPerfilFiscal().getNombre());
+            resumen.setCodigoPostal(dominio.getPerfilFiscal().getCodigoPostal());
+            resumen.setRegimenFiscal(dominio.getPerfilFiscal().getRegimenFiscal().getCodigo());
+            resumen.setCorreo(dominio.getPerfilFiscal().getCorreo());
+            mongo.setPerfilFiscal(resumen);
+        }
+        
         mongo.setCorreo(dominio.getCorreo());
         mongo.setContrasenia(dominio.getContrasenia());
+        
         Integer creditos = dominio.getCreditos();
         if (creditos == null) {
             mongo.setCreditos(0);
@@ -42,7 +57,7 @@ public class UsuarioPersistenciaAdapter {
     }
     
     public static Usuario convertirADominio(UsuarioMongoEntidad mongo) throws PersistenciaException {
-        if(mongo == null){
+        if (mongo == null) {
             return null;
         }
         
@@ -56,11 +71,26 @@ public class UsuarioPersistenciaAdapter {
         dominio.setContrasenia(mongo.getContrasenia());
         dominio.setCreditos(mongo.getCreditos());
         
+        if (mongo.getPerfilFiscal() != null) {
+            PerfilFiscal perfil = new PerfilFiscal();
+            perfil.setRfc(mongo.getPerfilFiscal().getRfc());
+            perfil.setNombre(mongo.getPerfilFiscal().getNombre());
+            perfil.setCorreo(mongo.getPerfilFiscal().getCorreo());
+            perfil.setCodigoPostal(mongo.getPerfilFiscal().getCodigoPostal());
+            String regimenStr = mongo.getPerfilFiscal().getRegimenFiscal();
+            
+            if (regimenStr != null && !regimenStr.isEmpty()) {
+                perfil.setRegimenFiscal(RegimenFiscal.valueOf(regimenStr));
+            }
+        
+            dominio.setPerfilFiscal(perfil);
+        }
+        
         return dominio;
     }
     
     public static Usuario convertirADominio(Document mongo) throws PersistenciaException {
-        if(mongo == null){
+        if (mongo == null) {
             return null;
         }
         
@@ -72,13 +102,30 @@ public class UsuarioPersistenciaAdapter {
         dominio.setApellidoMaterno(mongo.getString("apellidoMaterno"));
         dominio.setCorreo(mongo.getString("correo"));
         dominio.setContrasenia(mongo.getString("contrasenia"));
+        
         Integer creditos = mongo.getInteger("creditos");
-        if(creditos != null){
+        if (creditos != null) {
             dominio.setCreditos(creditos);
         } else {
             dominio.setCreditos(0);
         }
         
+        Document perfilDoc = (Document) mongo.get("perfilFiscal");
+        if (perfilDoc != null) {
+            PerfilFiscal perfil = new PerfilFiscal();
+            perfil.setRfc(perfilDoc.getString("rfc"));
+            perfil.setNombre(perfilDoc.getString("nombre"));
+            perfil.setCodigoPostal(perfilDoc.getString("codigoPostal"));
+            String regimenStr = perfilDoc.getString("regimenFiscal");
+            
+            if (regimenStr != null && !regimenStr.isEmpty()) {
+                perfil.setRegimenFiscal(RegimenFiscal.valueOf(regimenStr));
+            }
+            
+            perfil.setCorreo(perfilDoc.getString("correo"));
+            dominio.setPerfilFiscal(perfil);
+        }
+
         return dominio;
     }
     

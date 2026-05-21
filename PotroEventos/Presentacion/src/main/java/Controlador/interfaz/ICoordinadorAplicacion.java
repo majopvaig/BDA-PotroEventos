@@ -9,8 +9,10 @@ import dtos.CategoriaDTO;
 import dtos.CobroDTO;
 import dtos.EmpleadoDTO;
 import dtos.EventoDTO;
+import dtos.FacturaDTO;
 import dtos.LoginDTO;
 import dtos.PagoDTO;
+import dtos.PerfilFiscalDTO;
 import dtos.RegistroUsuarioDTO;
 import dtos.ReporteAsistenciaDTO;
 import dtos.ReservacionDTO;
@@ -130,5 +132,21 @@ public interface ICoordinadorAplicacion {
     void mostrarAsistencias(EventoDTO eventoDTO) throws CoordinadorException;
 
     public FrmAsistencias getFrmAsistencias();
+    
+    boolean facturar(String idReservacion)throws CoordinadorException;
+    
+    PerfilFiscalDTO recuperarPerfilFiscal(String idUsuario)throws CoordinadorException;
+    
+    PerfilFiscalDTO buscarPerfilFiscal(String rfc, String idUsuario)throws CoordinadorException;
+    
+    FacturaDTO crearFactura(PerfilFiscalDTO perfil, ReservacionDTO reserva)throws CoordinadorException;
+    
+    boolean timbrarFactura(FacturaDTO factura)throws CoordinadorException;
+    
+    public void mostrarBuscarRFC();
+    
+    public void mostrarDatosFactura(FacturaDTO factura);
+
+    public void mostrarResumenDatosFactura(FacturaDTO factura);
 
 }

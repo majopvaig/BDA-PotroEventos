@@ -81,4 +81,7 @@ public interface IReservacionBO {
      * @throws NegocioException Se lanza cuando ocurre un error.
      */
     List<AsientoEventoDTO> obtenerAsientosConAsistencia(String idEvento) throws NegocioException;
+
+    boolean obtenerReservacion(String idReservacion) throws NegocioException;
 }
+

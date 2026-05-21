@@ -13,12 +13,6 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>DTOs</artifactId>
-            <version>${project.version}</version>
-        </dependency>
 
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -29,18 +23,6 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>SubsistemaCompraBoleto</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>SubsistemaGestionEvento</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>SubsistemaGestionUsuarios</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -64,6 +46,31 @@
             <artifactId>SubsistemaRevisionBoletos</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>SubsistemaInicioSesionEmpleado</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>SubsistemaFactura</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>DTOs</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>SubsistemaGestionUsuarios</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>SubsistemaGestionEvento</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 

@@ -15,8 +15,21 @@ public class UsuarioDTO {
     private String apellidoMaterno;
     private String correo;
     private Integer creditos;
+    
+    // --- caso individual ---
+    private PerfilFiscalDTO perfil;
 
     public UsuarioDTO() {
+    }
+
+    public UsuarioDTO(String idUsuario, String nombre, String apellidoPaterno, String apellidoMaterno, String correo, Integer creditos, PerfilFiscalDTO perfil) {
+        this.idUsuario = idUsuario;
+        this.nombre = nombre;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.correo = correo;
+        this.creditos = creditos;
+        this.perfil = perfil;
     }
 
     public UsuarioDTO(String nombre, String apellidoPaterno, String apellidoMaterno, String correo, Integer creditos) {
@@ -34,6 +47,14 @@ public class UsuarioDTO {
         this.apellidoMaterno = apellidoMaterno;
         this.correo = correo;
         this.creditos = creditos;
+    }
+
+    public PerfilFiscalDTO getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(PerfilFiscalDTO perfil) {
+        this.perfil = perfil;
     }
 
     public String getIdUsuario() {

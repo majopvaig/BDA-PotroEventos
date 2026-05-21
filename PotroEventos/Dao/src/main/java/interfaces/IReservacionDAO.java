@@ -87,4 +87,9 @@ public interface IReservacionDAO {
      * consulta.
      */
     List<AsientoEvento> obtenerAsientosConAsistencia(String idEvento) throws PersistenciaException;
+
+    // caso factura
+    boolean tieneFactura(String idResevracion) throws PersistenciaException;
+    
+    boolean asociarFactura(String idReservacion, String idFactura) throws PersistenciaException;
 }
