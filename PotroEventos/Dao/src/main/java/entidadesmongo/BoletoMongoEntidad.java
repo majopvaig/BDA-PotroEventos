@@ -2,7 +2,6 @@ package entidadesmongo;
 
 import entidadesresumenmongo.AsientoEventoResumenMongo;
 import entidadesresumenmongo.EventoResumenMongo;
-import org.bson.codecs.pojo.annotations.BsonProperty;
 
 /**
  * Entidad de MongoDB que representa un Boleto dentro de una Reservación.
@@ -12,13 +11,11 @@ import org.bson.codecs.pojo.annotations.BsonProperty;
  */
 public class BoletoMongoEntidad {
 
-    @BsonProperty("id")
     private String id;
 
     private String estado;
     private EventoResumenMongo evento;
 
-    @BsonProperty("asiento")
     private AsientoEventoResumenMongo asiento;
 
     private String token;
@@ -83,12 +80,10 @@ public class BoletoMongoEntidad {
         this.evento = evento;
     }
 
-    @BsonProperty("asiento")
     public AsientoEventoResumenMongo getAsiento() {
         return asiento;
     }
 
-    @BsonProperty("asiento")
     public void setAsiento(AsientoEventoResumenMongo asiento) {
         this.asiento = asiento;
     }

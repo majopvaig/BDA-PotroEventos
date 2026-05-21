@@ -29,17 +29,17 @@ public class EventoAdapter {
         if (evento == null) {
             return null;
         }
-  
-        return new EventoDTO(evento.getIdEvento(), 
+
+        return new EventoDTO(evento.getIdEvento(),
                 CategoriaAdapter.entidadADTO(evento.getCategoriaEvento()),
-                evento.getNombreEvento(), 
-                evento.getInformacionEvento(), 
-                evento.getFechaHora(), 
-                UbicacionAdapter.entidadADTO(evento.getUbicacion()), 
-                convertirEstadoADTO(evento.getEstadoEvento()), 
-                evento.getUrlImagen(), 
-                evento.isGratuito(), 
-                TipoEventoN.valueOf(evento.getTipoEvento().name()), 
+                evento.getNombreEvento(),
+                evento.getInformacionEvento(),
+                evento.getFechaHora(),
+                UbicacionAdapter.entidadADTO(evento.getUbicacion()),
+                convertirEstadoADTO(evento.getEstadoEvento()),
+                evento.getUrlImagen(),
+                evento.isGratuito(),
+                evento.getTipoEvento() != null ? TipoEventoN.valueOf(evento.getTipoEvento().name()) : null,
                 evento.getDisponibilidad()
         );
     }
@@ -56,23 +56,23 @@ public class EventoAdapter {
         }
 
         return new Evento(
-                dto.getIdEvento(), 
+                dto.getIdEvento(),
                 CategoriaAdapter.dtoAEntidad(dto.getCategoriaEvento()),
-                dto.getNombreEvento(), 
-                dto.getInformacionEvento(), 
-                dto.getFechaHora(), 
-                UbicacionAdapter.dtoAEntidad(dto.getUbicacion()), 
-                convertirEstadoAEntidad(dto.getEstadoEvento()), 
-                dto.getUrlImagen(), 
-                dto.isGratuito(), 
-                TipoEventoP.valueOf(dto.getTipoEvento().name()), 
+                dto.getNombreEvento(),
+                dto.getInformacionEvento(),
+                dto.getFechaHora(),
+                UbicacionAdapter.dtoAEntidad(dto.getUbicacion()),
+                convertirEstadoAEntidad(dto.getEstadoEvento()),
+                dto.getUrlImagen(),
+                dto.isGratuito(),
+                dto.getTipoEvento() != null ? TipoEventoP.valueOf(dto.getTipoEvento().name()) : null,
                 dto.getDisponibilidad()
         );
     }
-    
-    public static List<EventoDTO> listaDTOs(List<Evento> lista){
+
+    public static List<EventoDTO> listaDTOs(List<Evento> lista) {
         List<EventoDTO> dtos = new ArrayList<>();
-        for(Evento e : lista){
+        for (Evento e : lista) {
             dtos.add(entidadADTO(e));
         }
         return dtos;

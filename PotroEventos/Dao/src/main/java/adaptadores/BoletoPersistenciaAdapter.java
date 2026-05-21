@@ -2,15 +2,12 @@ package adaptadores;
 
 import Entitys.AsientoEvento;
 import Entitys.Boleto;
-import Entitys.Evento;
 import Entitys.ENUMS.EstadoBoleto;
 import entidadesmongo.BoletoMongoEntidad;
 import entidadesresumenmongo.AsientoEventoResumenMongo;
 import entidadesresumenmongo.EventoResumenMongo;
 import excepciones.PersistenciaException;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -42,7 +39,7 @@ public class BoletoPersistenciaAdapter {
 
         if (dominio.getEvento() != null && dominio.getEvento().getIdEvento() != null) {
             EventoResumenMongo erm = new EventoResumenMongo();
-            erm.setId(new ObjectId(dominio.getEvento().getIdEvento()));
+            erm.setId(convertirStringAObjectId(dominio.getEvento().getIdEvento()));
             erm.setNombre(dominio.getEvento().getNombreEvento());
             erm.setFechaHora(dominio.getEvento().getFechaHora());
             mongo.setEvento(erm);
@@ -109,16 +106,6 @@ public class BoletoPersistenciaAdapter {
         Document eventoDoc = (Document) mongo.get("evento");
         if (eventoDoc != null) {
             dominio.setEvento(EventoPersistenciaAdapter.convertirADominio(eventoDoc));
-        }
-
-        // Mapeo de Asiento desde Lookup si existe
-        Document asientoDoc = (Document) mongo.get("asiento_lookup");
-        if (asientoDoc != null) {
-            AsientoEvento ae = dominio.getAsiento() != null ? dominio.getAsiento() : new AsientoEvento();
-            if (asientoDoc.getObjectId("_id") != null) {
-                ae.setIdAsientoEvento(asientoDoc.getObjectId("_id").toHexString());
-            }
-            dominio.setAsiento(ae);
         }
 
         // Mapeo de Asistencia
