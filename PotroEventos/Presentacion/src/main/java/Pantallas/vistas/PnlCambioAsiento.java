@@ -315,7 +315,6 @@ public class PnlCambioAsiento extends javax.swing.JPanel {
         lblFechaHora = new javax.swing.JLabel();
         lblUbicacion = new javax.swing.JLabel();
         btnVolver = new javax.swing.JButton();
-        lblTemporizador = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         lblTuSeccion = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -368,9 +367,6 @@ public class PnlCambioAsiento extends javax.swing.JPanel {
                 btnVolverActionPerformed(evt);
             }
         });
-
-        lblTemporizador.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblTemporizador.setText("Tiempo : Ejemplo");
 
         lblTuSeccion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTuSeccion.setText("Tu Sección");
@@ -524,7 +520,7 @@ public class PnlCambioAsiento extends javax.swing.JPanel {
         );
         PnlEstadioLayout.setVerticalGroup(
             PnlEstadioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 288, Short.MAX_VALUE)
+            .addGap(0, 297, Short.MAX_VALUE)
         );
 
         txtInfo.setEditable(false);
@@ -558,11 +554,7 @@ public class PnlCambioAsiento extends javax.swing.JPanel {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(lblUbicacion)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(55, 55, 55)
-                                .addComponent(lblTemporizador))
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblFechaHora, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))))
@@ -578,9 +570,7 @@ public class PnlCambioAsiento extends javax.swing.JPanel {
                         .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(16, 16, 16))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblTemporizador, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblNombre))
+                        .addComponent(lblNombre)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(138, 138, 138)
@@ -657,7 +647,7 @@ public class PnlCambioAsiento extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Asiento cambiado exitosamente.");
                 coordinador.mostrarDetalles(reservacion);
             } else {
-                JOptionPane.showMessageDialog(this, "No se pudo realizar el cambio de asiento. El asiento podría estar ocupado.");
+                JOptionPane.showMessageDialog(this, "No se pudo realizar el cambio de asiento.");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al cambiar el asiento: " + e.getMessage());
@@ -696,7 +686,6 @@ public class PnlCambioAsiento extends javax.swing.JPanel {
     private javax.swing.JLabel lblPrecio;
     private javax.swing.JLabel lblSecc;
     private javax.swing.JLabel lblSeccion;
-    private javax.swing.JLabel lblTemporizador;
     private javax.swing.JLabel lblTuSeccion;
     private javax.swing.JLabel lblUbicacion;
     private javax.swing.JTextPane txtInfo;

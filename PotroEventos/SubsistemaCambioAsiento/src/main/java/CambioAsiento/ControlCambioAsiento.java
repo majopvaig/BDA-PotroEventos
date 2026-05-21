@@ -6,7 +6,6 @@ package CambioAsiento;
 
 import Exception.CambioAsientoException;
 import dtos.BoletoDTO;
-import excepciones.NegocioException;
 import interfaces.IAsientoEventoBO;
 import interfaces.IBoletoBO;
 import interfaces.IReservacionBO;

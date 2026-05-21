@@ -66,9 +66,14 @@ public class PnlEvento extends Panel {
     public void mostrarBotonCancelar(){
         btnCancelar.setVisible(true);
     }
+    
+    public void mostrarBotonCambiarAsiento(){
+        btnCambiarAsiento.setVisible(true);
+    }
 
     private void cargarEvento() {
         btnCancelar.setVisible(false);
+        btnCambiarAsiento.setVisible(false);
         if (modoConsulta) {
             if (reservacion.getBoleto().getEvento().getUrlImagen() != null && !reservacion.getBoleto().getEvento().getUrlImagen().isEmpty()) {
 
@@ -192,6 +197,7 @@ public class PnlEvento extends Panel {
         btnCambiarAsiento.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnCambiarAsiento.setForeground(new java.awt.Color(255, 255, 255));
         btnCambiarAsiento.setText("Cambiar Asiento");
+        btnCambiarAsiento.setBorderPainted(false);
         btnCambiarAsiento.addActionListener(this::btnCambiarAsientoActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -216,7 +222,7 @@ public class PnlEvento extends Panel {
                         .addComponent(btnFacturar)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnCambiarAsiento)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

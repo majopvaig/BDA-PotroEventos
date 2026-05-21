@@ -282,6 +282,7 @@ public class ReservacionBO implements IReservacionBO {
         }
     }
     
+    @Override
     public BoletoDTO obtenerBoleto(String idReservacion) throws NegocioException{
         try{
             if(idReservacion == null){
