@@ -269,4 +269,16 @@ public class ReservacionBO implements IReservacionBO {
         }
     }
 
+    
+    @Override
+    public boolean obtenerReservacion(String idReservacion) throws NegocioException {
+        try{
+            if(idReservacion == null){
+                throw new NegocioException("Id reserva inválido");
+            }
+            return reservacionDAO.tieneFactura(idReservacion);
+        }catch(PersistenciaException ex){
+            throw new NegocioException(ex.getMessage());
+        }
+    }
 }

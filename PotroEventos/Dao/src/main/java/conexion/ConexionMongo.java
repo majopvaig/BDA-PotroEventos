@@ -12,6 +12,7 @@ import entidadesmongo.BoletoMongoEntidad;
 import entidadesmongo.CategoriaMongoEntidad;
 import entidadesmongo.EmpleadoMongoEntidad;
 import entidadesmongo.EventoMongoEntidad;
+import entidadesmongo.FacturaMongoEntidad;
 import entidadesmongo.ReservacionMongoEntidad;
 import entidadesmongo.SeccionMongoEntidad;
 import entidadesmongo.UbicacionMongoEntidad;
@@ -134,5 +135,9 @@ public class ConexionMongo {
     
     public static MongoCollection<BoletoMongoEntidad> obtenerColeccionBoletos(){
         return obtenerBaseDatos().getCollection("boletos", BoletoMongoEntidad.class);
+    }
+    public static MongoCollection<FacturaMongoEntidad> obtenerColeccionFacturas(){
+    return obtenerBaseDatos()
+                .getCollection("facturas", FacturaMongoEntidad.class);
     }
 }

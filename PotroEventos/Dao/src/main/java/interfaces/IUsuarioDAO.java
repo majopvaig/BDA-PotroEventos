@@ -4,6 +4,7 @@
  */
 package interfaces;
 
+import Entitys.PerfilFiscal;
 import Entitys.Usuario;
 import excepciones.PersistenciaException;
 
@@ -24,4 +25,7 @@ public interface IUsuarioDAO {
     boolean restarCreditos(String idUsuario, Integer cantidad) throws PersistenciaException;
     
     boolean aumentarCreditos(String idUsuario, Integer cantidad) throws PersistenciaException;
+    
+    //caso factura
+    boolean guardarPerfilFiscal(PerfilFiscal perfil, String idUsuario)throws PersistenciaException;
 }

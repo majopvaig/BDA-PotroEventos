@@ -6,13 +6,17 @@ package Pantallas.vistas;
 
 import Controlador.interfaz.ICoordinadorAplicacion;
 import dtos.EventoDTO;
+import dtos.FacturaDTO;
+import dtos.PerfilFiscalDTO;
 import dtos.ReservacionDTO;
+import excepciones.CoordinadorException;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Panel;
 import java.time.format.DateTimeFormatter;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -118,8 +122,15 @@ public class PnlEvento extends Panel {
 
     private void configurarModo() {
         if (modoConsulta) {
+            btnFacturar.setVisible(true);
+            btnFacturar.setText("Facturar");
+            btnMostrar.setText("Ver mis boletos");
+            if (evento.isGratuito()) {
+                btnFacturar.setVisible(false);
+            }
             btnMostrar.setText("Ver mis boletos");
         } else {
+            btnFacturar.setVisible(false);
             btnMostrar.setText("Mostrar Información");
         }
     }
@@ -139,6 +150,7 @@ public class PnlEvento extends Panel {
         iconEvento = new javax.swing.JLabel();
         btnMostrar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        btnFacturar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(221, 212, 212));
         setMaximumSize(new java.awt.Dimension(270, 188));
@@ -169,14 +181,20 @@ public class PnlEvento extends Panel {
         btnCancelar.setBorderPainted(false);
         btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
+        btnFacturar.setBackground(new java.awt.Color(69, 105, 82));
+        btnFacturar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnFacturar.setForeground(new java.awt.Color(255, 255, 255));
+        btnFacturar.setText("Facturar");
+        btnFacturar.addActionListener(this::btnFacturarActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
                         .addComponent(iconEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -184,11 +202,12 @@ public class PnlEvento extends Panel {
                             .addComponent(lblNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblUbicacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(btnMostrar)
                         .addGap(18, 18, 18)
-                        .addComponent(btnCancelar)))
-                .addContainerGap(16, Short.MAX_VALUE))
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnFacturar)))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -206,8 +225,10 @@ public class PnlEvento extends Panel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnMostrar)
-                        .addGap(0, 2, Short.MAX_VALUE))
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnCancelar)
+                        .addComponent(btnFacturar)))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -225,8 +246,27 @@ public class PnlEvento extends Panel {
         coordinador.cancelarReservacion(reservacion);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void btnFacturarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturarActionPerformed
+        try {
+            if(coordinador.facturar(reservacion.getIdReservacion())){
+                JOptionPane.showMessageDialog(this, "La reserva ya ha sido facturada");
+                return;
+            }
+            PerfilFiscalDTO perfilObtenido = coordinador.recuperarPerfilFiscal(reservacion.getUsuario().getIdUsuario());
+
+            if(perfilObtenido == null){
+                return;
+            }
+            FacturaDTO factura = coordinador.crearFactura(perfilObtenido, reservacion);
+            coordinador.mostrarDatosFactura(factura);
+        } catch (CoordinadorException ex) {
+            JOptionPane.showMessageDialog(this, "Surgió algo inesperado: " + ex.getMessage());
+        }
+    }//GEN-LAST:event_btnFacturarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnFacturar;
     private javax.swing.JButton btnMostrar;
     private javax.swing.JLabel iconEvento;
     private javax.swing.JLabel lblFechaHora;
