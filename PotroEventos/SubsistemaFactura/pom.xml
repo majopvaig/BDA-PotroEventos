@@ -8,6 +8,12 @@
     </parent>
     <artifactId>SubsistemaFactura</artifactId>
     <packaging>jar</packaging>
+    
+    <properties>
+        <maven.compiler.release>24</maven.compiler.release>
+        <exec.mainClass>com.mycompany.subsistemafactura.SubsistemaFactura</exec.mainClass>
+    </properties>
+    
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -24,27 +30,26 @@
             <artifactId>ObjetosNegocio</artifactId>
             <version>${project.version}</version>
         </dependency>
+        
+        <!-- JasperReports PDF (funciona sin conflictos) -->
         <dependency>
             <groupId>net.sf.jasperreports</groupId>
-            <artifactId>jasperreports</artifactId>
-            <version>7.0.3</version>
-            <type>jar</type>
+            <artifactId>jasperreports-pdf</artifactId>
+            <version>7.0.1</version>
         </dependency>
+
+        <!-- JAVA MAIL -->
         <dependency>
-            <groupId>jakarta.mail</groupId>
-            <artifactId>jakarta.mail-api</artifactId>
-            <version>1.6.7</version>
-            <type>jar</type>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.2</version>
         </dependency>
+
+        <!-- ACTIVATION -->
         <dependency>
-            <groupId>com.guicedee.services</groupId>
-            <artifactId>jakarta.activation</artifactId>
-            <version>1.0.12.4-jre14</version>
-            <type>jar</type>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+            <version>1.1.1</version>
         </dependency>
     </dependencies>
-    <properties>
-        <maven.compiler.release>24</maven.compiler.release>
-        <exec.mainClass>com.mycompany.subsistemafactura.SubsistemaFactura</exec.mainClass>
-    </properties>
 </project>
