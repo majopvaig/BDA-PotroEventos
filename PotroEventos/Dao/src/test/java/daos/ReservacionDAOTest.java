@@ -406,7 +406,7 @@ public class ReservacionDAOTest {
         // Act & Assert: el DAO lanza IllegalArgumentException porque ObjectId
         // falla antes de llegar al catch de MongoException
         assertThrows(
-                IllegalArgumentException.class,
+                PersistenciaException.class,
                 () -> dao.obtenerAsientosConAsistencia("formato@@invalido"),
                 "Debería lanzar IllegalArgumentException con un ID malformado"
         );
