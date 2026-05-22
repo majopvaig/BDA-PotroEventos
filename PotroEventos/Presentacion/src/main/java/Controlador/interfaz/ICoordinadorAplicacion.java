@@ -96,6 +96,8 @@ public interface ICoordinadorAplicacion {
     boolean validarCredenciales(UsuarioInstitucionalDTO credenciales);
 
     boolean isUsuarioITSONRegistrado();
+    
+    boolean reducirCapacidad(String idEvento);
 
     // lo agregó la majo
     void cancelarReservacion(ReservacionDTO reservacion);

@@ -698,6 +698,7 @@ public class PnlConsultarEvento extends javax.swing.JPanel {
             coordinador.venderAsientos(asientosSeleccionados, 0L, true, reservacionParcial);
 
             JOptionPane.showMessageDialog(this, "Boleto adquirido correctamente.");
+            coordinador.reducirCapacidad(evento.getIdEvento());
             coordinador.mostrarDetalles(reservacionParcial);
             return;
         }
@@ -741,10 +742,11 @@ public class PnlConsultarEvento extends javax.swing.JPanel {
             reservacionParcial.setEstado(ReservacionEstadoDTO.ACTIVA);
             reservacionParcial.setBoleto(boleto);
 
-            boolean exito = coordinador.venderAsientos(asientosSeleccionados, total, false, reservacionParcial);
+            boolean exito = coordinador.venderAsientos(asientosSeleccionados, totalCompra*2, false, reservacionParcial);
 
             if (exito) {
                 JOptionPane.showMessageDialog(this, "Compra realizada con créditos.");
+                coordinador.reducirCapacidad(evento.getIdEvento());
                 coordinador.mostrarDetalles(reservacionParcial);
                 return;
             } else {

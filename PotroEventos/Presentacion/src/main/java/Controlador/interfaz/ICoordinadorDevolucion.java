@@ -40,10 +40,8 @@ public interface ICoordinadorDevolucion {
      */
     void abrirConsultar(String tipoEvento);
 
-
     /*
-    chamba interna donde cuida que el evento que se quiere cancelar no esté a 
-    menos de 48 horas de ocurrir
+    validar que el usuario quiera cancelar su reservación con tiempo
      */
     boolean validarTiempo(EventoDTO evento);
 

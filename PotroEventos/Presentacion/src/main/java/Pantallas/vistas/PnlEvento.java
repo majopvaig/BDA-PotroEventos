@@ -9,14 +9,12 @@ import dtos.EventoDTO;
 import dtos.FacturaDTO;
 import dtos.PerfilFiscalDTO;
 import dtos.ReservacionDTO;
-import excepciones.CoordinadorException;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Panel;
 import java.time.format.DateTimeFormatter;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 
 /**
  *

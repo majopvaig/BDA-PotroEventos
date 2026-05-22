@@ -697,4 +697,13 @@ public class CoordinadorAplicacion implements ICoordinadorAplicacion {
             throw new CoordinadorException(e.getMessage());
         }
     }
+
+    @Override
+    public boolean reducirCapacidad(String idEvento) {
+        try{
+            return controlEvento.reducirCapacidad(idEvento);
+        } catch(GestionEventoException gee){
+            return false;
+        }
+    }
 }

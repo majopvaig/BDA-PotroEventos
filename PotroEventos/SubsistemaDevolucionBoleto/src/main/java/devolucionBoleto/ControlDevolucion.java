@@ -45,7 +45,6 @@ public class ControlDevolucion {
         return instancia;
     }
 
-    // este lo acabo de agregar pq debato entre si lo dejo aquí o en la presentación
     protected boolean tiempoValidoDevolucion(LocalDateTime fechaEvento) {
         if (fechaEvento == null) {
             return false;
