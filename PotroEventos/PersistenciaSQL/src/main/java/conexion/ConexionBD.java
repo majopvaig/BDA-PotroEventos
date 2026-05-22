@@ -4,23 +4,34 @@
  */
 package conexion;
 
+import excepciones.PersistenciaException;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 /**
  *
  * @author maria
  */
 public class ConexionBD {
-    
-    private static final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("ConexionPU");
-            
+
+    private static final String URL = "jdbc:mysql://localhost:3306/potroeventosbd ";
+    private static final String USUARIO = "potroeventosbd";
+    private static final String CONTRASENA = "potroeventosbd";
+
     private ConexionBD() {
 
     }
 
-    public static EntityManager crearConexion() {
-        return entityManagerFactory.createEntityManager();
+    public static Connection crearConexion() {
+        try {
+            return DriverManager.getConnection(URL, USUARIO, CONTRASENA);
+        } catch (SQLException e) {
+            throw new PersistenciaException("error al establecer conexión.");
+        }
     }
 }
