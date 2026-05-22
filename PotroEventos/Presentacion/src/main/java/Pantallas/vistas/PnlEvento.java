@@ -9,14 +9,12 @@ import dtos.EventoDTO;
 import dtos.FacturaDTO;
 import dtos.PerfilFiscalDTO;
 import dtos.ReservacionDTO;
-import excepciones.CoordinadorException;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Panel;
 import java.time.format.DateTimeFormatter;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -66,9 +64,14 @@ public class PnlEvento extends Panel {
     public void mostrarBotonCancelar(){
         btnCancelar.setVisible(true);
     }
+    
+    public void mostrarBotonCambiarAsiento(){
+        btnCambiarAsiento.setVisible(true);
+    }
 
     private void cargarEvento() {
         btnCancelar.setVisible(false);
+        btnCambiarAsiento.setVisible(false);
         if (modoConsulta) {
             if (reservacion.getBoleto().getEvento().getUrlImagen() != null && !reservacion.getBoleto().getEvento().getUrlImagen().isEmpty()) {
 
@@ -127,6 +130,7 @@ public class PnlEvento extends Panel {
             btnMostrar.setText("Ver mis boletos");
             if (evento.isGratuito()) {
                 btnFacturar.setVisible(false);
+                btnCambiarAsiento.setVisible(false);
             }
             btnMostrar.setText("Ver mis boletos");
         } else {
@@ -151,6 +155,7 @@ public class PnlEvento extends Panel {
         btnMostrar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnFacturar = new javax.swing.JButton();
+        btnCambiarAsiento = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(221, 212, 212));
         setMaximumSize(new java.awt.Dimension(270, 188));
@@ -187,6 +192,13 @@ public class PnlEvento extends Panel {
         btnFacturar.setText("Facturar");
         btnFacturar.addActionListener(this::btnFacturarActionPerformed);
 
+        btnCambiarAsiento.setBackground(new java.awt.Color(31, 92, 204));
+        btnCambiarAsiento.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnCambiarAsiento.setForeground(new java.awt.Color(255, 255, 255));
+        btnCambiarAsiento.setText("Cambiar Asiento");
+        btnCambiarAsiento.setBorderPainted(false);
+        btnCambiarAsiento.addActionListener(this::btnCambiarAsientoActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -207,7 +219,9 @@ public class PnlEvento extends Panel {
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnFacturar)))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnCambiarAsiento)
+                .addContainerGap(49, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,13 +237,12 @@ public class PnlEvento extends Panel {
                         .addComponent(lblUbicacion)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnMostrar)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(btnMostrar)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnCancelar)
-                        .addComponent(btnFacturar)))
-                .addContainerGap())
+                        .addComponent(btnFacturar)
+                        .addComponent(btnCambiarAsiento, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -247,24 +260,29 @@ public class PnlEvento extends Panel {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnFacturarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturarActionPerformed
-        try {
-            if(coordinador.facturar(reservacion.getIdReservacion())){
-                JOptionPane.showMessageDialog(this, "La reserva ya ha sido facturada");
-                return;
-            }
-            PerfilFiscalDTO perfilObtenido = coordinador.recuperarPerfilFiscal(reservacion.getUsuario().getIdUsuario());
-
-            if(perfilObtenido == null){
-                return;
-            }
-            FacturaDTO factura = coordinador.crearFactura(perfilObtenido, reservacion);
-            coordinador.mostrarDatosFactura(factura);
-        } catch (CoordinadorException ex) {
-            JOptionPane.showMessageDialog(this, "Surgió algo inesperado: " + ex.getMessage());
-        }
+//        try {
+//            if(coordinador.facturar(reservacion.getIdReservacion())){
+//                JOptionPane.showMessageDialog(this, "La reserva ya ha sido facturada");
+//                return;
+//            }
+//            PerfilFiscalDTO perfilObtenido = coordinador.recuperarPerfilFiscal(reservacion.getUsuario().getIdUsuario());
+//
+//            if(perfilObtenido == null){
+//                return;
+//            }
+//            FacturaDTO factura = coordinador.crearFactura(perfilObtenido, reservacion);
+//            coordinador.mostrarDatosFactura(factura);
+//        } catch (CoordinadorException ex) {
+//            JOptionPane.showMessageDialog(this, "Surgió algo inesperado: " + ex.getMessage());
+//        }
     }//GEN-LAST:event_btnFacturarActionPerformed
 
+    private void btnCambiarAsientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarAsientoActionPerformed
+        coordinador.mostrarCambioAsiento(reservacion);
+    }//GEN-LAST:event_btnCambiarAsientoActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCambiarAsiento;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnFacturar;
     private javax.swing.JButton btnMostrar;

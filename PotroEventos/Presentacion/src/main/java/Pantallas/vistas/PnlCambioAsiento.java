@@ -38,17 +38,13 @@ import utilerias.BotonUtileria;
  * @author Dayanara Peralta - 262695
  * @author María Valdez - 262775
  */
-public class PnlConsultarEvento extends javax.swing.JPanel {
+public class PnlCambioAsiento extends javax.swing.JPanel {
 
     private ICoordinadorAplicacion coordinador;
     private EventoDTO evento;
     private PnlEstadio estadioVisual;
-    private ReservacionDTO reservacionParcial;
+    private ReservacionDTO reservacion;
     private List<AsientoEventoDTO> asientosSeleccionados = new ArrayList<>();
-
-    //Variables para el Temporizador
-    private Timer temporizador;
-    private int tiempoRestante = 600; // 600 segundos
 
     /**
      * Guarda el total actual de la compra.
@@ -59,11 +55,12 @@ public class PnlConsultarEvento extends javax.swing.JPanel {
      * Constructor del panel de consulta de evento.
      *
      * @param coordinador Interfaz para la comunicación y navegación.
-     * @param evento El evento que se va a consultar.
+     * @param reservacion la reservacion que se va a consultar.
      */
-    public PnlConsultarEvento(ICoordinadorAplicacion coordinador, EventoDTO evento) {
+    public PnlCambioAsiento(ICoordinadorAplicacion coordinador, ReservacionDTO reservacion) {
         this.coordinador = coordinador;
-        this.evento = evento;
+        this.evento = reservacion.getBoleto().getEvento();
+        this.reservacion = reservacion;
 
         java.awt.EventQueue.invokeLater(() -> {
             validarUsuarioITSON();
@@ -75,8 +72,7 @@ public class PnlConsultarEvento extends javax.swing.JPanel {
         txtInfo.setEditable(false);
         txtInfo.setOpaque(false);
         BotonUtileria.estilizarBoton(btnVolver);
-        BotonUtileria.estilizarBoton(btnComprar);
-        lblTemporizador.setText(String.format(formatoTemporizador(tiempoRestante)));
+        BotonUtileria.estilizarBoton(btnCambiarAsiento);
 
         modoPantalla();
         cargarDatos();
@@ -85,7 +81,6 @@ public class PnlConsultarEvento extends javax.swing.JPanel {
             actualizarEtiquetasAsientos(new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
         }
 
-        iniciarTemporizador();
     }
 
     private void validarUsuarioITSON() {
@@ -108,7 +103,7 @@ public class PnlConsultarEvento extends javax.swing.JPanel {
             jLabel12.setText("");
             lblAsiento.setText("");
             jLabel14.setText("");
-            btnComprar.setText("Adquirir Boleto");
+            btnCambiarAsiento.setText("Adquirir Boleto");
             PnlEstadio.setVisible(true);
             jSeparator1.setVisible(false);
             jSeparator2.setVisible(false);
@@ -120,69 +115,13 @@ public class PnlConsultarEvento extends javax.swing.JPanel {
             jLabel10.setText("Fila");
             jLabel12.setText("Numero Asiento");
             jLabel14.setText("Precio Unitario");
-            btnComprar.setText("Comprar Boleto");
+            btnCambiarAsiento.setText("Comprar Boleto");
             PnlEstadio.setVisible(true);
             jSeparator1.setVisible(true);
             jSeparator2.setVisible(true);
             jSeparator3.setVisible(true);
             jSeparator4.setVisible(true);
         }
-    }
-
-    private String formatoTemporizador(int tiempoRestante) {
-        int minutos = tiempoRestante / 60;
-        int segundos = tiempoRestante % 60;
-        return String.format("Tiempo : %02d:%02d", minutos, segundos);
-    }
-
-    /**
-     * Inicia el temporizador de 10 minutos.
-     */
-    private void iniciarTemporizador() {
-        if (temporizador == null) {
-            temporizador = new Timer(1000, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    tiempoRestante--;
-                    lblTemporizador.setText(formatoTemporizador(tiempoRestante));
-
-                    if (tiempoRestante <= 0) {
-                        tiempoAgotado();
-                    }
-                }
-            });
-        }
-        if (!temporizador.isRunning()) {
-            temporizador.start();
-        }
-    }
-
-    /**
-     * Detiene el timer y lo devuelve a 10 minutos.
-     */
-    private void detenerYReiniciarTemporizador() {
-        if (temporizador != null) {
-            temporizador.stop();
-        }
-        tiempoRestante = 600;
-        lblTemporizador.setText("Tiempo : 10:00");
-    }
-
-    /**
-     * Lógica a ejecutar cuando los 10 minutos se terminan.
-     */
-    private void tiempoAgotado() {
-        detenerYReiniciarTemporizador();
-        JOptionPane.showMessageDialog(this, "El tiempo de tu sesión ha expirado. Los asientos reservados se han liberado.", "Tiempo Agotado", JOptionPane.WARNING_MESSAGE);
-
-        //AQUÍ ENTRA LA DAO (Vía Coordinador) - LIBERACIÓN MASIVA
-        // Si el tiempo se acaba, hay que enviar la orden a la base de datos para que
-        // todos los asientos que estaban en estado "RESERVADO" bajo esta sesión
-        // vuelvan a estar en "DISPONIBLE".
-        if (estadioVisual != null) {
-            estadioVisual.limpiarSeleccion();
-        }
-        coordinador.mostrarInicio();
     }
 
     private void cargarEstadio() {
@@ -319,8 +258,10 @@ public class PnlConsultarEvento extends javax.swing.JPanel {
             return;
         }
 
-        reservacionParcial = new ReservacionDTO();
-
+        if (reservacion.getBoleto() != null && reservacion.getBoleto().getAsiento() != null) {
+            AsientoEventoDTO asientoActual = reservacion.getBoleto().getAsiento();
+        }
+        
         if (evento.getUrlImagen() != null && !evento.getUrlImagen().isEmpty()) {
 
             String rutaLimpia = evento.getUrlImagen().replace("/src/main/resources", "");
@@ -374,7 +315,6 @@ public class PnlConsultarEvento extends javax.swing.JPanel {
         lblFechaHora = new javax.swing.JLabel();
         lblUbicacion = new javax.swing.JLabel();
         btnVolver = new javax.swing.JButton();
-        lblTemporizador = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         lblTuSeccion = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -390,7 +330,7 @@ public class PnlConsultarEvento extends javax.swing.JPanel {
         jLabel14 = new javax.swing.JLabel();
         lblPrecio = new javax.swing.JLabel();
         txtTotal = new javax.swing.JTextField();
-        btnComprar = new javax.swing.JButton();
+        btnCambiarAsiento = new javax.swing.JButton();
         PnlEstadio = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtInfo = new javax.swing.JTextPane();
@@ -427,9 +367,6 @@ public class PnlConsultarEvento extends javax.swing.JPanel {
                 btnVolverActionPerformed(evt);
             }
         });
-
-        lblTemporizador.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblTemporizador.setText("Tiempo : Ejemplo");
 
         lblTuSeccion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTuSeccion.setText("Tu Sección");
@@ -473,16 +410,16 @@ public class PnlConsultarEvento extends javax.swing.JPanel {
             }
         });
 
-        btnComprar.setBackground(new java.awt.Color(31, 92, 204));
-        btnComprar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnComprar.setForeground(new java.awt.Color(255, 255, 255));
-        btnComprar.setText("Comprar Boleto");
-        btnComprar.setBorderPainted(false);
-        btnComprar.setFocusPainted(false);
-        btnComprar.setOpaque(true);
-        btnComprar.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnCambiarAsiento.setBackground(new java.awt.Color(31, 92, 204));
+        btnCambiarAsiento.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnCambiarAsiento.setForeground(new java.awt.Color(255, 255, 255));
+        btnCambiarAsiento.setText("Cambiar asiento");
+        btnCambiarAsiento.setBorderPainted(false);
+        btnCambiarAsiento.setFocusPainted(false);
+        btnCambiarAsiento.setOpaque(true);
+        btnCambiarAsiento.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnComprarMouseClicked(evt);
+                btnCambiarAsientoMouseClicked(evt);
             }
         });
 
@@ -519,7 +456,7 @@ public class PnlConsultarEvento extends javax.swing.JPanel {
                         .addGap(23, 23, 23))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnComprar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCambiarAsiento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtTotal))
                         .addContainerGap())
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -562,15 +499,15 @@ public class PnlConsultarEvento extends javax.swing.JPanel {
                         .addComponent(lblAsiento)))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(55, 55, 55)
                 .addComponent(jLabel14)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblPrecio)
-                .addGap(43, 43, 43)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnComprar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btnCambiarAsiento)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         PnlEstadio.setBackground(new java.awt.Color(255, 255, 255));
@@ -583,7 +520,7 @@ public class PnlConsultarEvento extends javax.swing.JPanel {
         );
         PnlEstadioLayout.setVerticalGroup(
             PnlEstadioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 288, Short.MAX_VALUE)
+            .addGap(0, 297, Short.MAX_VALUE)
         );
 
         txtInfo.setEditable(false);
@@ -617,11 +554,7 @@ public class PnlConsultarEvento extends javax.swing.JPanel {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(lblUbicacion)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(55, 55, 55)
-                                .addComponent(lblTemporizador))
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblFechaHora, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))))
@@ -637,9 +570,7 @@ public class PnlConsultarEvento extends javax.swing.JPanel {
                         .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(16, 16, 16))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblTemporizador, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblNombre))
+                        .addComponent(lblNombre)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(138, 138, 138)
@@ -668,38 +599,15 @@ public class PnlConsultarEvento extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTotalActionPerformed
-
     private void btnVolverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVolverMouseClicked
         // TODO add your handling code here:
         coordinador.mostrarInicio();
     }//GEN-LAST:event_btnVolverMouseClicked
 
-    private void btnComprarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnComprarMouseClicked
+    private void btnCambiarAsientoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCambiarAsientoMouseClicked
 
         if (evento.isGratuito()) {
-
-            String tokenNuevo = UUID.randomUUID().toString();
-
-            // 2. Generar la ruta del QR usando ese token
-            String rutaQR = coordinador.generarQR(evento, null, tokenNuevo);
-
-            BoletoDTO boletoGratis = new BoletoDTO(rutaQR, 0.0, EstadoBoletoDTO.ACTIVO, evento, null, tokenNuevo);
-
-            reservacionParcial.setBoleto(boletoGratis);
-            reservacionParcial.setPago(null);
-            reservacionParcial.setTotal(0.0);
-            reservacionParcial.setEstado(ReservacionEstadoDTO.ACTIVA);
-            reservacionParcial.setUsuario(coordinador.getUsuarioSesion());
-            reservacionParcial.setFechaHora(LocalDateTime.now());
-
-            coordinador.venderAsientos(asientosSeleccionados, 0L, true, reservacionParcial);
-
-            JOptionPane.showMessageDialog(this, "Boleto adquirido correctamente.");
-            coordinador.reducirCapacidad(evento.getIdEvento());
-            coordinador.mostrarDetalles(reservacionParcial);
+            JOptionPane.showMessageDialog(this, "Los eventos gratuitos no permiten cambio de asiento.");
             return;
         }
 
@@ -710,75 +618,38 @@ public class PnlConsultarEvento extends javax.swing.JPanel {
         }
 
         if (asientosSeleccionados.size() != 1) {
-            JOptionPane.showMessageDialog(this, "Solo puede adquirir un boleto por compra.");
+            JOptionPane.showMessageDialog(this, "Solo puede cambiar un asiento a la vez.");
             return;
         }
 
-        AsientoEventoDTO asientoDTO = new AsientoEventoDTO(
-                asientosSeleccionados.get(0).getIdAsientoEvento(),
-                asientosSeleccionados.get(0).getPrecio(),
-                asientosSeleccionados.get(0).getEstadoAsiento(),
-                asientosSeleccionados.get(0).getAsiento(),
-                asientosSeleccionados.get(0).getEvento()
-        );
+        AsientoEventoDTO asientoActual = reservacion.getBoleto().getAsiento();
+        AsientoEventoDTO asientoNuevo = asientosSeleccionados.get(0);
 
-        // en el peor d los casos esto puede ser comentareado!
-        int opcion = JOptionPane.showConfirmDialog(this, "¿Desea pagar con créditos de la aplicación?");
-
-        // ================= PAGO CON CRÉDITOS =================
-        if (opcion == JOptionPane.OK_OPTION) {
-
-            Long total = totalCompra;
-
-            reservacionParcial.setPago(
-                    new PagoDTO(null, LocalDateTime.now(), total.doubleValue() * 2, "CREDITO")
-            );
-
-            reservacionParcial.setUsuario(coordinador.getUsuarioSesion());
-            String tokenPago = UUID.randomUUID().toString();
-            String rutaQR = coordinador.generarQR(evento, asientoDTO, tokenPago);
-            BoletoDTO boleto = new BoletoDTO(rutaQR, totalCompra.doubleValue() * 2, EstadoBoletoDTO.ACTIVO, evento, asientoDTO, tokenPago);
-            reservacionParcial.setFechaHora(LocalDateTime.now());
-            reservacionParcial.setEstado(ReservacionEstadoDTO.ACTIVA);
-            reservacionParcial.setBoleto(boleto);
-
-            boolean exito = coordinador.venderAsientos(asientosSeleccionados, totalCompra*2, false, reservacionParcial);
-
-            if (exito) {
-                JOptionPane.showMessageDialog(this, "Compra realizada con créditos.");
-                coordinador.reducirCapacidad(evento.getIdEvento());
-                coordinador.mostrarDetalles(reservacionParcial);
-                return;
-            } else {
-                JOptionPane.showMessageDialog(this, "No tienes créditos suficientes.");
-                return;
-            }
-
+        if (asientoActual != null && asientoActual.getIdAsientoEvento().equals(asientoNuevo.getIdAsientoEvento())) {
+            JOptionPane.showMessageDialog(this, "El asiento seleccionado es el mismo que ya tienes.");
+            return;
         }
 
-        // 1. Generar token
-        String tokenPago = UUID.randomUUID().toString();
+        int opcion = JOptionPane.showConfirmDialog(this, "Confirmar Cambio de Asiento");
 
-        // 2. Generar QR
-        String rutaQR = coordinador.generarQR(evento, asientoDTO, tokenPago);
+        if (opcion != JOptionPane.YES_OPTION) {
+            return;
+        }
 
-        // 3. Crear DTO
-        BoletoDTO boleto = new BoletoDTO(rutaQR, totalCompra.doubleValue(), EstadoBoletoDTO.ACTIVO, evento, asientoDTO, tokenPago);
+        try {
+            boolean exito = coordinador.cambioAsiento(reservacion, asientoNuevo);
 
-        reservacionParcial.setBoleto(boleto);
-
-        reservacionParcial.setBoleto(boleto);
-        reservacionParcial.setFechaHora(LocalDateTime.now());
-        reservacionParcial.setTotal(totalCompra.doubleValue());
-        reservacionParcial.setEstado(ReservacionEstadoDTO.ACTIVA);
-        reservacionParcial.setUsuario(coordinador.getUsuarioSesion());
-
-        // Guardas como pendiente en backend
-        coordinador.venderAsientos(asientosSeleccionados, totalCompra, false, reservacionParcial);
-
-        // Ahora sí vas a la pantalla de pago
-        coordinador.mostrarPago(reservacionParcial);
-    }//GEN-LAST:event_btnComprarMouseClicked
+            if (exito) {
+                JOptionPane.showMessageDialog(this, "Asiento cambiado exitosamente.");
+                coordinador.mostrarDetalles(reservacion);
+            } else {
+                JOptionPane.showMessageDialog(this, "No se pudo realizar el cambio de asiento.");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al cambiar el asiento: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnCambiarAsientoMouseClicked
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         // TODO add your handling code here:
@@ -788,10 +659,14 @@ public class PnlConsultarEvento extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnVolverActionPerformed
 
+    private void txtTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTotalActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PnlEstadio;
-    private javax.swing.JButton btnComprar;
+    private javax.swing.JButton btnCambiarAsiento;
     private javax.swing.JButton btnVolver;
     private javax.swing.JLabel iconEvento;
     private javax.swing.JLabel jLabel10;
@@ -811,7 +686,6 @@ public class PnlConsultarEvento extends javax.swing.JPanel {
     private javax.swing.JLabel lblPrecio;
     private javax.swing.JLabel lblSecc;
     private javax.swing.JLabel lblSeccion;
-    private javax.swing.JLabel lblTemporizador;
     private javax.swing.JLabel lblTuSeccion;
     private javax.swing.JLabel lblUbicacion;
     private javax.swing.JTextPane txtInfo;

@@ -281,4 +281,16 @@ public class ReservacionBO implements IReservacionBO {
             throw new NegocioException(ex.getMessage());
         }
     }
+    
+    @Override
+    public BoletoDTO obtenerBoleto(String idReservacion) throws NegocioException{
+        try{
+            if(idReservacion == null){
+                throw new NegocioException("Id reserva inválido");
+            }
+            return BoletoAdapter.entidadADTO(reservacionDAO.obtenerBoleto(idReservacion));
+        }catch(PersistenciaException e){
+            throw new NegocioException(e.getMessage());
+        }
+    }
 }

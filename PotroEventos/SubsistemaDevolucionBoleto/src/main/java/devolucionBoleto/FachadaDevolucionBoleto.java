@@ -28,8 +28,6 @@ public class FachadaDevolucionBoleto implements IDevolucionBoleto {
         if (!controlDevolucion.validarDevolucion(devolucion, true)) {
             throw new DevolucionBoletoException("Devolución inválida de la reservación.");
         }
-
-        System.out.println("Llegué hasta la fachada.");
         return controlDevolucion.cancelarReservacion(reservacion.getIdReservacion(), devolucion);
     }
 
@@ -67,7 +65,6 @@ public class FachadaDevolucionBoleto implements IDevolucionBoleto {
                 return true;
             }
         }
-        System.out.println("Llegué hasta la fachada.");
         return false;
     }
 
