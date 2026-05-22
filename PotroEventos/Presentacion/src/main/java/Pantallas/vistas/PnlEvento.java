@@ -247,21 +247,21 @@ public class PnlEvento extends Panel {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnFacturarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturarActionPerformed
-        try {
-            if(coordinador.facturar(reservacion.getIdReservacion())){
-                JOptionPane.showMessageDialog(this, "La reserva ya ha sido facturada");
-                return;
-            }
-            PerfilFiscalDTO perfilObtenido = coordinador.recuperarPerfilFiscal(reservacion.getUsuario().getIdUsuario());
-
-            if(perfilObtenido == null){
-                return;
-            }
-            FacturaDTO factura = coordinador.crearFactura(perfilObtenido, reservacion);
-            coordinador.mostrarDatosFactura(factura);
-        } catch (CoordinadorException ex) {
-            JOptionPane.showMessageDialog(this, "Surgió algo inesperado: " + ex.getMessage());
-        }
+//        try {
+//            if(coordinador.facturar(reservacion.getIdReservacion())){
+//                JOptionPane.showMessageDialog(this, "La reserva ya ha sido facturada");
+//                return;
+//            }
+//            PerfilFiscalDTO perfilObtenido = coordinador.recuperarPerfilFiscal(reservacion.getUsuario().getIdUsuario());
+//
+//            if(perfilObtenido == null){
+//                return;
+//            }
+//            FacturaDTO factura = coordinador.crearFactura(perfilObtenido, reservacion);
+//            coordinador.mostrarDatosFactura(factura);
+//        } catch (CoordinadorException ex) {
+//            JOptionPane.showMessageDialog(this, "Surgió algo inesperado: " + ex.getMessage());
+//        }
     }//GEN-LAST:event_btnFacturarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

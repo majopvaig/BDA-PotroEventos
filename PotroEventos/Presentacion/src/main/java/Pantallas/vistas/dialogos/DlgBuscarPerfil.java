@@ -198,16 +198,16 @@ public class DlgBuscarPerfil extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        if(validacionesEntrada()){
-            try {
-                if(coordinador.buscarPerfilFiscal(txtEntrada.getText(), null)!= null){
-                   JOptionPane.showMessageDialog(this, "Perfil encontrado");
-                   this.dispose();
-                }
-            } catch (CoordinadorException ex) {
-                JOptionPane.showMessageDialog(this, "Suceso inesperado", "Fallo de operación", JOptionPane.ERROR_MESSAGE);
-            }
-        }
+//        if(validacionesEntrada()){
+//            try {
+//                if(coordinador.buscarPerfilFiscal(txtEntrada.getText(), null)!= null){
+//                   JOptionPane.showMessageDialog(this, "Perfil encontrado");
+//                   this.dispose();
+//                }
+//            } catch (CoordinadorException ex) {
+//                JOptionPane.showMessageDialog(this, "Suceso inesperado", "Fallo de operación", JOptionPane.ERROR_MESSAGE);
+//            }
+//        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void txtEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEntradaActionPerformed

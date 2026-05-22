@@ -133,20 +133,20 @@ public interface ICoordinadorAplicacion {
 
     public FrmAsistencias getFrmAsistencias();
     
-    boolean facturar(String idReservacion)throws CoordinadorException;
-    
-    PerfilFiscalDTO recuperarPerfilFiscal(String idUsuario)throws CoordinadorException;
-    
-    PerfilFiscalDTO buscarPerfilFiscal(String rfc, String idUsuario)throws CoordinadorException;
-    
-    FacturaDTO crearFactura(PerfilFiscalDTO perfil, ReservacionDTO reserva)throws CoordinadorException;
-    
-    boolean timbrarFactura(FacturaDTO factura)throws CoordinadorException;
-    
-    public void mostrarBuscarRFC();
-    
-    public void mostrarDatosFactura(FacturaDTO factura);
-
-    public void mostrarResumenDatosFactura(FacturaDTO factura);
+//    boolean facturar(String idReservacion)throws CoordinadorException;
+//    
+//    PerfilFiscalDTO recuperarPerfilFiscal(String idUsuario)throws CoordinadorException;
+//    
+//    PerfilFiscalDTO buscarPerfilFiscal(String rfc, String idUsuario)throws CoordinadorException;
+//    
+//    FacturaDTO crearFactura(PerfilFiscalDTO perfil, ReservacionDTO reserva)throws CoordinadorException;
+//    
+//    boolean timbrarFactura(FacturaDTO factura)throws CoordinadorException;
+//    
+//    public void mostrarBuscarRFC();
+//    
+//    public void mostrarDatosFactura(FacturaDTO factura);
+//
+//    public void mostrarResumenDatosFactura(FacturaDTO factura);
 
 }

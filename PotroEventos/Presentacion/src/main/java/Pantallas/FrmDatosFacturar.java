@@ -502,9 +502,9 @@ public class FrmDatosFacturar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
-        if(recogerDatos()){
-            this.coordinador.mostrarResumenDatosFactura(this.factura);
-        }
+//        if(recogerDatos()){
+//            this.coordinador.mostrarResumenDatosFactura(this.factura);
+//        }
     }//GEN-LAST:event_btnGenerarActionPerformed
     private void campoMetodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoMetodoActionPerformed
         // TODO add your handling code here:
