@@ -4,13 +4,14 @@
  */
 package interfaces;
 
+import Entitys.Factura;
 import excepciones.PersistenciaException;
 
 /**
  *
- * @author Dayanara Peralta G
+ * @author maria
  */
-public interface IBoletoDAO {
-    
-    public void actualizarAsiento(String idReservacion, String idAsientoNuevo) throws PersistenciaException;
+public interface IFacturaDAO {
+
+    String guardarFactura(Factura factura) throws PersistenciaException;
 }

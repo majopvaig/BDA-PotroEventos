@@ -4,13 +4,14 @@
  */
 package interfaces;
 
+import Entitys.PerfilFiscal;
 import excepciones.PersistenciaException;
 
 /**
  *
- * @author Dayanara Peralta G
+ * @author maria
  */
-public interface IBoletoDAO {
-    
-    public void actualizarAsiento(String idReservacion, String idAsientoNuevo) throws PersistenciaException;
+public interface IPerfilFiscal {
+
+    boolean guardarPerfilFiscal(PerfilFiscal perfil, String idUsuario) throws PersistenciaException;
 }

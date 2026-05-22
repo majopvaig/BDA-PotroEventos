@@ -4,13 +4,16 @@
  */
 package interfaces;
 
+import Entitys.Pago;
 import excepciones.PersistenciaException;
 
 /**
  *
- * @author Dayanara Peralta G
+ * @author maria
  */
-public interface IBoletoDAO {
+public interface IPagoDAO {
     
-    public void actualizarAsiento(String idReservacion, String idAsientoNuevo) throws PersistenciaException;
+    Pago agregarPago(Pago pago, String idReservacion) throws PersistenciaException;
+    
+    Pago consultarReservacion(String idPago) throws PersistenciaException;
 }

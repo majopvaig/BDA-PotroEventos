@@ -4,13 +4,17 @@
  */
 package interfaces;
 
+import Entitys.Seccion;
 import excepciones.PersistenciaException;
+import java.util.List;
 
 /**
  *
- * @author Dayanara Peralta G
+ * @author maria
  */
-public interface IBoletoDAO {
+public interface ISeccionDAO {
     
-    public void actualizarAsiento(String idReservacion, String idAsientoNuevo) throws PersistenciaException;
+    Seccion buscarSeccionPorId(String idSeccion) throws PersistenciaException;
+    
+    List<Seccion> buscarPorEvento(String idEvento) throws PersistenciaException;
 }

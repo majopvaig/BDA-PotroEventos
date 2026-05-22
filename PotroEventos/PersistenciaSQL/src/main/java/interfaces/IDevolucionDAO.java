@@ -4,13 +4,16 @@
  */
 package interfaces;
 
+import Entitys.Devolucion;
 import excepciones.PersistenciaException;
 
 /**
  *
- * @author Dayanara Peralta G
+ * @author maria
  */
-public interface IBoletoDAO {
+public interface IDevolucionDAO {
     
-    public void actualizarAsiento(String idReservacion, String idAsientoNuevo) throws PersistenciaException;
+    Devolucion agregarDevolucion(Devolucion devolucion, String idReservacion) throws PersistenciaException;
+    
+    Devolucion consultarDevolucion(String idDevolucion) throws PersistenciaException;
 }

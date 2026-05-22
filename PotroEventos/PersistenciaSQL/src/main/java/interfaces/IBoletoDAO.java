@@ -4,13 +4,24 @@
  */
 package interfaces;
 
+import Entitys.Boleto;
 import excepciones.PersistenciaException;
 
 /**
  *
- * @author Dayanara Peralta G
+ * @author maria
  */
 public interface IBoletoDAO {
+    
+    Boleto obtenerBoleto(String idBoleto) throws PersistenciaException;
+    
+    boolean cancelarBoleto(String idBoleto) throws PersistenciaException;
+    
+    Boleto agregarBoleto(Boleto boleto) throws PersistenciaException;
+    
+    Boleto buscarPorToken(String token) throws PersistenciaException;
+    
+    boolean actualizarEstado(Boleto boleto) throws PersistenciaException;
     
     public void actualizarAsiento(String idReservacion, String idAsientoNuevo) throws PersistenciaException;
 }
