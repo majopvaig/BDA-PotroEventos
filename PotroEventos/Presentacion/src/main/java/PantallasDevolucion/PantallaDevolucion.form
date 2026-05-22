@@ -23,12 +23,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="pnlBlanco" alignment="0" max="32767" attributes="0"/>
+          <Component idReserva="pnlBlanco" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="pnlBlanco" alignment="0" max="32767" attributes="0"/>
+          <Component idReserva="pnlBlanco" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -43,36 +43,36 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="pnlAzul" alignment="0" max="32767" attributes="0"/>
-              <Component id="pnlAzulFuerte" alignment="0" max="32767" attributes="0"/>
+              <Component idReserva="pnlAzul" alignment="0" max="32767" attributes="0"/>
+              <Component idReserva="pnlAzulFuerte" alignment="0" max="32767" attributes="0"/>
               <Group type="102" alignment="0" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
-                          <Component id="lblForm" min="-2" max="-2" attributes="0"/>
+                          <Component idReserva="lblForm" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-                          <Component id="btnRegresar" min="-2" pref="201" max="-2" attributes="0"/>
+                          <Component idReserva="btnRegresar" min="-2" pref="201" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jScrollPane1" min="-2" pref="361" max="-2" attributes="0"/>
+                                  <Component idReserva="jScrollPane1" min="-2" pref="361" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="117" max="-2" attributes="0"/>
-                                  <Component id="btnCancelar" min="-2" pref="201" max="-2" attributes="0"/>
+                                  <Component idReserva="btnCancelar" min="-2" pref="201" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="lblMotivo" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="pnlMotivos" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component idReserva="lblMotivo" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component idReserva="pnlMotivos" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="94" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="lblEvento" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="pnlEvento" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component idReserva="lblEvento" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component idReserva="pnlEvento" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <Component id="lblComen" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component idReserva="lblComen" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -83,33 +83,33 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Component id="pnlAzul" min="-2" max="-2" attributes="0"/>
+                  <Component idReserva="pnlAzul" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                  <Component id="pnlAzulFuerte" min="-2" max="-2" attributes="0"/>
+                  <Component idReserva="pnlAzulFuerte" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                  <Component id="lblForm" min="-2" max="-2" attributes="0"/>
+                  <Component idReserva="lblForm" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblMotivo" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblEvento" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component idReserva="lblMotivo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component idReserva="lblEvento" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="pnlMotivos" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="pnlEvento" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component idReserva="pnlMotivos" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component idReserva="pnlEvento" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="lblComen" min="-2" max="-2" attributes="0"/>
+                  <Component idReserva="lblComen" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="10" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="btnCancelar" min="-2" pref="46" max="-2" attributes="0"/>
+                          <Component idReserva="btnCancelar" min="-2" pref="46" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="jScrollPane1" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnRegresar" alignment="1" min="-2" pref="47" max="-2" attributes="0"/>
+                              <Component idReserva="jScrollPane1" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component idReserva="btnRegresar" alignment="1" min="-2" pref="47" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
                       </Group>
@@ -257,12 +257,12 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                      <Component id="iconEvento" min="-2" pref="123" max="-2" attributes="0"/>
+                      <Component idReserva="iconEvento" min="-2" pref="123" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="lblNombreEvento" alignment="0" pref="324" max="32767" attributes="0"/>
-                          <Component id="lblUbicacion" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtFechaHora" alignment="0" max="32767" attributes="0"/>
+                          <Component idReserva="lblNombreEvento" alignment="0" pref="324" max="32767" attributes="0"/>
+                          <Component idReserva="lblUbicacion" alignment="0" max="32767" attributes="0"/>
+                          <Component idReserva="txtFechaHora" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace pref="19" max="32767" attributes="0"/>
                   </Group>
@@ -274,15 +274,15 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                              <Component id="iconEvento" min="-2" pref="115" max="-2" attributes="0"/>
+                              <Component idReserva="iconEvento" min="-2" pref="115" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                              <Component id="lblNombreEvento" min="-2" max="-2" attributes="0"/>
+                              <Component idReserva="lblNombreEvento" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                              <Component id="lblUbicacion" min="-2" max="-2" attributes="0"/>
+                              <Component idReserva="lblUbicacion" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="txtFechaHora" min="-2" max="-2" attributes="0"/>
+                              <Component idReserva="txtFechaHora" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace pref="20" max="32767" attributes="0"/>
@@ -334,7 +334,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                      <Component id="lblPotroEventos" min="-2" max="-2" attributes="0"/>
+                      <Component idReserva="lblPotroEventos" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -343,7 +343,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace pref="24" max="32767" attributes="0"/>
-                      <Component id="lblPotroEventos" min="-2" max="-2" attributes="0"/>
+                      <Component idReserva="lblPotroEventos" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>

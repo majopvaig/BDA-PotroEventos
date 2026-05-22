@@ -23,19 +23,19 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="lblImagen" min="-2" pref="150" max="-2" attributes="0"/>
+              <Component idReserva="lblImagen" min="-2" pref="150" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="btnAsistencias" min="-2" max="-2" attributes="0"/>
+                      <Component idReserva="btnAsistencias" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="btnCheckIn" min="-2" max="-2" attributes="0"/>
+                      <Component idReserva="btnCheckIn" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblNombreEvento" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblFechaEvento" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblUbicacionEvento" min="-2" max="-2" attributes="0"/>
+                          <Component idReserva="lblNombreEvento" min="-2" max="-2" attributes="0"/>
+                          <Component idReserva="lblFechaEvento" min="-2" max="-2" attributes="0"/>
+                          <Component idReserva="lblUbicacionEvento" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
@@ -50,20 +50,20 @@
               <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="lblImagen" min="-2" pref="150" max="-2" attributes="0"/>
+                      <Component idReserva="lblImagen" min="-2" pref="150" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="23" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                      <Component id="lblNombreEvento" min="-2" max="-2" attributes="0"/>
+                      <Component idReserva="lblNombreEvento" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="lblFechaEvento" min="-2" max="-2" attributes="0"/>
+                      <Component idReserva="lblFechaEvento" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="lblUbicacionEvento" min="-2" max="-2" attributes="0"/>
+                      <Component idReserva="lblUbicacionEvento" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btnAsistencias" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnCheckIn" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component idReserva="btnAsistencias" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component idReserva="btnCheckIn" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>

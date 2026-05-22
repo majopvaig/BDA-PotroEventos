@@ -23,12 +23,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="1" pref="588" max="32767" attributes="0"/>
+          <Component idReserva="jPanel1" alignment="1" pref="588" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="0" pref="691" max="32767" attributes="0"/>
+          <Component idReserva="jPanel1" alignment="0" pref="691" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -46,31 +46,31 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="jPanelAzul" alignment="1" pref="588" max="32767" attributes="0"/>
+              <Component idReserva="jPanelAzul" alignment="1" pref="588" max="32767" attributes="0"/>
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="160" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="btnRegistrarse" min="-2" pref="225" max="-2" attributes="0"/>
-                              <Component id="iniciaSesion" min="-2" max="-2" attributes="0"/>
+                              <Component idReserva="btnRegistrarse" min="-2" pref="225" max="-2" attributes="0"/>
+                              <Component idReserva="iniciaSesion" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="98" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="lblApellidoM" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblApellidoP" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblNombre" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblContraseniaConfirmacion" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblContrasenia" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblCorreo" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtContrasenia" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtCorreo" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtConfirmacionContrasenia" alignment="0" pref="365" max="32767" attributes="0"/>
-                              <Component id="txtNombre" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtApellidoP" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtApellidoM" alignment="0" max="32767" attributes="0"/>
+                              <Component idReserva="lblApellidoM" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component idReserva="lblApellidoP" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component idReserva="lblNombre" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component idReserva="lblContraseniaConfirmacion" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component idReserva="lblContrasenia" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component idReserva="lblCorreo" min="-2" max="-2" attributes="0"/>
+                              <Component idReserva="txtContrasenia" alignment="0" max="32767" attributes="0"/>
+                              <Component idReserva="txtCorreo" alignment="0" max="32767" attributes="0"/>
+                              <Component idReserva="txtConfirmacionContrasenia" alignment="0" pref="365" max="32767" attributes="0"/>
+                              <Component idReserva="txtNombre" alignment="0" max="32767" attributes="0"/>
+                              <Component idReserva="txtApellidoP" alignment="0" max="32767" attributes="0"/>
+                              <Component idReserva="txtApellidoM" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -81,35 +81,35 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Component id="jPanelAzul" min="-2" pref="60" max="-2" attributes="0"/>
+                  <Component idReserva="jPanelAzul" min="-2" pref="60" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
-                  <Component id="lblNombre" min="-2" max="-2" attributes="0"/>
+                  <Component idReserva="lblNombre" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="txtNombre" min="-2" max="-2" attributes="0"/>
+                  <Component idReserva="txtNombre" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="lblApellidoP" min="-2" max="-2" attributes="0"/>
+                  <Component idReserva="lblApellidoP" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="txtApellidoP" min="-2" max="-2" attributes="0"/>
+                  <Component idReserva="txtApellidoP" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="lblApellidoM" min="-2" max="-2" attributes="0"/>
+                  <Component idReserva="lblApellidoM" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="txtApellidoM" min="-2" max="-2" attributes="0"/>
+                  <Component idReserva="txtApellidoM" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="13" max="32767" attributes="0"/>
-                  <Component id="lblCorreo" min="-2" max="-2" attributes="0"/>
+                  <Component idReserva="lblCorreo" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="txtCorreo" min="-2" max="-2" attributes="0"/>
+                  <Component idReserva="txtCorreo" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="lblContrasenia" min="-2" max="-2" attributes="0"/>
+                  <Component idReserva="lblContrasenia" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="txtContrasenia" min="-2" pref="34" max="-2" attributes="0"/>
+                  <Component idReserva="txtContrasenia" min="-2" pref="34" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="lblContraseniaConfirmacion" min="-2" max="-2" attributes="0"/>
+                  <Component idReserva="lblContraseniaConfirmacion" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="txtConfirmacionContrasenia" min="-2" pref="36" max="-2" attributes="0"/>
+                  <Component idReserva="txtConfirmacionContrasenia" min="-2" pref="36" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                  <Component id="btnRegistrarse" min="-2" pref="38" max="-2" attributes="0"/>
+                  <Component idReserva="btnRegistrarse" min="-2" pref="38" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="iniciaSesion" min="-2" max="-2" attributes="0"/>
+                  <Component idReserva="iniciaSesion" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -123,7 +123,7 @@
             </Property>
             <Property name="text" type="java.lang.String" value="&lt;html&gt;&#xbf;Ya tienes cuenta? &lt;font color=&quot;blue&quot;&gt;&lt;u&gt;Iniciar Sesi&#xf3;n&lt;/u&gt;&lt;/font&gt;&lt;/html&gt;"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Default Cursor"/>
+              <Color idReserva="Default Cursor"/>
             </Property>
           </Properties>
           <Events>
@@ -179,14 +179,14 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="textiniciaSesion" alignment="0" max="32767" attributes="0"/>
+                  <Component idReserva="textiniciaSesion" alignment="0" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="textiniciaSesion" min="-2" max="-2" attributes="0"/>
+                      <Component idReserva="textiniciaSesion" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="9" max="32767" attributes="0"/>
                   </Group>
               </Group>

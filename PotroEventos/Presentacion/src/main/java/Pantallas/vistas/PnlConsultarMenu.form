@@ -26,14 +26,14 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="354" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="btnEventosCancelados" max="32767" attributes="0"/>
-                          <Component id="btnEventosProximos" max="32767" attributes="0"/>
-                          <Component id="btnEventosPasados" min="-2" pref="330" max="-2" attributes="0"/>
+                          <Component idReserva="btnEventosCancelados" max="32767" attributes="0"/>
+                          <Component idReserva="btnEventosProximos" max="32767" attributes="0"/>
+                          <Component idReserva="btnEventosPasados" min="-2" pref="330" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="268" max="-2" attributes="0"/>
-                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                      <Component idReserva="jLabel2" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="381" max="32767" attributes="0"/>
@@ -44,13 +44,13 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
-              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+              <Component idReserva="jLabel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="68" max="32767" attributes="0"/>
-              <Component id="btnEventosPasados" min="-2" pref="57" max="-2" attributes="0"/>
+              <Component idReserva="btnEventosPasados" min="-2" pref="57" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
-              <Component id="btnEventosProximos" min="-2" pref="53" max="-2" attributes="0"/>
+              <Component idReserva="btnEventosProximos" min="-2" pref="53" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-              <Component id="btnEventosCancelados" min="-2" pref="53" max="-2" attributes="0"/>
+              <Component idReserva="btnEventosCancelados" min="-2" pref="53" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="138" max="-2" attributes="0"/>
           </Group>
       </Group>

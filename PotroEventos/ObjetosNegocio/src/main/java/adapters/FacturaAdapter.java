@@ -36,31 +36,7 @@ public class FacturaAdapter {
         fac.setFechaTimbrado(factura.getFechaTimbrado());
         fac.setXmlTimbrado(factura.getXmlTimbrado());
         fac.setUuid(factura.getUuid());
+        fac.setIdReserva(factura.getIdReservacion());
         return fac;
-    }
-    
-    public static FacturaDTO entidadADTO(Factura factura){
-        if(factura == null){
-            return null;
-        }
-        
-        FacturaDTO facturaDTO = new FacturaDTO();
-        
-        // Convertir PerfilFiscal a PerfilFiscalDTO
-        facturaDTO.setPerfil(PerfilFiscalAdapter.convertirADTO(factura.getPerfil()));
-        
-        // Convertir UsoCfdi Enum a UsoCfdiDTO
-        if (factura.getUsoCfdi() != null) {
-            facturaDTO.setUsoCfdi(UsoCfdiDTO.valueOf(factura.getUsoCfdi().name()));
-        }
-        
-        facturaDTO.setTotal(factura.getTotal());
-        facturaDTO.setMoneda(factura.getMoneda());
-        facturaDTO.setMetodoPago(factura.getMetodoPago());
-        facturaDTO.setFechaCompra(factura.getFechaCompra());
-        facturaDTO.setFechaTimbrado(factura.getFechaTimbrado());
-        facturaDTO.setXmlTimbrado(factura.getXmlTimbrado());
-        facturaDTO.setUuid(factura.getUuid());
-        return facturaDTO;
     }
 }

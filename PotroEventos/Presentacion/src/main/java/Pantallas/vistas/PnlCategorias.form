@@ -22,13 +22,13 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+          <Component idReserva="jPanel1" alignment="0" max="32767" attributes="0"/>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="evento1" min="-2" max="-2" attributes="0"/>
+                  <Component idReserva="evento1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="evento2" min="-2" max="-2" attributes="0"/>
+                  <Component idReserva="evento2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="409" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -36,13 +36,13 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+          <Component idReserva="jPanel1" alignment="0" max="32767" attributes="0"/>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="evento1" alignment="0" max="32767" attributes="0"/>
-                      <Component id="evento2" alignment="0" max="32767" attributes="0"/>
+                      <Component idReserva="evento1" alignment="0" max="32767" attributes="0"/>
+                      <Component idReserva="evento2" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace pref="537" max="32767" attributes="0"/>
               </Group>
@@ -106,9 +106,9 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="340" max="-2" attributes="0"/>
-                  <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
+                  <Component idReserva="jPanel6" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="50" max="32767" attributes="0"/>
-                  <Component id="jPanel7" min="-2" max="-2" attributes="0"/>
+                  <Component idReserva="jPanel7" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -118,8 +118,8 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="301" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jPanel6" max="32767" attributes="0"/>
-                      <Component id="jPanel7" max="32767" attributes="0"/>
+                      <Component idReserva="jPanel6" max="32767" attributes="0"/>
+                      <Component idReserva="jPanel7" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace pref="242" max="32767" attributes="0"/>
               </Group>

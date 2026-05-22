@@ -22,13 +22,13 @@ public class Factura {
     private LocalDateTime fechaTimbrado;
     private String xmlTimbrado;
     private String uuid;           // Para mostrar en el PDF
-    
+
+    //  --- para sql ---
+    private String idReserva;
     public Factura() {
     }
 
-    
-    
-    public Factura(PerfilFiscal perfil, UsoCfdi usoCfdi, Double total, String moneda, String metodoPago, LocalDateTime fechaCompra, LocalDateTime fechaTimbrado, String xmlTimbrado, String uuid) {
+    public Factura(PerfilFiscal perfil, UsoCfdi usoCfdi, Double total, String moneda, String metodoPago, LocalDateTime fechaCompra, LocalDateTime fechaTimbrado, String xmlTimbrado, String uuid, String idReserva) {
         this.perfil = perfil;
         this.usoCfdi = usoCfdi;
         this.total = total;
@@ -38,6 +38,7 @@ public class Factura {
         this.fechaTimbrado = fechaTimbrado;
         this.xmlTimbrado = xmlTimbrado;
         this.uuid = uuid;
+        this.idReserva = idReserva;
     }
 
     public PerfilFiscal getPerfil() {
@@ -112,6 +113,11 @@ public class Factura {
         this.uuid = uuid;
     }
 
-    
-    
+    public String getIdReserva() {
+        return idReserva;
+    }
+
+    public void setIdReserva(String idReserva) {
+        this.idReserva = idReserva;
+    }
 }

@@ -27,14 +27,14 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-              <Component id="jPanelInicio" min="-2" pref="542" max="-2" attributes="0"/>
+              <Component idReserva="jPanelInicio" min="-2" pref="542" max="-2" attributes="0"/>
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanelInicio" alignment="0" max="32767" attributes="0"/>
+          <Component idReserva="jPanelInicio" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -49,16 +49,16 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="jScrollPane1" alignment="0" min="-2" pref="672" max="-2" attributes="0"/>
-              <Component id="jPanelAzul" alignment="0" min="-2" pref="555" max="-2" attributes="0"/>
+              <Component idReserva="jScrollPane1" alignment="0" min="-2" pref="672" max="-2" attributes="0"/>
+              <Component idReserva="jPanelAzul" alignment="0" min="-2" pref="555" max="-2" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Component id="jPanelAzul" min="-2" pref="100" max="-2" attributes="0"/>
+                  <Component idReserva="jPanelAzul" min="-2" pref="100" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" max="32767" attributes="0"/>
+                  <Component idReserva="jScrollPane1" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -79,19 +79,19 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                      <Component id="textPotroEventos" min="-2" max="-2" attributes="0"/>
+                      <Component idReserva="textPotroEventos" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="292" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="jPanelAzulOscuro" alignment="0" max="32767" attributes="0"/>
+                  <Component idReserva="jPanelAzulOscuro" alignment="0" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="textPotroEventos" min="-2" max="-2" attributes="0"/>
+                      <Component idReserva="textPotroEventos" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jPanelAzulOscuro" max="32767" attributes="0"/>
+                      <Component idReserva="jPanelAzulOscuro" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -148,24 +148,24 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
-                                  <Component id="btnVolver" min="-2" max="-2" attributes="0"/>
+                                  <Component idReserva="btnVolver" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="93" max="-2" attributes="0"/>
-                                  <Component id="btnPagar" min="-2" max="-2" attributes="0"/>
+                                  <Component idReserva="btnPagar" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="textCorreo1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="txtNoTarjeta" alignment="0" min="-2" pref="365" max="-2" attributes="0"/>
+                                      <Component idReserva="textCorreo1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component idReserva="txtNoTarjeta" alignment="0" min="-2" pref="365" max="-2" attributes="0"/>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="txtFechaExpiracion" max="32767" attributes="0"/>
-                                              <Component id="textCorreo2" min="-2" pref="146" max="-2" attributes="0"/>
+                                              <Component idReserva="txtFechaExpiracion" max="32767" attributes="0"/>
+                                              <Component idReserva="textCorreo2" min="-2" pref="146" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace max="32767" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="txtCVV" min="-2" pref="128" max="-2" attributes="0"/>
-                                              <Component id="textCorreo3" min="-2" max="-2" attributes="0"/>
+                                              <Component idReserva="txtCVV" min="-2" pref="128" max="-2" attributes="0"/>
+                                              <Component idReserva="textCorreo3" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -179,26 +179,26 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
-                          <Component id="textCorreo1" min="-2" max="-2" attributes="0"/>
+                          <Component idReserva="textCorreo1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="txtNoTarjeta" min="-2" max="-2" attributes="0"/>
+                          <Component idReserva="txtNoTarjeta" min="-2" max="-2" attributes="0"/>
                           <EmptySpace pref="158" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="textCorreo2" min="-2" max="-2" attributes="0"/>
+                                  <Component idReserva="textCorreo2" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="txtFechaExpiracion" min="-2" max="-2" attributes="0"/>
+                                  <Component idReserva="txtFechaExpiracion" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="textCorreo3" min="-2" max="-2" attributes="0"/>
+                                  <Component idReserva="textCorreo3" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="txtCVV" min="-2" max="-2" attributes="0"/>
+                                  <Component idReserva="txtCVV" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace min="-2" pref="138" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="btnPagar" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnVolver" min="-2" max="-2" attributes="0"/>
+                              <Component idReserva="btnPagar" min="-2" max="-2" attributes="0"/>
+                              <Component idReserva="btnVolver" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
@@ -290,12 +290,12 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel1" alignment="0" pref="136" max="32767" attributes="0"/>
+                          <Component idReserva="jLabel1" alignment="0" pref="136" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel1" alignment="0" pref="36" max="32767" attributes="0"/>
+                          <Component idReserva="jLabel1" alignment="0" pref="36" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
@@ -311,7 +311,7 @@
                         <Property name="horizontalAlignment" type="int" value="0"/>
                         <Property name="text" type="java.lang.String" value="Pagar"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                          <Color id="Default Cursor"/>
+                          <Color idReserva="Default Cursor"/>
                         </Property>
                       </Properties>
                     </Component>
@@ -330,12 +330,12 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel2" alignment="0" pref="136" max="32767" attributes="0"/>
+                          <Component idReserva="jLabel2" alignment="0" pref="136" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel2" alignment="0" pref="36" max="32767" attributes="0"/>
+                          <Component idReserva="jLabel2" alignment="0" pref="36" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
@@ -351,7 +351,7 @@
                         <Property name="horizontalAlignment" type="int" value="0"/>
                         <Property name="text" type="java.lang.String" value="Volver"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                          <Color id="Default Cursor"/>
+                          <Color idReserva="Default Cursor"/>
                         </Property>
                       </Properties>
                       <Events>

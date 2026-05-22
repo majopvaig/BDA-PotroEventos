@@ -23,12 +23,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+          <Component idReserva="jPanel1" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+          <Component idReserva="jPanel1" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -57,15 +57,15 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="iconNotificacion" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component idReserva="iconNotificacion" min="-2" pref="25" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="lblTipoNotificacion" min="-2" max="-2" attributes="0"/>
+                          <Component idReserva="lblTipoNotificacion" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="btnCerrarDlg" min="-2" max="-2" attributes="0"/>
+                          <Component idReserva="btnCerrarDlg" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                          <Component id="lblMensaje" min="-2" pref="327" max="-2" attributes="0"/>
+                          <Component idReserva="lblMensaje" min="-2" pref="327" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="23" max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -73,9 +73,9 @@
               </Group>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-                  <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
+                  <Component idReserva="btnCancelar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="btnAceptar" min="-2" pref="94" max="-2" attributes="0"/>
+                  <Component idReserva="btnAceptar" min="-2" pref="94" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -85,16 +85,16 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="iconNotificacion" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblTipoNotificacion" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnCerrarDlg" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component idReserva="iconNotificacion" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component idReserva="lblTipoNotificacion" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component idReserva="btnCerrarDlg" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="lblMensaje" min="-2" max="-2" attributes="0"/>
+                  <Component idReserva="lblMensaje" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="136" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btnCancelar" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
-                      <Component id="btnAceptar" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                      <Component idReserva="btnCancelar" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                      <Component idReserva="btnAceptar" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
               </Group>

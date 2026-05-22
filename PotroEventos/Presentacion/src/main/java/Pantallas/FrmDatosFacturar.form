@@ -27,9 +27,9 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="pnlSuperior" alignment="0" max="32767" attributes="0"/>
+          <Component idReserva="pnlSuperior" alignment="0" max="32767" attributes="0"/>
           <Group type="102" alignment="0" attributes="0">
-              <Component id="pnlContenedor" min="-2" max="-2" attributes="0"/>
+              <Component idReserva="pnlContenedor" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -37,9 +37,9 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <Component id="pnlSuperior" min="-2" max="-2" attributes="0"/>
+              <Component idReserva="pnlSuperior" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-              <Component id="pnlContenedor" min="-2" max="-2" attributes="0"/>
+              <Component idReserva="pnlContenedor" min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -56,44 +56,44 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Component id="pnlGris" min="-2" max="-2" attributes="0"/>
+                  <Component idReserva="pnlGris" min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="txtRFC" min="-2" max="-2" attributes="0"/>
+                                  <Component idReserva="txtRFC" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="campoCorreo" alignment="0" pref="156" max="32767" attributes="0"/>
-                                      <Component id="campoRazon" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="cbxUsocfdi" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="campoCP" alignment="0" max="32767" attributes="0"/>
+                                      <Component idReserva="campoCorreo" alignment="0" pref="156" max="32767" attributes="0"/>
+                                      <Component idReserva="campoRazon" alignment="0" max="32767" attributes="0"/>
+                                      <Component idReserva="cbxUsocfdi" alignment="0" max="32767" attributes="0"/>
+                                      <Component idReserva="campoCP" alignment="0" max="32767" attributes="0"/>
                                       <Group type="102" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="txtCP" min="-2" max="-2" attributes="0"/>
-                                              <Component id="txtCorreo" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="txtUsoCFDI" min="-2" max="-2" attributes="0"/>
-                                              <Component id="txtRazonSocial" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component idReserva="txtCP" min="-2" max="-2" attributes="0"/>
+                                              <Component idReserva="txtCorreo" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component idReserva="txtUsoCFDI" min="-2" max="-2" attributes="0"/>
+                                              <Component idReserva="txtRazonSocial" alignment="0" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                       </Group>
-                                      <Component id="campoRfc" alignment="0" max="32767" attributes="0"/>
+                                      <Component idReserva="campoRfc" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="98" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="txtTotal" min="-2" max="-2" attributes="0"/>
-                                      <Component id="txtMoneda" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="txtMétodoPago" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="txtFechaReserva" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="txtRegimenFiscal" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="campoMoneda" alignment="0" pref="156" max="32767" attributes="0"/>
-                                      <Component id="campoTotal" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="campoMetodo" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="campoFecha" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="campoRegimen" alignment="0" max="32767" attributes="0"/>
+                                      <Component idReserva="txtTotal" min="-2" max="-2" attributes="0"/>
+                                      <Component idReserva="txtMoneda" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component idReserva="txtMétodoPago" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component idReserva="txtFechaReserva" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component idReserva="txtRegimenFiscal" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component idReserva="campoMoneda" alignment="0" pref="156" max="32767" attributes="0"/>
+                                      <Component idReserva="campoTotal" alignment="0" max="32767" attributes="0"/>
+                                      <Component idReserva="campoMetodo" alignment="0" max="32767" attributes="0"/>
+                                      <Component idReserva="campoFecha" alignment="0" max="32767" attributes="0"/>
+                                      <Component idReserva="campoRegimen" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="94" max="-2" attributes="0"/>
                               </Group>
@@ -103,11 +103,11 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <EmptySpace min="-2" pref="174" max="-2" attributes="0"/>
-                                  <Component id="lblDatosFiscales" min="-2" pref="183" max="-2" attributes="0"/>
+                                  <Component idReserva="lblDatosFiscales" min="-2" pref="183" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="190" max="-2" attributes="0"/>
-                                  <Component id="btnGenerar" min="-2" max="-2" attributes="0"/>
+                                  <Component idReserva="btnGenerar" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
@@ -118,61 +118,61 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="pnlGris" alignment="0" max="32767" attributes="0"/>
+              <Component idReserva="pnlGris" alignment="0" max="32767" attributes="0"/>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="lblDatosFiscales" min="-2" pref="35" max="-2" attributes="0"/>
+                  <Component idReserva="lblDatosFiscales" min="-2" pref="35" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="txtRFC" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtTotal" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component idReserva="txtRFC" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component idReserva="txtTotal" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="campoRfc" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="campoTotal" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component idReserva="campoRfc" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component idReserva="campoTotal" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="txtMoneda" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtRazonSocial" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component idReserva="txtMoneda" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component idReserva="txtRazonSocial" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="campoRazon" min="-2" max="-2" attributes="0"/>
-                      <Component id="campoMoneda" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component idReserva="campoRazon" min="-2" max="-2" attributes="0"/>
+                      <Component idReserva="campoMoneda" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="txtMétodoPago" min="-2" max="-2" attributes="0"/>
+                          <Component idReserva="txtMétodoPago" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="campoMetodo" min="-2" max="-2" attributes="0"/>
+                          <Component idReserva="campoMetodo" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="txtFechaReserva" min="-2" max="-2" attributes="0"/>
+                          <Component idReserva="txtFechaReserva" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="campoFecha" min="-2" max="-2" attributes="0"/>
+                          <Component idReserva="campoFecha" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="txtRegimenFiscal" min="-2" max="-2" attributes="0"/>
+                          <Component idReserva="txtRegimenFiscal" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="campoRegimen" min="-2" max="-2" attributes="0"/>
+                          <Component idReserva="campoRegimen" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="txtCorreo" min="-2" max="-2" attributes="0"/>
+                          <Component idReserva="txtCorreo" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="campoCorreo" min="-2" max="-2" attributes="0"/>
+                          <Component idReserva="campoCorreo" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="txtCP" min="-2" max="-2" attributes="0"/>
+                          <Component idReserva="txtCP" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                          <Component id="campoCP" min="-2" max="-2" attributes="0"/>
+                          <Component idReserva="campoCP" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="txtUsoCFDI" min="-2" max="-2" attributes="0"/>
+                          <Component idReserva="txtUsoCFDI" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="cbxUsocfdi" min="-2" max="-2" attributes="0"/>
+                          <Component idReserva="cbxUsocfdi" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                  <Component id="btnGenerar" min="-2" pref="52" max="-2" attributes="0"/>
+                  <Component idReserva="btnGenerar" min="-2" pref="52" max="-2" attributes="0"/>
                   <EmptySpace pref="38" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -335,7 +335,7 @@
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
+              <Color blue="ff" green="ff" idReserva="white" palette="1" red="ff" type="palette"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto" size="12" style="0"/>
@@ -350,7 +350,7 @@
               </Border>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Default Cursor"/>
+              <Color idReserva="Default Cursor"/>
             </Property>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[100, 21]"/>
@@ -368,7 +368,7 @@
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
+              <Color blue="ff" green="ff" idReserva="white" palette="1" red="ff" type="palette"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto" size="12" style="0"/>
@@ -383,7 +383,7 @@
               </Border>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Default Cursor"/>
+              <Color idReserva="Default Cursor"/>
             </Property>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[100, 21]"/>
@@ -409,7 +409,7 @@
               </Border>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Default Cursor"/>
+              <Color idReserva="Default Cursor"/>
             </Property>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[100, 21]"/>
@@ -435,7 +435,7 @@
               </Border>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Default Cursor"/>
+              <Color idReserva="Default Cursor"/>
             </Property>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[100, 21]"/>
@@ -463,7 +463,7 @@
               </Border>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Default Cursor"/>
+              <Color idReserva="Default Cursor"/>
             </Property>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[100, 21]"/>
@@ -487,7 +487,7 @@
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
+              <Color blue="ff" green="ff" idReserva="white" palette="1" red="ff" type="palette"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto" size="12" style="0"/>
@@ -502,7 +502,7 @@
               </Border>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Default Cursor"/>
+              <Color idReserva="Default Cursor"/>
             </Property>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[100, 21]"/>
@@ -520,7 +520,7 @@
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
+              <Color blue="ff" green="ff" idReserva="white" palette="1" red="ff" type="palette"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto" size="12" style="0"/>
@@ -535,7 +535,7 @@
               </Border>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Default Cursor"/>
+              <Color idReserva="Default Cursor"/>
             </Property>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[100, 21]"/>
@@ -553,7 +553,7 @@
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
+              <Color blue="ff" green="ff" idReserva="white" palette="1" red="ff" type="palette"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto" size="12" style="0"/>
@@ -568,7 +568,7 @@
               </Border>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Default Cursor"/>
+              <Color idReserva="Default Cursor"/>
             </Property>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[100, 21]"/>
@@ -589,7 +589,7 @@
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
+              <Color blue="ff" green="ff" idReserva="white" palette="1" red="ff" type="palette"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto" size="12" style="0"/>
@@ -604,7 +604,7 @@
               </Border>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Default Cursor"/>
+              <Color idReserva="Default Cursor"/>
             </Property>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[100, 21]"/>
@@ -631,7 +631,7 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Generar Factura"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Default Cursor"/>
+              <Color idReserva="Default Cursor"/>
             </Property>
           </Properties>
           <Events>
@@ -642,7 +642,7 @@
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
+              <Color blue="ff" green="ff" idReserva="white" palette="1" red="ff" type="palette"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto" size="12" style="0"/>
@@ -657,7 +657,7 @@
               </Border>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Default Cursor"/>
+              <Color idReserva="Default Cursor"/>
             </Property>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[100, 21]"/>
@@ -685,7 +685,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                  <Component id="lblHacienda" min="-2" pref="150" max="-2" attributes="0"/>
+                  <Component idReserva="lblHacienda" min="-2" pref="150" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -694,7 +694,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                  <Component id="lblHacienda" min="-2" pref="33" max="-2" attributes="0"/>
+                  <Component idReserva="lblHacienda" min="-2" pref="33" max="-2" attributes="0"/>
                   <EmptySpace pref="19" max="32767" attributes="0"/>
               </Group>
           </Group>

@@ -14,6 +14,7 @@ Entitys\Empleado.class
 Entitys\Boleto.class
 Entitys\ENUMS\RegimenFiscal.class
 Entitys\ENUMS\ReservacionEstado.class
+Entitys\ReporteAsistencia.class
 Entitys\Categoria.class
 Entitys\AsientoEvento.class
 Entitys\ENUMS\TipoDevolucionP.class
