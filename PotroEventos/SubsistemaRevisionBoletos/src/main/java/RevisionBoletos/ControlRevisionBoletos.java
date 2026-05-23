@@ -10,17 +10,18 @@ import com.google.zxing.common.HybridBinarizer;
 import dtos.AsientoEventoDTO;
 import dtos.AsistenciaDTO;
 import dtos.BoletoDTO;
-import dtos.CategoriaDTO;
 import dtos.ENUMS.EstadoBoletoDTO;
 import dtos.EventoDTO;
 import dtos.ReporteAsistenciaDTO;
 import excepciones.CamaraException;
 import excepciones.NegocioException;
 import excepciones.RevisionBoletosException;
+import interfaces.IAsientoEventoBO;
 import interfaces.IEventoBO;
 import interfaces.IReservacionBO;
 import java.awt.image.BufferedImage;
 import java.util.List;
+import objetosNegocio.AsientoEventoBO;
 import objetosNegocio.EventoBO;
 import objetosNegocio.ReservacionBO;
 
@@ -34,6 +35,7 @@ public class ControlRevisionBoletos {
 
     private static ControlRevisionBoletos instancia;
     private final IReservacionBO reservacionBO;
+    private final IAsientoEventoBO asientoEventoBO;
     private final IEventoBO eventoBO;
     private final IIpWebcam camara = new IpWebcam();
     private String ultimoQR = "";
@@ -43,6 +45,7 @@ public class ControlRevisionBoletos {
      */
     private ControlRevisionBoletos() {
         this.reservacionBO = ReservacionBO.getInstance();
+        this.asientoEventoBO = AsientoEventoBO.getInstance();
         this.eventoBO = EventoBO.getInstance();
     }
 
@@ -257,7 +260,7 @@ public class ControlRevisionBoletos {
      */
     protected List<AsientoEventoDTO> obtenerAsientosConAsistencia(String idEvento) throws RevisionBoletosException {
         try {
-            return reservacionBO.obtenerAsientosConAsistencia(idEvento);
+            return asientoEventoBO.obtenerAsientosConAsistencia(idEvento);
         } catch (NegocioException e) {
             throw new RevisionBoletosException(e.getMessage());
         }

@@ -23,4 +23,15 @@ public interface IAsientoEventoBO {
     public boolean ocuparAsiento(String idAsientoNuevo) throws NegocioException;
     
     boolean venderAsiento(String idAsiento) throws NegocioException;
+    
+    /**
+     * Obtiene los asientos que cuentan con asistencia registrada.
+     *
+     * @param idEvento ID del evento.
+     *
+     * @return Lista de asientos con asistencia.
+     *
+     * @throws NegocioException Se lanza cuando ocurre un error.
+     */
+    List<AsientoEventoDTO> obtenerAsientosConAsistencia(String idEvento) throws NegocioException;
 }

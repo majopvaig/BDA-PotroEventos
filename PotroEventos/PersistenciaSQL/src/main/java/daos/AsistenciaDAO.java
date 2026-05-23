@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -43,17 +44,55 @@ public class AsistenciaDAO implements IAsistenciaDAO {
             throw new PersistenciaException("No puede haber IDs nulos");
         }
         String sql = """
-                     
+                        insert into asistencias(fechaHora, id_empleado) values (?, ?)
                      """;
-        Long idLong = IdAdapter.stringALong(idBoleto);
-        try (Connection con = ConexionBD.crearConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setLong(1, idLong);
-
-        } catch (SQLException ex) {
+        Long idBoletoLong = IdAdapter.stringALong(idBoleto);
+        try(Connection cone = ConexionBD.crearConexion(); PreparedStatement ps = cone.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
+            ps.setObject(1, asistencia.getFechaHoraRegistro());
+            ps.setLong(2, IdAdapter.stringALong(asistencia.getEmpleado().getIdEmpleado()));
+            int filasAfectadas = ps.executeUpdate();
+            if(filasAfectadas == 0){
+                LOG.log(Level.WARNING, "No se pudo agregar la asistencia.");
+                throw new PersistenciaException("No se pudo agregar la asistencia.");
+            }
+            Long idAsistencia = null;
+            try(ResultSet rs = ps.getGeneratedKeys()){
+                if(rs.next()){
+                    idAsistencia = rs.getLong(1);
+                    asistencia.setIdAsistencia(IdAdapter.LongAString(idAsistencia));
+                } else {
+                    throw new PersistenciaException("Error al obtener el ID generado para la asistencia.");
+                }
+             if(asociarAsistencia(idBoletoLong, idAsistencia)){
+                 return asistencia;
+             }
+             throw new PersistenciaException("La operación falló.");
+            }
+        } catch (SQLException | PersistenciaException ex) {
             LOG.log(Level.SEVERE, "Error de SQL al registrar la asistencia.", ex);
             throw new PersistenciaException(ex.getMessage());
         }
-        return null;
+    }
+    
+    private boolean asociarAsistencia(Long idBoleto, Long idAsistencia) throws PersistenciaException {
+        if(idBoleto == null || idAsistencia == null){
+            throw new PersistenciaException("Los valores no pueden ser nulos.");
+        }
+        String comando = """
+                           update boletos set id_asistencia = ? where id = ?
+                           """;
+        try(Connection cone = ConexionBD.crearConexion(); PreparedStatement ps = cone.prepareStatement(comando)){
+            ps.setLong(1, idAsistencia);
+            ps.setLong(2, idBoleto);
+            int filasAfectadas = ps.executeUpdate();
+            if(filasAfectadas == 0){
+                LOG.log(Level.WARNING, "No se pudo agregar la asistencia al boleto.");
+                throw new PersistenciaException("No se agregó la asistencia al boleto.");
+            }
+            return true;
+        } catch(SQLException ex){
+            throw new PersistenciaException(ex.getMessage());
+        }
     }
 
     @Override

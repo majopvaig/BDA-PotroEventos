@@ -44,7 +44,7 @@ public class ControlGestionUsuarios {
 
     protected UsuarioDTO getUsuarioActivo() throws GestionUsuarioException {
         try {
-            return usuarioBO.obtenerUsuarioPorId(usuarioActivo.getIdUsuario());
+            return usuarioBO.obtenerPorId(usuarioActivo.getIdUsuario());
         } catch (NegocioException ne) {
             throw new GestionUsuarioException(ne.getMessage());
         }

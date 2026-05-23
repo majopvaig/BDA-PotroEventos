@@ -71,17 +71,6 @@ public interface IReservacionBO {
      */
     public ReporteAsistenciaDTO obtenerResumenBoletosEvento(String idEvento) throws NegocioException;
 
-    /**
-     * Obtiene los asientos que cuentan con asistencia registrada.
-     *
-     * @param idEvento ID del evento.
-     *
-     * @return Lista de asientos con asistencia.
-     *
-     * @throws NegocioException Se lanza cuando ocurre un error.
-     */
-    List<AsientoEventoDTO> obtenerAsientosConAsistencia(String idEvento) throws NegocioException;
-
     boolean obtenerReservacion(String idReservacion) throws NegocioException;
 }
 

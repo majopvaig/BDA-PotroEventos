@@ -12,6 +12,7 @@ import excepciones.NegocioException;
 import excepciones.PersistenciaException;
 import interfaces.IAsientoEventoBO;
 import interfaces.IAsientoEventoDAO;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,7 +51,6 @@ public class AsientoEventoBO implements IAsientoEventoBO {
 
         } catch (PersistenciaException e) {
             // Log de error y relanzamiento como NegocioException
-            System.err.println("Error en AsientoEventoBO: " + e.getMessage());
             throw new NegocioException("No se pudo cargar la ocupación del evento.");
         }
     }
@@ -106,4 +106,38 @@ public class AsientoEventoBO implements IAsientoEventoBO {
             throw new NegocioException("No fue posible liberar el asiento");
         }
     }
+    
+        /**
+     * Obtiene los asientos con asistencia registrada.
+     *
+     * @param idEvento ID del evento.
+     *
+     * @return Lista de asientos.
+     *
+     * @throws NegocioException Se lanza cuando ocurre un error.
+     */
+    @Override
+    public List<AsientoEventoDTO> obtenerAsientosConAsistencia(String idEvento) throws NegocioException {
+
+        if (idEvento == null) {
+            throw new NegocioException("El id del evento no puede ser nulo.");
+        }
+
+        try {
+
+            List<AsientoEvento> asientos = asientoEventoDAO.obtenerAsientosConAsistencia(idEvento);
+
+            List<AsientoEventoDTO> asientosDTO = new ArrayList<>();
+
+            for (AsientoEvento asiento : asientos) {
+                asientosDTO.add(AsientoEventoAdapter.entidadADTO(asiento));
+            }
+
+            return asientosDTO;
+
+        } catch (PersistenciaException e) {
+            throw new NegocioException(e.getMessage());
+        }
+    }
+
 }
