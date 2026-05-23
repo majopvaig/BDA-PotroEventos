@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package dao;
+package daos;
 
 import Entitys.Asiento;
 import Entitys.AsientoEvento;
@@ -164,7 +164,7 @@ public class ReservacionDAO implements IReservacionDAO {
     }
 
     @Override
-    public List<Reservacion> consultarReservacionesUsuario(String idUsuario) throws PersistenciaException {
+    public List<Reservacion> obtenerReservacionesUsuario(String idUsuario) throws PersistenciaException {
         if (idUsuario == null) {
             throw new PersistenciaException("El ID no puede ser nulo.");
         }
@@ -268,7 +268,7 @@ public class ReservacionDAO implements IReservacionDAO {
     }
 
     @Override
-    public boolean agregarReservacion(Reservacion reservacion) throws PersistenciaException {
+    public boolean guardarReservacion(Reservacion reservacion) throws PersistenciaException {
         String comandoSQL = """
                             insert into reservaciones (estado, total, fechaHora, id_boleto, id_usuario) values (?, ?, ?, ?, ?, ?)
                             """;

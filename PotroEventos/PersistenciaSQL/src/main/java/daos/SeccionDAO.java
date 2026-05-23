@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package dao;
+package daos;
 
 import Entitys.Seccion;
 import adapters.IdAdapter;
@@ -30,7 +30,7 @@ public class SeccionDAO implements ISeccionDAO {
     
     private SeccionDAO(){}
     
-    public static SeccionDAO getInstancia(){
+    public static SeccionDAO getInstance(){
         if(instance == null){
             instance = new SeccionDAO();
         }

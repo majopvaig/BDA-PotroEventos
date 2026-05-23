@@ -15,7 +15,7 @@ public interface IUsuarioBO {
 
     public UsuarioDTO guardarUsuario(RegistroUsuarioDTO usuario) throws NegocioException;
 
-    public UsuarioDTO obtenerUsuarioPorId(String idUsuario) throws NegocioException;
+    public UsuarioDTO obtenerPorId(String idUsuario) throws NegocioException;
 
     public RegistroUsuarioDTO iniciarSesion(LoginDTO sesion) throws NegocioException;
 

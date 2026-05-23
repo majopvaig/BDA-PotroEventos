@@ -1,4 +1,4 @@
-package dao;
+package daos;
 
 import Entitys.Reembolso;
 import adapters.IdAdapter;

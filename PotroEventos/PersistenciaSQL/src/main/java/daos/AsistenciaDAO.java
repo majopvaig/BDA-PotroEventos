@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package dao;
+package daos;
 
 import Entitys.Asistencia;
 import Entitys.ReporteAsistencia;
@@ -53,6 +53,7 @@ public class AsistenciaDAO implements IAsistenciaDAO {
             LOG.log(Level.SEVERE, "Error de SQL al registrar la asistencia.", ex);
             throw new PersistenciaException(ex.getMessage());
         }
+        return null;
     }
 
     @Override
@@ -79,7 +80,6 @@ public class AsistenciaDAO implements IAsistenciaDAO {
                     return new ReporteAsistencia(asistidos, pendientes);
                 }
             }
-
         } catch (SQLException ex) {
             LOG.log(Level.SEVERE, "Error de SQL al obtener el reporte de las asistencias.", ex);
             throw new PersistenciaException(ex.getMessage());

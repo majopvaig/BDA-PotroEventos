@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package dao;
+package daos;
 
 import Entitys.Categoria;
 import Entitys.ENUMS.CategoriaEvento;
@@ -34,21 +34,22 @@ import java.util.logging.Logger;
  */
 public class EventoDAO implements IEventoDAO {
     
-    private static EventoDAO instance;
-    
+    private static EventoDAO instancia;
+
     private static final Logger LOG = Logger.getLogger(EventoDAO.class.getName());
-    
-    private EventoDAO(){}
-    
-    public static EventoDAO getInstancia(){
-        if(instance == null){
-            instance = new EventoDAO();
+
+    private EventoDAO() {
+    }
+
+    public static EventoDAO getInstance() {
+        if (instancia == null) {
+            instancia = new EventoDAO();
         }
-        return instance;
+        return instancia;
     }
 
     @Override
-    public Evento consultarEvento(String idEvento) throws PersistenciaException {
+    public Evento buscarPorId(String idEvento) throws PersistenciaException {
         if(idEvento == null || idEvento.isEmpty() || idEvento.isBlank()){
             throw new PersistenciaException("Por favor, proporcione un ID.");
         }
@@ -100,8 +101,8 @@ public class EventoDAO implements IEventoDAO {
     }
 
     @Override
-    public List<Evento> consultarPorCategoria(String idCategoria) throws PersistenciaException {
-        if(idCategoria == null || idCategoria.isEmpty() || idCategoria.isBlank()){
+    public List<Evento> buscarTodosCategoria(Categoria categoria) throws PersistenciaException {
+        if(categoria.getId() == null || categoria.getId().isEmpty() || categoria.getId().isBlank()){
             throw new PersistenciaException("Por favor, proporcione un ID.");
         }
         String comando = """
@@ -135,7 +136,7 @@ public class EventoDAO implements IEventoDAO {
                          left join secciones s on s.id_ubicacion = u.id
                          where e.id_categoria = ?
                          """;
-        Long idLong = IdAdapter.stringALong(idCategoria);
+        Long idLong = IdAdapter.stringALong(categoria.getId());
         try(Connection con = ConexionBD.crearConexion(); PreparedStatement ps = con.prepareStatement(comando)){
             ps.setLong(1, idLong);
             try(ResultSet rs = ps.executeQuery()){
@@ -148,7 +149,7 @@ public class EventoDAO implements IEventoDAO {
     }
 
     @Override
-    public boolean reducirCapacidad(String idEvento) throws PersistenciaException {
+    public boolean reducirDisponibilidad(String idEvento) throws PersistenciaException {
         if(idEvento == null || idEvento.isEmpty() || idEvento.isBlank()){
             throw new PersistenciaException("Se ocupa el ID.");
         }
@@ -171,7 +172,7 @@ public class EventoDAO implements IEventoDAO {
     }
 
     @Override
-    public boolean aumentarCapacidad(String idEvento) throws PersistenciaException {
+    public boolean aumentarDisponibilidad(String idEvento) throws PersistenciaException {
         if(idEvento == null || idEvento.isEmpty() || idEvento.isBlank()){
             throw new PersistenciaException("Se ocupa el ID.");
         }
@@ -194,7 +195,7 @@ public class EventoDAO implements IEventoDAO {
     }
 
     @Override
-    public List<Evento> consultarPorNombre(String nombre) throws PersistenciaException {
+    public List<Evento> buscarPorNombre(String nombre) throws PersistenciaException {
         if(nombre == null || nombre.isEmpty() || nombre.isBlank()){
             throw new PersistenciaException("Por favor, proporcione un nombre.");
         }
@@ -241,7 +242,7 @@ public class EventoDAO implements IEventoDAO {
     }
 
     @Override
-    public List<Evento> consultarEventosActuales() throws PersistenciaException {
+    public List<Evento> obtenerEventosActuales() throws PersistenciaException {
         String comando = """
                          select 
                              e.id as id_evento,

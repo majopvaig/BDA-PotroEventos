@@ -3,11 +3,14 @@ package objetosNegocio;
 import Entitys.AsientoEvento;
 import Entitys.Asistencia;
 import Entitys.Boleto;
+import Entitys.ReporteAsistencia;
 import adapters.AsientoEventoAdapter;
 import adapters.AsistenciaAdapter;
 import adapters.BoletoAdapter;
 import adapters.DevolucionAdapter;
 import adapters.ReservacionAdapter;
+import daos.AsistenciaDAO;
+import daos.BoletoDAO;
 import daos.ReservacionDAO;
 import dtos.AsientoEventoDTO;
 import dtos.AsistenciaDTO;
@@ -18,6 +21,8 @@ import dtos.ReservacionDTO;
 import entidadesmongo.ReporteAsistencia;
 import excepciones.NegocioException;
 import excepciones.PersistenciaException;
+import interfaces.IAsistenciaDAO;
+import interfaces.IBoletoDAO;
 import interfaces.IReservacionBO;
 import interfaces.IReservacionDAO;
 import java.time.LocalDateTime;
@@ -32,6 +37,8 @@ public class ReservacionBO implements IReservacionBO {
 
     private static ReservacionBO instance;
     private final IReservacionDAO reservacionDAO = ReservacionDAO.getInstance();
+    private final IBoletoDAO boletoDAO = BoletoDAO.getInstancia();
+    private final IAsistenciaDAO asistenciaDAO = AsistenciaDAO.getInstancia();
 
     private ReservacionBO() {
     }
@@ -143,7 +150,7 @@ public class ReservacionBO implements IReservacionBO {
 
         try {
 
-            Boleto boleto = reservacionDAO.buscarPorToken(token);
+            Boleto boleto = boletoDAO.buscarPorToken(token);
 
             return BoletoAdapter.entidadADTO(boleto);
 
@@ -173,7 +180,7 @@ public class ReservacionBO implements IReservacionBO {
 
             Boleto boleto = BoletoAdapter.dtoAEntidad(boletoDTO);
 
-            return reservacionDAO.actualizarEstado(boleto);
+            return boletoDAO.actualizarEstado(boleto);
 
         } catch (PersistenciaException e) {
 
@@ -205,7 +212,7 @@ public class ReservacionBO implements IReservacionBO {
 
             Asistencia asistencia = AsistenciaAdapter.convertirAsistenciaEntidad(asistenciaDTO);
 
-            Asistencia asistenciaRegistrada = reservacionDAO.registrarAsistencia(boleto, asistencia);
+            Asistencia asistenciaRegistrada = asistenciaDAO.registrarAsistencia(boleto.getIdBoleto(), asistencia);
 
             return AsistenciaAdapter.convertirAsistenciaDTO(asistenciaRegistrada);
 
@@ -232,7 +239,7 @@ public class ReservacionBO implements IReservacionBO {
             throw new NegocioException("El id del evento no puede ser nulo o vacío.");
         }
 
-        ReporteAsistencia dominio = reservacionDAO.obtenerReporteAsistencia(idEvento);
+        ReporteAsistencia dominio = asistenciaDAO.obtenerReporteAsistencia(idEvento);
         return new ReporteAsistenciaDTO(dominio.getAsistidos(), dominio.getPendientes());
     }
 

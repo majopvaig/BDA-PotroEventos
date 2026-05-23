@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package dao;
+package daos;
 
 import Entitys.Asiento;
 import Entitys.AsientoEvento;
@@ -26,6 +26,17 @@ import java.sql.SQLException;
  * @author Dayanara Peralta G
  */
 public class BoletoDAO implements IBoletoDAO {
+    private static BoletoDAO instancia;
+
+    public BoletoDAO() {
+    }
+
+    public static BoletoDAO getInstancia() {
+        if (instancia == null) {
+            instancia = new BoletoDAO();
+        }
+        return instancia;
+    }
 
     private Boleto mapearBoleto(ResultSet rs) throws SQLException {
         Boleto boleto = new Boleto();
@@ -298,7 +309,7 @@ public class BoletoDAO implements IBoletoDAO {
                 }
             }
         } catch (SQLException ex) {
-            System.getLogger(dao.BoletoDAO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.getLogger(daos.BoletoDAO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             throw new PersistenciaException("Error al obtener el boleto con token: " + token);
         }
         return null;
@@ -319,7 +330,7 @@ public class BoletoDAO implements IBoletoDAO {
             int filas = ps.executeUpdate();
             return filas > 0;
         } catch (SQLException ex) {
-            System.getLogger(dao.BoletoDAO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.getLogger(daos.BoletoDAO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             throw new PersistenciaException("Error al actualizar el estado del boleto");
         }
     }

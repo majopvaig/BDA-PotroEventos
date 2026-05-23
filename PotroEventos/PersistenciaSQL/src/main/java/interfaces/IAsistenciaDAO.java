@@ -4,9 +4,11 @@
  */
 package interfaces;
 
+import Entitys.AsientoEvento;
 import Entitys.Asistencia;
 import Entitys.ReporteAsistencia;
 import excepciones.PersistenciaException;
+import java.util.List;
 
 /**
  *
@@ -16,6 +18,8 @@ public interface IAsistenciaDAO {
     
     Asistencia registrarAsistencia(String idBoleto, Asistencia asistencia) throws PersistenciaException;
     
-    ReporteAsistencia obtenerReporteAsistencia(String idEvento); 
+    ReporteAsistencia obtenerReporteAsistencia(String idEvento);
+    
+    //public List<AsientoEvento> obtenerAsientosConAsistencia(String idEvento) throws PersistenciaException;
     
 }

@@ -6,12 +6,14 @@ package objetosNegocio;
 
 import Entitys.PerfilFiscal;
 import adapters.PerfilFiscalAdapter;
+import daos.PerfilFiscalDAO;
 import daos.UsuarioDAO;
 import dtos.PerfilFiscalDTO;
 import excepciones.NegocioException;
 import excepciones.PersistenciaException;
 import fabricas.FabricaFacturaBO;
 import fabricas.IFabricaFacturaBO;
+import interfaces.IPerfilFiscal;
 import interfaces.IPerfilFiscalBO;
 import interfaces.IUsuarioDAO;
 
@@ -22,7 +24,7 @@ import interfaces.IUsuarioDAO;
 public class PerfilFiscalBO implements IPerfilFiscalBO{
 
     // porque con el usuario lo asociare jeje
-    private IUsuarioDAO usuarioDAO = UsuarioDAO.getInstance();
+    private IPerfilFiscal perfilDAO = PerfilFiscalDAO.getInstance();
     
     private static PerfilFiscalBO instance;
 
@@ -43,7 +45,7 @@ public class PerfilFiscalBO implements IPerfilFiscalBO{
         PerfilFiscal perfilGuardar = PerfilFiscalAdapter.convertirADominio(guardar);
         
         try {
-            return usuarioDAO.guardarPerfilFiscal(perfilGuardar, idUsuario);
+            return perfilDAO.guardarPerfilFiscal(perfilGuardar, idUsuario);
         } catch (PersistenciaException ex) {
             throw new NegocioException("Error al asociar perfil fiscal");
         }

@@ -32,7 +32,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>Dao</artifactId>
+            <artifactId>PersistenciaSQL</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

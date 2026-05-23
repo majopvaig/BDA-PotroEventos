@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package dao;
+package daos;
 
 import Entitys.Usuario;
 import adapters.IdAdapter;
@@ -30,11 +30,48 @@ public class UsuarioDAO implements IUsuarioDAO {
     
     private UsuarioDAO(){}
     
-    public static UsuarioDAO getInstancia(){
+    public static UsuarioDAO getInstance(){
         if(instance == null){
             instance = new UsuarioDAO();
         }
         return instance;
+    }
+    
+    @Override
+    public Usuario obtenerUsuario(Usuario usuario) throws PersistenciaException {
+        if (usuario == null || usuario.getCorreo() == null) {
+            throw new PersistenciaException("El correo del usuario es requerido.");
+        }
+        
+        String sql = """
+                     select id,
+                            nombre,
+                            apellidoPaterno,
+                            apellidoMaterno,
+                            correo,
+                            creditos
+                     from usuarios
+                     where correo = ?
+                     """;
+        try (Connection con = ConexionBD.crearConexion(); 
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, usuario.getCorreo());
+            try(ResultSet rs = ps.executeQuery()){
+                if(rs.next()){
+                    Usuario usu = new Usuario();
+                    usu.setIdUsuario(IdAdapter.LongAString(rs.getLong("id_usuario")));
+                    usu.setNombre(rs.getString("nombre"));
+                    usu.setApellidoPaterno(rs.getString("apellidoPaterno"));
+                    usu.setApellidoMaterno(rs.getString("apellidoMaterno"));
+                    usu.setCorreo(rs.getString("correo"));
+                    usu.setCreditos(rs.getInt("creditos"));
+                    return usu;
+                }
+            }
+        } catch (SQLException ex) {
+            System.getLogger(UsuarioDAO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        return null;
     }
 
     @Override

@@ -16,9 +16,9 @@ public interface IReservacionDAO {
     
     Reservacion consultarReservacion(String id) throws PersistenciaException;
     
-    List<Reservacion> consultarReservacionesUsuario(String idUsuario) throws PersistenciaException;
+    List<Reservacion> obtenerReservacionesUsuario(String idUsuario) throws PersistenciaException;
     
-    boolean agregarReservacion(Reservacion reservacion) throws PersistenciaException;
+    boolean guardarReservacion(Reservacion reservacion) throws PersistenciaException;
     
     boolean cancelarReservacion(String idReservacion) throws PersistenciaException;
     

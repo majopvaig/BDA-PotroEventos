@@ -1,4 +1,4 @@
-package dao;
+package daos;
 
 import Entitys.Categoria;
 import Entitys.ENUMS.CategoriaEvento;

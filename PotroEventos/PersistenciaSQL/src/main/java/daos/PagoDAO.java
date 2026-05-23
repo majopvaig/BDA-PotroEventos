@@ -1,4 +1,4 @@
-package dao;
+package daos;
 
 import Entitys.Pago;
 import adapters.IdAdapter;

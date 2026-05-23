@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package dao;
+package daos;
 
 import Entitys.Empleado;
 import adapters.IdAdapter;
@@ -21,18 +21,19 @@ import java.util.logging.Logger;
  * @author maria
  */
 public class EmpleadoDAO implements IEmpleadoDAO {
-    
-    private static EmpleadoDAO instance;
-    
+        
     private static final Logger LOG = Logger.getLogger(EmpleadoDAO.class.getName());
     
-    private EmpleadoDAO(){}
-    
-    public static EmpleadoDAO getInstancia(){
-        if(instance == null){
-            instance = new EmpleadoDAO();
+    private static EmpleadoDAO instancia;
+
+    private EmpleadoDAO() {
+    }
+
+    public static EmpleadoDAO getInstance() {
+        if (instancia == null) {
+            instancia = new EmpleadoDAO();
         }
-        return instance;
+        return instancia;
     }
 
     @Override

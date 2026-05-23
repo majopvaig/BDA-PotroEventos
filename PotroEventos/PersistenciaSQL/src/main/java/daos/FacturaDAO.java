@@ -1,4 +1,4 @@
-package dao;
+package daos;
 
 import Entitys.Factura;
 import adapters.IdAdapter;
@@ -24,7 +24,7 @@ public class FacturaDAO implements IFacturaDAO {
     }
 
     @Override
-    public boolean guardarFactura(Factura factura) throws PersistenciaException {
+    public String guardarFactura(Factura factura) throws PersistenciaException {
         //  --- ya m dio hueva comentar ---
 
         String sql =
@@ -57,10 +57,13 @@ public class FacturaDAO implements IFacturaDAO {
             ps.setString(12, factura.getUuid());
             ps.setLong(13, IdAdapter.stringALong(factura.getIdReserva()));
 
-            if(ps.executeUpdate() <= 0){
-                return false;
+            int filasAfectadas = ps.executeUpdate();
+            
+            if(filasAfectadas <= 0){
+                throw new PersistenciaException("No se pudo insertar la factura, ninguna fila fue afectada.");
             }
-            return true ;
+            
+            return factura.getUuid();
         }catch(SQLException e){
             throw new PersistenciaException("Error al guardar factura.");
         }

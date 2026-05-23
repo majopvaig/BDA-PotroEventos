@@ -13,6 +13,8 @@ import excepciones.PersistenciaException;
  */
 public interface IUsuarioDAO {
 
+    public Usuario obtenerUsuario(Usuario usuario) throws PersistenciaException;
+    
     Usuario obtenerPorId(String idUsuario) throws PersistenciaException;
 
     Usuario guardarUsuario(Usuario usuario) throws PersistenciaException;

@@ -13,5 +13,5 @@ import excepciones.PersistenciaException;
  */
 public interface IFacturaDAO {
 
-    boolean guardarFactura(Factura factura) throws PersistenciaException;
+    String guardarFactura(Factura factura) throws PersistenciaException;
 }
