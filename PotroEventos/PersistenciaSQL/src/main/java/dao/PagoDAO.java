@@ -58,9 +58,4 @@ public class PagoDAO implements IPagoDAO {
         }
     }
 
-    @Override
-    public Pago consultarReservacion(String idPago) throws PersistenciaException {
-        
-        return null;
-    }
 }

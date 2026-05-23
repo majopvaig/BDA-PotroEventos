@@ -4,7 +4,6 @@
  */
 package interfaces;
 
-import Entitys.PerfilFiscal;
 import Entitys.Usuario;
 import excepciones.PersistenciaException;
 
@@ -15,8 +14,6 @@ import excepciones.PersistenciaException;
 public interface IUsuarioDAO {
 
     Usuario obtenerPorId(String idUsuario) throws PersistenciaException;
-
-    Usuario obtenerUsuario(Usuario usuario) throws PersistenciaException;
 
     Usuario guardarUsuario(Usuario usuario) throws PersistenciaException;
 

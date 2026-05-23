@@ -15,5 +15,4 @@ public interface IReembolsoDAO {
     
     Reembolso agregarReembolso(Reembolso reembolso, String idDevolucion) throws PersistenciaException;
     
-    Reembolso consultarReembolso(String idReembolso) throws PersistenciaException;
 }

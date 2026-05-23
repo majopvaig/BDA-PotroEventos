@@ -13,7 +13,6 @@ import excepciones.PersistenciaException;
  */
 public interface IDevolucionDAO {
     
-    Devolucion agregarDevolucion(Devolucion devolucion, String idReservacion) throws PersistenciaException;
+    boolean agregarDevolucion(Devolucion devolucion, String idReservacion) throws PersistenciaException;
     
-    Devolucion consultarDevolucion(String idDevolucion) throws PersistenciaException;
 }

@@ -56,8 +56,4 @@ public class ReembolsoDAO implements IReembolsoDAO {
         }
     }
 
-    @Override
-    public Reembolso consultarReembolso(String idReembolso) throws PersistenciaException {
-        return null;
-    }
 }

@@ -15,5 +15,4 @@ public interface IPagoDAO {
     
     Pago agregarPago(Pago pago, String idReservacion) throws PersistenciaException;
     
-    Pago consultarReservacion(String idPago) throws PersistenciaException;
 }
