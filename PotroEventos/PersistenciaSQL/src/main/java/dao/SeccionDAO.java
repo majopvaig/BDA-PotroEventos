@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -62,7 +63,28 @@ public class SeccionDAO implements ISeccionDAO {
 
     @Override
     public List<Seccion> buscarPorEvento(String idEvento) throws PersistenciaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = """
+                     select id_seccion, nombre, capacidad, precio_base 
+                     from secciones where id_evento = ?""";
+        Long idL = IdAdapter.stringALong(idEvento);
+        try(Connection con = ConexionBD.crearConexion();
+                PreparedStatement ps = con.prepareStatement(sql)){
+            ps.setLong(1, idL);
+            try(ResultSet rs = ps.executeQuery()){
+                List<Seccion> secciones = new ArrayList<>();
+                while(rs.next()){
+                    Seccion seccion = new Seccion();
+                    seccion.setIdSeccion(IdAdapter.LongAString(idL));
+                    seccion.setNombre(rs.getString("nombre"));
+                    seccion.setCapacidad(rs.getInt("capacidad"));
+                    seccion.setPrecioBase(rs.getLong("precio_base"));
+                    secciones.add(seccion);
+                }
+                return secciones;
+            }
+        } catch (SQLException ex) {
+            throw new PersistenciaException("No fue posible obtener las secciones para el evento: " + idEvento, ex);
+        }
     }
     
     private Seccion extraerSeccion(ResultSet rs) throws SQLException {
